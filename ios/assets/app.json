@@ -1,0 +1,6 @@
+{
+  "name": "knbc",
+  "displayName": "knbc",
+  "API_URL": "https://sayang.ntq.solutions/graphql",
+  "UPLOAD_URL": "https://example/api/v1/upload"
+}

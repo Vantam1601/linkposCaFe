@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1036708206438",
+    "project_id": "azs-beta",
+    "storage_bucket": "azs-beta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036708206438:android:57cdc7d0cd086dfd2a9aa7",
+        "android_client_info": {
+          "package_name": "com.az.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036708206438-0bblmi0q84lingslmc6pubieec41h87u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbQSiuBc9uo1zda8XaDiVO-xLjp2cNvdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036708206438-0bblmi0q84lingslmc6pubieec41h87u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

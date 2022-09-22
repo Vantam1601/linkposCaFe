@@ -1,0 +1,1 @@
+export const dataLoadPoint = ['100,000','200,000','500,000', '1,000,000', 'label:others'];

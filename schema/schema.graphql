@@ -1,0 +1,4773 @@
+input AcceptOrderRefundExchangeInput {
+  orderRefundId: Uint64!
+  prefixPhone: String!
+  phone: String!
+  postalCode: String
+  detailAddress: String!
+  unitNo: String
+  buyerOriginalAddress: Boolean!
+}
+
+input AddBundleDealCartInput {
+  shopId: Uint64!
+  postId: Uint64
+  bundleDealPromotionId: Uint64!
+  addOnDetail: [AddOnDealDetailInput]
+}
+
+input AddOnDealCartInput {
+  cartMetaId: Uint64!
+  shopId: Uint64!
+  postId: Uint64
+  addOnDetail: [AddOnDealDetailInput]
+}
+
+type AddOnDealCartResponse {
+  items: [Cart!]!
+}
+
+input AddOnDealDetailInput {
+  productId: Uint64!
+  quantity: Int!
+  variant_id: Uint64
+}
+
+input AddToCartInput {
+  productId: Uint64!
+  variantId: Uint64
+  postId: Uint64
+  quantity: Int!
+  shopId: Uint64!
+  addOnDetail: [AddOnDealDetailInput]
+}
+
+type AddressBook {
+  id: Uint64!
+  userId: String!
+  fullname: String!
+  prefixPhone: String!
+  phone: String!
+  postalCode: String
+  detailAddress: String!
+  defaultAddress: Boolean!
+  unitNo: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type Admin {
+  id: String!
+  email: String!
+  prefixPhone: String
+  phone: String
+  firstName: String
+  lastName: String
+  role: String
+  roleEntity: Role
+  createdAt: Date
+  updatedAt: Date
+}
+
+input AdminApproveRejectWithdrawalInput {
+  id: Uint64!
+  status: StatusWithdrawal!
+  sessionToken: String
+}
+
+enum AdminChangeUserStatus {
+  DELETED
+  DEACTIVATED
+  ACTIVE
+  SUSPENDED
+  TERMINATED
+}
+
+input AdminCreateCampaignInput {
+  bannerId: Uint64!
+  name: String!
+  description: String!
+  numberParticipant: Uint64
+  feeInvolved: Float!
+  nominatingPeriodFrom: Date!
+  nominatingPeriodTo: Date!
+  eventDurationFrom: Date!
+  eventDurationTo: Date!
+  reviewTimeFrom: Date!
+  reviewTimeTo: Date!
+  publishedTime: Date!
+  publishToType: PublishedToType!
+  additionalRequirement: String!
+  sellerPenaltyPoint: Float
+  shopRating: Float
+  preOrder: Boolean
+  maximumProducts: Float
+  minimumStock: Float
+  originalPrice: Float
+  promoPrice: Float
+  promoPriceType: PromoPriceType
+  discountCriteria: String
+  numberOfLike: Float
+  productRating: Float
+  categoryLimit: Float
+  sellerPenaltyPointRequired: Boolean
+  shopRatingRequired: Boolean
+  maximumProductsRequired: Boolean
+  minimumStockRequired: Boolean
+  originalPriceRequired: Boolean
+  promoPriceRequired: Boolean
+  numberOfLikeRequired: Boolean
+  productRatingRequired: Boolean
+  categoryLimitRequired: Boolean
+  categoryIds: [Uint64!]
+  publishedIds: [String!]
+  status: StatusCampaignInput!
+}
+
+input AdminCreateCommissionInput {
+  commissionRate: Float!
+  commissionType: CommissionType!
+  remark: String
+  appliedTarget: [String!]!
+}
+
+input AdminCreateOrUpdateSeoInput {
+  featureImageId: Uint64
+  metaDescription: String
+  seoKeywords: [String!]
+  seoPageTitle: String
+}
+
+input AdminCreatePromotionInput {
+  promotionName: String!
+  promotionType: PromotionType!
+  voucherCode: String!
+  claimPeriodFrom: Date!
+  claimPeriodTo: Date!
+  validUntil: Date!
+  discountType: DiscountType!
+  discountAmount: Float!
+  minimumOrderAmount: Float!
+  maximumOrderAmount: Float
+  claimQuantity: Int
+  usageQuantity: Int
+  imageId: Uint64
+  exceptType: PromotionExceptType!
+  exceptIds: [Uint64!]
+  paymentMethod: PromotionPaymentMethod!
+}
+
+input AdminCreateRoleInput {
+  status: StatusRole!
+  name: String!
+  remark: String
+  permissions: [String!]!
+}
+
+input AdminCreateRoleUserInput {
+  status: StatusRoleUser!
+  email: String!
+  firstName: String!
+  lastName: String!
+  prefixPhone: String!
+  phone: String!
+  roleId: Uint64!
+  expirationDate: Date
+}
+
+input AdminCreateUserInput {
+  username: String!
+  phone: String!
+  prefixPhone: String!
+  email: String!
+  password: String!
+  avatar: String
+}
+
+input AdminCreateUserMerchantInput {
+  profile: CreateProfileUserMerchantInput!
+  info: CreateUserMerchantInput
+  document: MerchantUserDocumentInput!
+}
+
+input AdminCreateUserPartnerInput {
+  profile: CreateProfileUserMerchantInput!
+  info: CreateUserPartnerInput
+  document: PartnerUserDocumentInput!
+}
+
+input AdminDeleteNotificationInput {
+  id: Uint64!
+}
+
+input AdminDetailNotificationInput {
+  id: Uint64!
+}
+
+input AdminEditCampaignInput {
+  id: Uint64!
+  bannerId: Uint64!
+  name: String!
+  description: String!
+  numberParticipant: Uint64
+  feeInvolved: Float!
+  nominatingPeriodFrom: Date!
+  nominatingPeriodTo: Date!
+  eventDurationFrom: Date!
+  eventDurationTo: Date!
+  reviewTimeFrom: Date!
+  reviewTimeTo: Date!
+  publishedTime: Date!
+  publishToType: PublishedToType!
+  additionalRequirement: String!
+  sellerPenaltyPoint: Float
+  shopRating: Float
+  preOrder: Boolean
+  maximumProducts: Float
+  minimumStock: Float
+  originalPrice: Float
+  promoPrice: Float
+  promoPriceType: PromoPriceType
+  discountCriteria: String
+  numberOfLike: Float
+  productRating: Float
+  categoryLimit: Float
+  sellerPenaltyPointRequired: Boolean
+  shopRatingRequired: Boolean
+  maximumProductsRequired: Boolean
+  minimumStockRequired: Boolean
+  originalPriceRequired: Boolean
+  promoPriceRequired: Boolean
+  numberOfLikeRequired: Boolean
+  productRatingRequired: Boolean
+  categoryLimitRequired: Boolean
+  categoryIds: [Uint64!]
+  publishedIds: [String!]
+  status: StatusCampaignInput!
+}
+
+input AdminEditCampaignLayoutInput {
+  campaignId: Uint64!
+  layout: String!
+}
+
+input AdminEditCommissionInput {
+  id: Uint64!
+  commissionRate: Float!
+  status: CommissionStatus!
+  remark: String
+  appliedTarget: [String!]!
+}
+
+input AdminEditNotificationInput {
+  title: String!
+  content: String!
+  notificationType: AdminNotificationType!
+  userType: AdminNotificationUserType!
+  time: String!
+  date: Date!
+  id: Uint64!
+}
+
+input AdminEditPostGeneralInfo {
+  postType: PostType!
+  status: StatusPost!
+  displayMediaIds: [Uint64]!
+  caption: String
+}
+
+input AdminEditPostRequest {
+  id: Uint64!
+  recipeName: String
+  durationHour: Int
+  durationMinute: Int
+  difficulty: Int
+  generalInfo: AdminEditPostGeneralInfo!
+  cookingMethods: [EditCookingMethod!]
+  postIngredients: [EditPostIngredient!]
+  productIds: [Uint64!]
+  ratio: PostRatio
+  thumbnail: String
+}
+
+input AdminEditProductInput {
+  reason: String
+  productId: Uint64!
+  info: ProductInfoInput
+  categoryIds: [Uint64!]!
+}
+
+input AdminEditPromotionInput {
+  id: Uint64!
+  promotionName: String!
+  promotionType: PromotionType!
+  voucherCode: String!
+  claimPeriodFrom: Date!
+  claimPeriodTo: Date!
+  validUntil: Date!
+  discountType: DiscountType!
+  discountAmount: Float!
+  minimumOrderAmount: Float!
+  maximumOrderAmount: Float
+  claimQuantity: Int
+  usageQuantity: Int
+  imageId: Uint64
+  exceptType: PromotionExceptType!
+  exceptIds: [Uint64!]
+  paymentMethod: PromotionPaymentMethod!
+}
+
+input AdminEditRefereeVoucherInput {
+  rewardType: WelcomeVoucherRewardType!
+  status: CommissionStatus!
+  validUntil: Int!
+  validUntilType: ValidUntilType!
+  discountType: CommissionDiscountType!
+  discountAmount: Float!
+  maximumDiscountAmount: Float
+  minimumOrderAmount: Float!
+  remark: String
+  exceptType: PromotionExceptType!
+  exceptIds: [Uint64!]
+  paymentMethod: PromotionPaymentMethod!
+}
+
+input AdminEditReferrerVoucherInput {
+  status: CommissionStatus!
+  discountAmount: Float!
+  remark: String
+}
+
+input AdminEditRoleInput {
+  id: Uint64!
+  status: StatusRole!
+  name: String!
+  remark: String
+  permissions: [String!]!
+  reason: String
+}
+
+input AdminEditRoleUserInput {
+  id: Uint64!
+  status: StatusRoleUser!
+  email: String!
+  firstName: String!
+  lastName: String!
+  prefixPhone: String!
+  phone: String!
+  roleId: Uint64!
+  expirationDate: Date
+  reason: String
+}
+
+input AdminEditStatusPostRequest {
+  id: Uint64!
+  status: StatusPost!
+}
+
+input AdminEditUserInput {
+  id: String!
+  username: String!
+  phone: String!
+  prefixPhone: String!
+  password: String
+  avatar: String
+  status: UserStatus!
+  reason: String
+  bannedDays: Int
+}
+
+input AdminEditUserMerchantInput {
+  id: String!
+  profile: EditProfileUserMerchantInput!
+  info: CreateUserMerchantInput
+  document: MerchantUserDocumentInput!
+}
+
+input AdminEditUserPartnerInput {
+  id: String!
+  profile: EditProfileUserPartnerInput!
+  info: CreateUserPartnerInput!
+  document: PartnerUserDocumentInput!
+}
+
+input AdminEditWelcomeVoucherInput {
+  rewardType: WelcomeVoucherRewardType!
+  status: CommissionStatus!
+  validUntil: Int!
+  validUntilType: ValidUntilType!
+  discountType: CommissionDiscountType!
+  discountAmount: Float!
+  maximumDiscountAmount: Float
+  minimumOrderAmount: Float!
+  remark: String
+  exceptType: PromotionExceptType!
+  exceptIds: [Uint64!]
+  paymentMethod: PromotionPaymentMethod!
+}
+
+input AdminFinanceInput {
+  limit: Int
+  page: Int
+  search: String
+  fromDate: String
+  toDate: String
+  status: StatementStatus
+}
+
+input AdminFinanceStatementDetailInput {
+  statementId: Uint64!
+  userId: String!
+  shopId: Uint64!
+}
+
+input AdminGetListMerchantNoCommissionInput {
+  search: String
+  limit: Int
+  page: Int
+}
+
+input AdminHandleDisputeRefundInput {
+  orderRefundId: Uint64!
+  type: HandleRefundType!
+  amount: Float
+  reason: String!
+}
+
+input AdminListCampaginInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusCampaign
+  redirectCampaign: Boolean
+}
+
+input AdminListCampaginMerchantInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusCampaignMerchant
+  campaignId: Uint64!
+}
+
+input AdminListNotificationsInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  type: AdminNotificationType
+  status: AdminNotificationStatus
+}
+
+type AdminNotificationEntity {
+  id: Uint64!
+  title: String!
+  content: String!
+  date: String!
+  time: String!
+  notificationType: AdminNotificationType!
+  userType: AdminNotificationUserType!
+  createdAt: Date
+  activeAt: Date
+  status: AdminNotificationStatus!
+}
+
+enum AdminNotificationStatus {
+  SENT
+  NOT_SENT
+}
+
+enum AdminNotificationType {
+  PROMOTIONS
+  OTHERS
+}
+
+enum AdminNotificationUserType {
+  ALL
+  BUYER
+  PARTNER
+  MERCHANT
+}
+
+input AdminPaginationBannerInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusBannerInput
+  type: BannerType!
+}
+
+input AdminPaginationWithdrawalInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusWithdrawal
+}
+
+type AdminRoomSubscriptions {
+  id: Uint64!
+  type: RoomType!
+  members: [RoomMember]!
+  name: String
+  image: String
+  createdAt: String!
+  updatedAt: String!
+  message: Message
+  unread: Int!
+}
+
+input AdminSendNotificationInput {
+  title: String!
+  content: String!
+  notificationType: AdminNotificationType!
+  userType: AdminNotificationUserType!
+  time: String!
+  date: Date!
+}
+
+enum AdminStatementStatusFilter {
+  CURRENT
+  PAST
+  ALL
+}
+
+type AgentListResponse {
+  items: [AgentManagement!]!
+  meta: MetaPagination!
+}
+
+type AgentManagement {
+  id: String!
+  email: String!
+  prefixPhone: String
+  phone: String
+  firstName: String
+  lastName: String
+  role: String
+  createdAt: Date
+  updatedAt: Date
+  activeCase: Int!
+  pendingCase: Int!
+  totalCase: Int!
+  score: Int!
+}
+
+input AgentManagementInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+}
+
+type AllCategoryResponse {
+  total: Int!
+  items: [Category!]
+}
+
+type AllProductResponse {
+  total: Int!
+  items: [ProductEntity!]!
+}
+
+input AppLoginInput {
+  username: String!
+  password: String!
+  deviceToken: String!
+  deviceID: String!
+  platform: PlatformType!
+}
+
+input AppLoginSNSInput {
+  token: String!
+  deviceToken: String!
+  type: LoginSNSType!
+}
+
+type Bank {
+  id: Uint64!
+  name: String!
+  digitsMin: Int!
+  digitsMax: Int!
+  payNow: Boolean!
+}
+
+type Banner {
+  id: Uint64!
+  type: BannerType!
+  imageId: Uint64!
+  image: MediaEntity
+  redirectType: RedirectType!
+  redirectId: Uint64
+  campaign: Campaign
+  redirectUrl: String
+  startDate: Date!
+  endDate: Date!
+  status: BannerStatus!
+  serial: Int!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+enum BannerStatus {
+  ON
+  OFF
+  EXPIRED
+}
+
+enum BannerType {
+  DISCOVER
+  ECOMMERCE
+}
+
+enum BuyerUpdateOrder {
+  CANCEL
+  CONFIRM_RECEIVED
+}
+
+input BuyerUpdateOrderStatusInput {
+  status: BuyerUpdateOrder!
+  reason: String
+  reasonTemplateId: Uint64
+  images: [Uint64]
+  orderId: Uint64!
+}
+
+type CalculateCartMetaPrice {
+  cartMetaId: Uint64!
+  quantity: Float
+  unitPrice: Float
+  productId: Uint64
+  variantId: Uint64
+  price: Float!
+  bundleDealsPrice: [CalculateCartMetaPrice]
+}
+
+type CalculateCartPrice {
+  cartId: Uint64!
+  totalPrice: Float!
+  shippingFee: Float!
+  shippingDiscount: Float!
+  originalPrice: Float!
+  cartMeta: [CalculateCartMetaPrice!]!
+}
+
+type CalculateCartPriceResponse {
+  total: CartMetaPriceTotal!
+  items: [CalculateCartPrice!]!
+}
+
+input CalculateQuantityCartMetaInput {
+  meta: [OrderCartInput]!
+  sayangVoucher: Uint64
+}
+
+type Campaign {
+  id: Uint64!
+  bannerId: Uint64!
+  banner: MediaEntity
+  name: String!
+  description: String!
+  numberParticipant: Uint64
+  feeInvolved: Float!
+  nominatingPeriodFrom: Date!
+  nominatingPeriodTo: Date!
+  eventDurationFrom: Date!
+  eventDurationTo: Date!
+  reviewTimeFrom: Date!
+  reviewTimeTo: Date!
+  publishedTime: Date!
+  publishedToType: PublishedToType!
+  additionalRequirement: Date!
+  createdAt: Date!
+  updatedAt: Date!
+  campaignCategories: CampaignCategories
+  campaignPublishTo: CampaignPublishTo
+  campaignMerchant: CampaignMerchant
+  campaignMerchantProducts: [CampaignMerchantProduct]
+  layout: String
+  layoutUpdatedAt: Date
+  meta: CampaignMeta!
+  status: StatusCampaign!
+}
+
+type CampaignCategories {
+  categories: [Category!]
+  categoryIds: [Uint64!]!
+}
+
+type CampaignJoinStatus {
+  id: Uint64!
+  canJoin: Boolean!
+}
+
+enum CampaignJoinedSort {
+  WAIT_TO_START
+  IN_PROGRESS
+  ENDED
+}
+
+type CampaignLayoutResponse {
+  campaignId: Uint64!
+  name: String!
+  layout: String!
+  layoutUpdatedAt: Date
+}
+
+type CampaignMerchant {
+  id: Uint64!
+  shopId: Uint64!
+  shop: Shop
+  userId: String!
+  user: User
+  status: StatusCampaignMerchant!
+  reason: String
+  products: [CampaignMerchantProduct!]
+  categories: [Category!]
+  createdAt: Date!
+  updatedAt: Date!
+  campaignMeta: CampaignMeta
+  eligibility: CampaignMerchantEligibility
+  canReview: Boolean!
+}
+
+type CampaignMerchantEligibility {
+  sellerPenaltyPointRequired: Boolean!
+  shopRatingRequired: Boolean!
+  maximumProductsRequired: Boolean!
+  minimumStockRequired: Boolean!
+  originalPriceRequired: Boolean!
+  promoPriceRequired: Boolean!
+  numberOfLikeRequired: Boolean!
+  productRatingRequired: Boolean!
+  categoryLimitRequired: Boolean!
+}
+
+type CampaignMerchantProduct {
+  id: Uint64!
+  productId: Uint64!
+  product: ProductEntity
+  variations: [CampaignMerchantProductVariation!]!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input CampaignMerchantProductInput {
+  productId: Uint64!
+  variations: [CampaignMerchantProductVariationInput!]!
+}
+
+type CampaignMerchantProductVariation {
+  productVariationId: Uint64
+  productVariation: ProductVariant
+  productVariation1: String
+  productVariation2: String
+  discountPrice: Float!
+  discountPercent: Float!
+  campaignStock: Uint64!
+  purchaseLimit: Uint64!
+}
+
+input CampaignMerchantProductVariationInput {
+  productVariationId: Uint64
+  discountPrice: Float!
+  discountPercent: Float!
+  campaignStock: Uint64!
+  purchaseLimit: Uint64!
+  productVariation1: String
+  productVariation2: String
+}
+
+type CampaignMeta {
+  id: Uint64!
+  sellerPenaltyPoint: Float
+  shopRating: Float
+  preOrder: Boolean
+  maximumProducts: Float
+  minimumStock: Float
+  originalPrice: Float
+  promoPrice: Float
+  discountCriteria: String
+  numberOfLike: Float
+  productRating: Float
+  categoryLimit: Float
+  promoPriceType: PromoPriceType!
+  sellerPenaltyPointRequired: Boolean
+  shopRatingRequired: Boolean
+  maximumProductsRequired: Boolean
+  minimumStockRequired: Boolean
+  originalPriceRequired: Boolean
+  promoPriceRequired: Boolean
+  numberOfLikeRequired: Boolean
+  productRatingRequired: Boolean
+  categoryLimitRequired: Boolean
+}
+
+enum CampaignNominatedSort {
+  CANCELED_BY_MERCHANT
+  CANCELED_BY_ADMIN
+  NOMINATED
+  WAITING
+}
+
+type CampaignPublishTo {
+  publishedToIds: [String!]!
+  publishedTo: [Shop!]
+}
+
+enum CampaignSort {
+  UPCOMING
+  NOMINATING
+  REVIEWING
+  IN_PROGRESS
+  ENDED
+  CANCELED
+  WAITING
+}
+
+type CampaignTransaction {
+  id: Uint64!
+  userId: String!
+  status: StatusCampaignTransaction!
+  paymentServices: PaymentServiceMethod!
+  cardNumber: String
+  fee: Float!
+  pgTransactionId: String
+  pgUrl: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+enum CampaignUnderReviewSort {
+  ACCEPTED
+  REJECTED
+  INFO_REQUESTED
+  EXPIRED
+  WAITING
+}
+
+type CampaingMarketingResponse {
+  totalCampaignThisYear: Float!
+  totalVoucherThisYear: Float!
+  listChart: [ListCampaignChart]!
+  activeCampaigns: [Campaign]!
+}
+
+type Cart {
+  id: Uint64!
+  shop: Shop
+  metaData: [CartMeta]
+  createdAt: String!
+  updatedAt: String!
+}
+
+type CartBundleDeal {
+  items: [CartMetaBundle]
+  promotion: MerchantBundleDealEntity
+}
+
+type CartMeta {
+  id: Uint64!
+  product: ProductEntity
+  variant: ProductVariant
+  quantity: Int
+  createdAt: String!
+  updatedAt: String!
+  addOnDeals: [CartMeta]
+  priceAddOnDeal: Float
+  bundleDeals: CartBundleDeal
+}
+
+type CartMetaBundle {
+  id: Uint64!
+  product: ProductEntity
+  variant: ProductVariant
+  quantity: Int
+  createdAt: String!
+  updatedAt: String!
+}
+
+type CartMetaPriceTotal {
+  totalPrice: Float!
+  totalShippingFee: Float!
+  totalShippingDiscount: Float!
+  totalShopVoucherDiscount: Float!
+  totalSayangVoucherDiscount: Float!
+  totalSayangVoucherShippingDiscount: Float!
+  totalSayangCoinDiscount: Float!
+}
+
+type Category {
+  id: Uint64!
+  name: String!
+  image: String!
+  description: String
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  children: [Category!]
+  parent: Category
+  productCount: Int
+  productUserCount: Uint64
+  readOnly: Boolean
+}
+
+input CategoryPaginationInput {
+  search: String
+  limit: Int
+  page: Int
+}
+
+enum ChangeStatusTicket {
+  PENDING
+  RESOLVED
+  WITHDRAWN
+}
+
+input ChangeStatusTicketInput {
+  ticketId: Uint64!
+  status: ChangeStatusTicket
+  priority: TicketPriority
+  note: String
+}
+
+input ChatListInput {
+  limit: Int
+  page: Int
+  keyword: String
+  type: RoomListSearchType
+}
+
+input CheckRoomInput {
+  userId: String!
+  platfom: RoomPlatformType!
+}
+
+type CheckUserUpgradeStatus {
+  merchant: UserUpgradeStatus
+  partner: UserUpgradeStatus
+}
+
+input ClaimMyVoucherInput {
+  promotionId: Uint64!
+  promotionType: ClaimMyVoucherType!
+}
+
+enum ClaimMyVoucherType {
+  SHOP_VOUCHER
+  SAYANG_VOUCHER
+}
+
+enum CoinActivity {
+  RECEIVE
+  SPEND
+}
+
+type CoinHistory {
+  id: Uint64!
+  type: CoinActivity!
+  amount: Int!
+  receivedAt: Date!
+  spentAt: Date
+  receiveType: CoinReceiveType
+  spendType: CoinSpendType
+  userId: String!
+}
+
+enum CoinReceiveType {
+  PAID_ORDER
+}
+
+enum CoinSpendType {
+  DISCOUNT
+}
+
+type Comment {
+  id: Uint64!
+  content: String!
+  createdAt: String!
+  updatedAt: String!
+  children: [Comment!]
+  parent: Comment
+  parentId: Uint64
+  userId: String!
+  postId: Uint64!
+  user: User
+  post: Post
+  status: StatusComment!
+  tags: [TagComment!]
+}
+
+input CommentPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusComment
+  postId: Uint64
+}
+
+enum CommissionDiscountType {
+  PERCENTAGE_OFF
+  FIX_AMOUNT_OFF
+  FIX_AMOUNT_CASHBACK
+}
+
+type CommissionEntity {
+  id: Uint64!
+  commissionRate: Float!
+  commissionType: CommissionType!
+  status: CommissionStatus!
+  remark: String
+  appliedTarget: [String!]!
+  createdAt: Date!
+  updatedAt: Date!
+  merchants: [User!]!
+}
+
+input CommissionPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: CommissionStatus
+  type: CommissionType
+}
+
+enum CommissionPaymentMethod {
+  ANY
+  PAY_NOW
+  CREDIT_CARD
+}
+
+enum CommissionStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum CommissionType {
+  PLATFORMWIDE
+  SPECIFIC_MERCHANT
+}
+
+input CreateAddressBookInput {
+  fullname: String!
+  prefixPhone: String!
+  phone: String!
+  postalCode: String
+  detailAddress: String!
+  defaultAddress: Boolean!
+  unitNo: String
+}
+
+input CreateBannerInput {
+  imageId: Uint64!
+  type: BannerType!
+  redirectType: RedirectType!
+  redirectId: Uint64
+  redirectUrl: String
+  startDate: Date!
+  endDate: Date!
+}
+
+input CreateCategoryRequest {
+  name: String!
+  parentId: Uint64
+  image: String!
+  description: String
+}
+
+input CreateCommentInput {
+  commentId: Uint64
+  content: String!
+  postId: Uint64!
+  tags: [TagCommentInput!]
+}
+
+input CreateCookingMethod {
+  name: String!
+  mediaId: Uint64
+  description: String
+}
+
+input CreateHashTagRequest {
+  name: String!
+  image: String
+  description: String
+}
+
+input CreateMediaWithPathInput {
+  url: String!
+  name: String
+  fileType: FileType!
+}
+
+input CreateOrderInput {
+  addressId: Uint64!
+  carMetaData: [OrderCartInput]!
+  payment: CreateOrderPaymentInput!
+  sayangVoucher: Uint64
+}
+
+input CreateOrderPaymentInput {
+  service: PaymentServiceMethodOrder!
+  method: PaymentMethodOrder!
+  cardId: String!
+}
+
+type CreateOrderResponse {
+  payment: Boolean!
+  order: [Order!]!
+}
+
+input CreatePostGeneralInfo {
+  postType: PostType!
+  postPrivacy: PostPrivacy!
+  allowComment: Boolean!
+  saveToDevice: Boolean!
+  displayMediaIds: [Uint64]!
+  caption: String
+}
+
+input CreatePostIngredient {
+  name: String!
+  amount: Float!
+  measurement: String!
+  productId: Uint64
+}
+
+input CreatePostRequest {
+  isDraft: Boolean
+  recipeName: String
+  durationHour: Int
+  durationMinute: Int
+  difficulty: Int
+  generalInfo: CreatePostGeneralInfo!
+  cookingMethods: [CreateCookingMethod!]!
+  postIngredients: [CreatePostIngredient!]!
+  productIds: [Uint64!]
+  ratio: PostRatio
+  thumbnail: String
+}
+
+input CreateProductInput {
+  info: ProductInfoInput
+  categoryIds: [Uint64!]!
+  variations: [ProductVariantDetail!]!
+}
+
+input CreateProfileUserMerchantInput {
+  username: String!
+  email: String!
+  avatar: String
+  password: String!
+  prefixPhone: String!
+  phone: String!
+}
+
+input CreateProfileUserPartnerInput {
+  username: String!
+  email: String!
+  avatar: String
+  password: String!
+  prefixPhone: String!
+  phone: String!
+}
+
+input CreateTicketInput {
+  message: String!
+}
+
+input CreateTodoInput {
+  name: String!
+  metadata: String
+  age: Int
+}
+
+input CreateUserInput {
+  info: NewUserInput!
+  otp: String!
+}
+
+input CreateUserMerchantInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  prefixPhone: String!
+  phone: String!
+  postalCode: String
+  address: String
+  bankName: String
+  bankId: Uint64
+  bankAccountNumber: String
+  shopName: String
+  businessDescription: String
+  halalCertificationNumber: String
+  uenNo: String
+  sfaLicenseNo: String
+  socialMediaUrls: [SocialMediaUrl!]!
+  categoryIds: [Uint64!]
+}
+
+input CreateUserPartnerInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  prefixPhone: String!
+  phone: String!
+  postalCode: String
+  address: String
+  bankId: Uint64
+  bankName: String
+  bankAccountNumber: String
+  socialMediaUrls: [SocialMediaUrl!]!
+}
+
+type CreditCard {
+  id: String!
+  cardHolder: String
+  brand: CreditCardBrand!
+  last4: String!
+  expiredMonth: Uint64!
+  expiredYear: Uint64!
+}
+
+enum CreditCardBrand {
+  Amex
+  Diners
+  Discover
+  Jcb
+  MasterCard
+  UnionPay
+  Unknown
+  Visa
+}
+
+type CustomerServiceTotalResponse {
+  resolved: Float!
+  pending: Float!
+  total: Float!
+  buyerList: [ListTotalSales]!
+  sellerList: [ListTotalSales]!
+}
+
+type DashboardFinance {
+  salesChart: [ListTotalSales]!
+  sellerCommissionChart: [ListTotalSales]!
+  annualSellerCommission: [ListTotalSales]!
+  totalAppVoucherRedeemed: Float!
+  totalMonthlyRefund: [ListTotalSales]!
+}
+
+input DashboardPlatformPerformanceInput {
+  numberTime: Int
+  typeTime: DashboardTypeTime
+  role: UserRole
+}
+
+enum DashboardTypeTime {
+  DATE
+  MONTH
+}
+
+"""
+
+"""
+scalar Date
+
+input DeleteBundleDealInput {
+  cartMetaId: Uint64!
+  cartMetaBundleDealId: Uint64!
+}
+
+input DeleteChatBoxInput {
+  roomId: Uint64!
+}
+
+input DeleteProductInput {
+  productIds: [Uint64!]!
+}
+
+input DeleteSearchLogInput {
+  id: Uint64!
+}
+
+enum DiscountType {
+  PERCENTAGE_OFF
+  FIX_AMOUNT_OFF
+  FIX_SHIPPING_FEE
+  FIX_AMOUNT_CASHBACK
+}
+
+type DiscoverHashTag {
+  id: Uint64!
+  name: String!
+  image: String
+  description: String
+  createdAt: String
+  updatedAt: String
+  posts: [Post!]!
+}
+
+input DisputeOrderRefundInput {
+  orderRefundId: Uint64!
+  reason: String!
+  reasonTemplateId: Uint64
+  mediaIds: [Uint64!]
+}
+
+input EditAddressBookInput {
+  id: Uint64!
+  fullname: String!
+  prefixPhone: String!
+  phone: String!
+  postalCode: String
+  detailAddress: String!
+  defaultAddress: Boolean!
+  unitNo: String
+}
+
+input EditBannerInput {
+  id: Uint64!
+  imageId: Uint64!
+  type: BannerType!
+  redirectType: RedirectType!
+  redirectId: Uint64
+  redirectUrl: String
+  startDate: Date!
+  endDate: Date!
+}
+
+input EditCommentInput {
+  id: Uint64!
+  content: String!
+  tags: [TagCommentInput!]
+}
+
+input EditCookingMethod {
+  id: Uint64
+  name: String!
+  mediaId: Uint64
+  description: String!
+}
+
+input EditPostGeneralInfo {
+  postType: PostType!
+  postPrivacy: PostPrivacy!
+  allowComment: Boolean!
+  saveToDevice: Boolean!
+  displayMediaIds: [Uint64]!
+  caption: String
+}
+
+input EditPostIngredient {
+  id: Uint64
+  name: String!
+  amount: Float!
+  measurement: String!
+  productId: Uint64
+}
+
+input EditPostPrivacty {
+  id: Uint64!
+  postPrivacy: PostPrivacy!
+}
+
+input EditPostRequest {
+  id: Uint64!
+  isDraft: Boolean
+  recipeName: String
+  durationHour: Int
+  durationMinute: Int
+  difficulty: Int
+  generalInfo: EditPostGeneralInfo!
+  cookingMethods: [EditCookingMethod!]
+  postIngredients: [EditPostIngredient!]
+  productIds: [Uint64!]
+  ratio: PostRatio
+  thumbnail: String
+}
+
+input EditProductInput {
+  productId: Uint64!
+  info: ProductInfoInput
+  categoryIds: [Uint64!]!
+  variations: [ProductVariantDetail!]!
+}
+
+input EditProfileUserMerchantInput {
+  username: String!
+  avatar: String
+  prefixPhone: String!
+  phone: String!
+  status: UserStatus!
+  reason: String
+  bannedDays: Int
+  password: String
+}
+
+input EditProfileUserPartnerInput {
+  username: String!
+  avatar: String
+  prefixPhone: String!
+  phone: String!
+  status: UserStatus!
+  reason: String
+  bannedDays: Int
+  password: String
+}
+
+input EditShopInput {
+  avatarUrl: String
+  coverPhotoUrl: String
+  description: String
+  bannerId: Uint64
+}
+
+input ElasticSearchInput {
+  search: String
+  limit: Int
+  page: Int
+}
+
+enum ExceptType {
+  PRODUCT
+  CATEGORY
+}
+
+enum FileType {
+  IMAGE
+  VIDEO
+  PDF
+  OTHER
+}
+
+input FinanceOrderInput {
+  limit: Int
+  page: Int
+  search: String
+  fromDate: String
+  toDate: String
+}
+
+input FinanceReceivedInput {
+  limit: Int
+  page: Int
+  search: String
+  fromDate: String
+  toDate: String
+  status: StatementStatus
+}
+
+input FinanceRevenueInput {
+  search: String
+  fromDate: String
+  toDate: String
+  status: StatementStatus
+}
+
+type FinanceRevenueResponse {
+  transactionSale: Float!
+  payout: Float!
+  platformVouchers: Float!
+  refunds: Float!
+  earnedPlatformFees: Float!
+  earnedCampaignFees: Float!
+  earnedQuestServiceFees: Float!
+  earnedPartnerCommissionFees: Float!
+  earnedMiscellanceousFees: Float!
+}
+
+input FinanceStatementDetailInput {
+  statementId: Uint64!
+}
+
+input FinanceStatementItemDetailInput {
+  limit: Int
+  page: Int
+  statementId: Uint64!
+}
+
+input FinanceStatementOrderDetailInput {
+  statementOrderDetailId: Uint64!
+}
+
+type FinanceStatmentResponse {
+  meta: MetaPagination!
+  items: [StatementEntity!]
+}
+
+type FinanceTotalEntity {
+  value: Float!
+  startDate: String
+  endDate: String
+}
+
+type FinanceTotalResponse {
+  upcoming: FinanceTotalEntity!
+  current: FinanceTotalEntity!
+  previous: FinanceTotalEntity!
+  lifetime: FinanceTotalEntity!
+}
+
+enum FlagStement {
+  NONE
+  FRAUD
+  RESOLVED
+}
+
+"""
+
+"""
+scalar Float32
+
+input FollowingListPostInput {
+  limit: Int
+  page: Int
+  search: String
+}
+
+input ForYouListPostInput {
+  limit: Int
+  page: Int
+}
+
+input ForgotPasswordAdminInput {
+  email: String!
+}
+
+input ForgotPasswordMerchantInput {
+  email: String!
+}
+
+input GetCoinHistoryRequest {
+  limit: Int
+  page: Int
+  type: CoinActivity
+}
+
+type GetCoinHistoryResponse {
+  meta: MetaPagination!
+  items: [CoinHistory!]!
+}
+
+input GetMyVouchersRequest {
+  limit: Int
+  page: Int
+  type: MerchantPromotionTypes!
+}
+
+type GetMyVouchersRequestResponse {
+  meta: MetaPagination!
+  items: [UserVoucherEntity!]!
+}
+
+input GetProductRatingInput {
+  limit: Int
+  page: Int
+  productId: Uint64!
+}
+
+enum HandleRefundType {
+  REFUND_TO_BUYER
+  CLOSE_DISPUTE
+}
+
+type HashTag {
+  id: Uint64!
+  name: String!
+  image: String
+  description: String
+  createdAt: String
+  updatedAt: String
+  postNumber: Int
+  count: Int
+  posts: [Post!]!
+}
+
+type HashTagBanned {
+  id: Uint64!
+  name: String!
+  createdAt: String
+  updatedAt: String
+}
+
+input HashTagBannedPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+}
+
+input HashTagDiscoverInput {
+  limit: Int
+  page: Int
+}
+
+input HashTagPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+}
+
+type ListCampaignChart {
+  date: String!
+  active: Float!
+  close: Float!
+}
+
+input ListCommentInput {
+  limit: Int
+  page: Int
+  postId: Uint64!
+}
+
+type ListFinanceStatementResponse {
+  meta: MetaPagination!
+  items: [StatementEntity!]
+}
+
+input ListFollowInput {
+  search: String
+  userId: String!
+  limit: Int
+  page: Int
+}
+
+input ListPaymentInput {
+  shopId: String
+  productId: String
+}
+
+type ListPaymentMethodResponse {
+  items: [PaymentMethod!]!
+}
+
+input ListProductInput {
+  search: String
+  categoryIds: [Uint64!]
+}
+
+input ListReasonTemplateInput {
+  type: ReasonTeamplate
+}
+
+enum ListStatusTicket {
+  QUEUE
+  ACTIVE
+}
+
+type ListTotalSales {
+  date: String!
+  total: Float!
+}
+
+input ListUserByCategoriesInput {
+  categoriesIds: [Uint64]
+}
+
+input LoginAdminInput {
+  email: String!
+  password: String!
+}
+
+type LoginAdminResponse {
+  token: String!
+  deviceToken: String!
+  refreshToken: String!
+  admin: Admin!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+type LoginResponse {
+  token: String!
+  deviceToken: String!
+  refreshToken: String!
+  user: User!
+  userBuyer: User!
+  trustDevice: Boolean!
+}
+
+enum LoginSNSType {
+  GOOGLE
+  FACEBOOK
+  APPLE
+}
+
+enum LoginType {
+  EMAIL
+  USERNAME
+  PHONE
+}
+
+type MediaEntity {
+  id: Uint64!
+  url: String!
+  name: String!
+  fileType: FileType!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+}
+
+type MerchantAddOnDealEntity {
+  id: Uint64!
+  shopId: Uint64!
+  addOnName: String!
+  startDate: Date!
+  endDate: Date!
+  purchaseLimit: Float!
+  mainProducts: [Uint64!]!
+  addOnProducts: [PromotionProduct!]!
+  createdAt: Date!
+  updatedAt: Date!
+  status: MerchantPromotionTypes!
+}
+
+type MerchantBundleDealEntity {
+  id: Uint64!
+  shopId: Uint64!
+  bundleName: String!
+  startDate: Date!
+  endDate: Date!
+  type: MerchantBundleDealType!
+  bundleQuantity: Int!
+  bundleGet: Float!
+  purchaseLimit: Float!
+  applicableProducts: [Uint64!]!
+  products: [ProductEntity!]!
+  createdAt: Date!
+  updatedAt: Date!
+  status: MerchantPromotionTypes!
+}
+
+enum MerchantBundleDealType {
+  PERCENTAGE_OFF
+  FIX_AMOUNT_OFF
+  BUNDLE_PRICE
+}
+
+type MerchantConnection {
+  meta: MetaPaging!
+  items: [Partner!]!
+}
+
+input MerchantCreateAddOnDealRequest {
+  addOnName: String!
+  startDate: Date!
+  endDate: Date!
+  purchaseLimit: Float!
+  mainProducts: [Uint64!]!
+  addOnProducts: [PromotionProductInput!]!
+}
+
+input MerchantCreateBundleDealRequest {
+  bundleName: String!
+  startDate: Date!
+  endDate: Date!
+  type: MerchantBundleDealType!
+  bundleQuantity: Int!
+  bundleGet: Float!
+  purchaseLimit: Float!
+  applicableProducts: [Uint64!]!
+}
+
+input MerchantCreateDiscountRequest {
+  discountName: String!
+  startDate: Date!
+  endDate: Date!
+  discount: Float!
+  purchaseLimit: Float
+  applicableProducts: [Uint64!]!
+}
+
+input MerchantCreateShippingFeeRequest {
+  type: MerchantShippingFeeType!
+  amount: Float!
+  max: Float
+  minimumOrderAmount: Float!
+  applicableProducts: [Uint64!]!
+  startDate: Date
+  endDate: Date
+}
+
+input MerchantCreateVoucherRequest {
+  voucherName: String!
+  voucherCode: String!
+  startDate: Date!
+  endDate: Date!
+  claimQuantity: Int!
+  usageQuantity: Int
+  discountType: MerchantVoucherDiscountType!
+  minSpendRequired: Float!
+  type: MerchantVoucherType!
+  applicableProducts: [Uint64!]!
+  maximumDiscountAmount: Float
+  value: Float!
+}
+
+type MerchantDiscountEntity {
+  id: Uint64!
+  shopId: Uint64!
+  discountName: String!
+  startDate: Date!
+  endDate: Date!
+  discount: Float!
+  purchaseLimit: Float
+  applicableProducts: [Uint64!]!
+  products: [ProductEntity!]!
+  createdAt: Date!
+  updatedAt: Date!
+  status: MerchantPromotionTypes!
+}
+
+input MerchantEditAddOnDealRequest {
+  id: Uint64!
+  addOnName: String!
+  startDate: Date!
+  endDate: Date!
+  purchaseLimit: Float!
+  mainProducts: [Uint64!]!
+  addOnProducts: [PromotionProductInput!]!
+}
+
+input MerchantEditBundleDealRequest {
+  id: Uint64!
+  bundleName: String!
+  startDate: Date!
+  endDate: Date!
+  type: MerchantBundleDealType!
+  bundleQuantity: Int!
+  bundleGet: Float!
+  purchaseLimit: Float!
+  applicableProducts: [Uint64!]!
+}
+
+input MerchantEditDiscountRequest {
+  id: Uint64!
+  discountName: String!
+  startDate: Date!
+  endDate: Date!
+  discount: Float!
+  purchaseLimit: Float
+  applicableProducts: [Uint64!]!
+}
+
+input MerchantEditShippingFeeRequest {
+  id: Uint64!
+  type: MerchantShippingFeeType!
+  amount: Float!
+  max: Float
+  minimumOrderAmount: Float!
+  applicableProducts: [Uint64!]!
+  startDate: Date
+  endDate: Date
+}
+
+input MerchantEditVoucherRequest {
+  id: Uint64!
+  voucherName: String!
+  voucherCode: String!
+  startDate: Date!
+  endDate: Date!
+  claimQuantity: Int!
+  usageQuantity: Int
+  discountType: MerchantVoucherDiscountType!
+  minSpendRequired: Float!
+  type: MerchantVoucherType!
+  applicableProducts: [Uint64!]!
+  maximumDiscountAmount: Float
+  value: Float!
+}
+
+type MerchantGetAddOnDealsResponse {
+  meta: MetaPagination!
+  items: [MerchantAddOnDealEntity!]!
+}
+
+type MerchantGetBundleDealsResponse {
+  meta: MetaPagination!
+  items: [MerchantBundleDealEntity!]!
+}
+
+type MerchantGetDiscountsResponse {
+  meta: MetaPagination!
+  items: [MerchantDiscountEntity!]!
+}
+
+input MerchantGetProductPaginationInput {
+  search: String
+  categoryIds: [Uint64!]
+  minPrice: Float
+  maxPrice: Float
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusProduct
+  taggable: Boolean
+  stock: StockTypeEnum
+}
+
+input MerchantGetPromotionsRequest {
+  limit: Int
+  page: Int
+  type: MerchantPromotionTypes!
+}
+
+type MerchantGetShippingFeesResponse {
+  meta: MetaPagination!
+  items: [MerchantShippingFeeEntity!]!
+}
+
+type MerchantGetVouchersResponse {
+  meta: MetaPagination!
+  items: [MerchantVoucherEntity!]!
+}
+
+input MerchantJoinCampaignInput {
+  campaignId: Uint64!
+  products: [CampaignMerchantProductInput!]!
+}
+
+input MerchantJoinedListCampaignsInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusCampaign
+  sort: CampaignJoinedSort
+}
+
+input MerchantListCampaignsInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusCampaign
+  sort: CampaignSort
+}
+
+input MerchantNominatedListCampaignsInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusCampaign
+  sort: CampaignNominatedSort
+}
+
+input MerchantPaymentCampaignInput {
+  service: PaymentServiceMethod!
+  cardId: String
+  campaignId: Uint64!
+  campaignMerchantId: Uint64!
+}
+
+enum MerchantPromotionTypes {
+  UPCOMING
+  ONGOING
+  EXPIRED
+}
+
+type MerchantShippingFeeEntity {
+  id: Uint64!
+  shopId: Uint64!
+  type: MerchantShippingFeeType!
+  amount: Float!
+  max: Float
+  minimumOrderAmount: Float!
+  applicableProducts: [Uint64!]!
+  products: [ProductEntity!]
+  createdAt: Date!
+  updatedAt: Date!
+  startDate: Date
+  endDate: Date
+  status: MerchantPromotionTypes!
+}
+
+enum MerchantShippingFeeType {
+  PERCENTAGE_OFF
+  FIX_AMOUNT_OFF
+  FIXED_AMOUNT
+}
+
+input MerchantUnderReviewListCampaignsInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusCampaign
+  sort: CampaignUnderReviewSort
+}
+
+enum MerchantUpdateOrder {
+  APPROVE
+  DECLINE
+  TO_SHIP
+  COMPLETE_SHIP
+  REPORT_PROBLEM
+}
+
+input MerchantUpdateOrderStatusInput {
+  status: MerchantUpdateOrder!
+  reason: String
+  reasonTemplateId: Uint64
+  images: [Uint64]
+  orderId: Uint64!
+}
+
+input MerchantUpgradeInput {
+  info: MerchantUserInfoInput!
+  document: MerchantUserDocumentInput!
+}
+
+input MerchantUserDocumentInput {
+  nricUrls: [String!]!
+  bankStatementUrls: [String!]!
+  personalPhotoUrls: [String!]!
+  acraBizFileUrls: [String!]!
+  halalCertificationUrls: [String!]!
+  sfaLicenseUrls: [String!]!
+  websites: [String!]!
+}
+
+input MerchantUserInfoInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  prefixPhone: String!
+  postalCode: String!
+  address: String!
+  socialMediaUrls: [SocialMediaUrl!]!
+  bankId: Uint64
+  bankName: String!
+  bankAccountNumber: String!
+  shopName: String!
+  businessDescription: String!
+  halalCertificationNumber: String
+  uenNo: String
+  sfaLicenseNo: String
+  categoryIds: [Uint64!]
+}
+
+enum MerchantVoucherDiscountType {
+  FIX_AMOUNT_OFF
+  PERCENTAGE_OFF
+}
+
+type MerchantVoucherEntity {
+  id: Uint64!
+  shopId: Uint64!
+  voucherName: String!
+  voucherCode: String!
+  startDate: Date!
+  endDate: Date!
+  claimQuantity: Int!
+  claimed: Int!
+  used: Int!
+  usageQuantity: Int
+  discountType: MerchantVoucherDiscountType!
+  minSpendRequired: Float!
+  type: MerchantVoucherType!
+  applicableProducts: [Uint64!]!
+  products: [ProductEntity!]!
+  maximumDiscountAmount: Float
+  createdAt: Date!
+  updatedAt: Date!
+  value: Float!
+  status: MerchantPromotionTypes!
+  isClaim: Boolean!
+}
+
+enum MerchantVoucherType {
+  SHOP_VOUCHER
+  PRODUCT_VOUCHER
+}
+
+type Message {
+  id: Uint64!
+  roomID: Uint64!
+  text: String
+  type: MessageType!
+  user: User
+  admin: Admin
+  product: ProductEntity
+  post: Post
+  images: [MediaEntity]
+  createdAt: String!
+  updatedAt: String!
+}
+
+input MessageListInput {
+  limit: Int
+  page: Int
+  keyword: String
+  roomId: Uint64!
+}
+
+type MessageListResponse {
+  items: [Message!]!
+  meta: MetaPagination!
+}
+
+enum MessageType {
+  TEXT
+  VIDEO
+  POST
+  IMAGE
+  PRODUCT
+  SYSTEM
+}
+
+type MetaPagination {
+  totalRecord: Int!
+  totalPage: Int!
+  offset: Int!
+  limit: Int!
+  page: Int!
+  prevPage: Int
+  nextPage: Int
+}
+
+type MetaPaginationProduct {
+  totalRecord: Int!
+  totalPage: Int!
+  offset: Int!
+  limit: Int!
+  page: Int!
+  prevPage: Int
+  nextPage: Int
+  minPrice: Float!
+  maxPrice: Float!
+}
+
+type MetaPaging {
+  totalRecord: Int!
+  totalPage: Int!
+  offset: Int!
+  limit: Int!
+  page: Int!
+  prevPage: Int!
+  nextPage: Int!
+}
+
+input MostInteractionInput {
+  type: MostInteractionType
+  numerDay: Int
+}
+
+type MostInteractionResponse {
+  items: [Post!]!
+}
+
+enum MostInteractionType {
+  LIKE
+  SHARE
+  COMMENT
+}
+
+type Mutation {
+  createAddressBook(input: CreateAddressBookInput!): AddressBook
+  editAddressBook(input: EditAddressBookInput!): AddressBook
+  deleteAddressBook(id: Uint64!): Boolean!
+  setDefaultAddressBook(id: Uint64!): Boolean!
+  loginAdmin(input: LoginAdminInput!): LoginAdminResponse
+  forgotPasswordAdmin(input: ForgotPasswordAdminInput!): Boolean
+  resetPasswordAdmin(input: ResetPasswordAdminInput!): Boolean
+  adminCreateUser(input: AdminCreateUserInput!): User
+  adminCreateUserMerchant(input: AdminCreateUserMerchantInput!): User
+  adminCreateUserPartner(input: AdminCreateUserPartnerInput!): Partner
+  adminEditUserMerchant(input: AdminEditUserMerchantInput!): Partner
+  adminEditUserPartner(input: AdminEditUserPartnerInput!): Partner
+  adminEditUser(input: AdminEditUserInput!): User
+  adminApprovePartner(id: String!): Boolean!
+  adminRejectPartner(id: String!, reason: String!): Boolean!
+  adminReviewPartner(id: String!): Boolean!
+  adminCheckDuplicateShopName(input: String!): Boolean!
+  adminChangePassword(password: String!, newPassword: String!): Boolean!
+  adminChangeUserStatus(status: AdminChangeUserStatus!, userId: String!, reason: String): Boolean!
+  adminCreateBanner(input: CreateBannerInput!): Banner
+  adminEditBanner(input: EditBannerInput!): Banner
+  adminDeleteBanner(id: Uint64!): Boolean!
+  adminReOrderBanner(input: [ReOrderBannerInput!]!): Boolean!
+  adminDeleteCampaign(id: Uint64!): Boolean!
+  adminCancelCampaign(id: Uint64!): Boolean!
+  adminCreateCampaign(input: AdminCreateCampaignInput!): Campaign
+  adminEditCampaign(input: AdminEditCampaignInput!): Campaign
+  adminEditCampaignLayout(input: AdminEditCampaignLayoutInput!): String
+  adminRequestCampaignMerchant(input: adminRequestCampaignMerchantInput!): Boolean!
+  adminAcceptCampaignMerchant(input: adminAcceptCampaignMerchantInput!): Boolean!
+  adminRejectCampaignMerchant(input: adminRejectCampaignMerchantInput!): Boolean!
+  merchantJoinCampaign(input: MerchantJoinCampaignInput!): Boolean!
+  merchantLeaveCampaign(campaignId: Uint64!, reason: String!): Boolean!
+  merchantEditJoinCampaign(input: MerchantJoinCampaignInput!): Boolean!
+  merchantPaymentCampaign(input: MerchantPaymentCampaignInput!): CampaignTransaction
+  addToCart(input: AddToCartInput!): CartMeta!
+  addOnDealToCart(input: AddOnDealCartInput!): [CartMeta]!
+  addBundleDealToCart(input: AddBundleDealCartInput!): CartMeta!
+  updateQuantityCartMeta(input: UpdateQuantityCartMetaInput!): Cart!
+  updateQuantityBundleDeal(input: UpdateQuantityBundleDealInput!): Cart!
+  updateVariantBundleDeal(input: UpdateVariantBundleDealInput!): Cart!
+  deleteBundleDealItem(input: DeleteBundleDealInput!): Cart!
+  replaceCartMeta(input: ReplaceCartMetaInput!): Cart!
+  calculatePriceCartMetaSelected(input: CalculateQuantityCartMetaInput!): CalculateCartPriceResponse!
+  reOrder(input: ReOrderInput!): Boolean!
+  createCategory(input: CreateCategoryRequest!): Category
+  updateCategory(input: UpdateCategoryInput!): Category
+  deleteCategory(id: Uint64!): Boolean
+  newMessage(input: NewMessageInput!): Message
+  adminNewMessage(input: NewMessageInput!): Message
+  checkRoom(input: CheckRoomInput!): Room
+  deleteChatBox(input: DeleteChatBoxInput!): Boolean!
+  updateReadRoom(input: UpdateReadInput!): Boolean!
+  merchantNewMessage(input: NewMessageInput!): Message
+  merchantDeleteChatBox(input: DeleteChatBoxInput!): Boolean!
+  merchantUpdateReadRoom(input: UpdateReadInput!): Boolean!
+  createTicket(input: CreateTicketInput!): Ticket!
+  checkTicket: Ticket
+  ratingTicket(input: RatingTicketInput!): Boolean!
+  adminAcceptTicket(ticketId: Uint64!): Ticket!
+  adminChangeStatusTicket(input: ChangeStatusTicketInput!): Ticket!
+  adminCloseTicket(ticketId: Uint64!): Boolean!
+  adminDeleteComment(id: Uint64!): Boolean!
+  adminUpdateStatusComment(id: Uint64!, status: StatusComment!): Boolean!
+  createComment(input: CreateCommentInput!): Comment
+  editComment(input: EditCommentInput!): Comment
+  deleteComment(id: Uint64!): Boolean!
+  adminCreateCommission(input: AdminCreateCommissionInput!): CommissionEntity!
+  adminEditCommission(input: AdminEditCommissionInput!): CommissionEntity!
+  adminDeleteCommission(ids: [Uint64!]!): Boolean!
+  adminEditWelcomeVoucher(input: AdminEditWelcomeVoucherInput!): WelcomeVoucherEntity!
+  adminEditRefereeVoucher(input: AdminEditRefereeVoucherInput!): RefereeVoucherEntity!
+  adminEditReferrerVoucher(input: AdminEditReferrerVoucherInput!): ReferrerVoucherEntity!
+  deleteSearchLog(input: DeleteSearchLogInput): Boolean
+  adminConfirmFinanceStatementDetail(id: Uint64!, status: StatusStatementInput!): Boolean!
+  adminConfirmFinanceStatement(id: Uint64!, status: StatusStatementInput!): Boolean!
+  adminConfirmPaymentStatement(id: Uint64!): Boolean!
+  test: Boolean!
+  createHashTag(input: CreateHashTagRequest!): HashTag
+  updateHashTag(input: UpdateHashTagInput!): HashTag
+  deleteHashTag(id: Uint64!): Boolean
+  createHashTagBanned(name: String!): HashTagBanned
+  deleteHashTagBanned(id: Uint64!): Boolean
+  createMediaWithPath(input: CreateMediaWithPathInput!): MediaEntity!
+  readAllMyNotifications: Boolean!
+  readNotifications(input: ReadNotificationInput!): Boolean!
+  changeMyNotificationConfig(input: NotificationConfigInput!): NotificationConfig!
+  adminSendNotification(input: AdminSendNotificationInput!): Boolean!
+  adminEditNotification(input: AdminEditNotificationInput!): Boolean!
+  adminDeleteNotification(input: AdminDeleteNotificationInput!): Boolean!
+  createOrder(input: CreateOrderInput): CreateOrderResponse!
+  merchantUpdateOrder(input: MerchantUpdateOrderStatusInput): Order!
+  buyerUpdateOrder(input: BuyerUpdateOrderStatusInput): Order!
+  rePayment(input: RePaymentOrderInput): TransactionPayment!
+  requestOrderRefund(input: RequestOrderRefundInput!): Boolean!
+  acceptRefundOffer(orderRefundId: Uint64!, refundType: OrderRefundType!): Boolean!
+  disputeOrderRefund(input: DisputeOrderRefundInput!): Boolean
+  merchantAcceptRefundOffer(orderRefundId: Uint64!, amount: Float!): Boolean!
+  merchantDisputeOrderRefund(input: DisputeOrderRefundInput!): Boolean!
+  merchantAcceptRefundExchange(input: AcceptOrderRefundExchangeInput!): Boolean!
+  adminHandleDisputeRefund(input: AdminHandleDisputeRefundInput!): Boolean!
+  sendOtp(input: SendOtpInput!): Boolean
+  sendOtpEmail(input: SendOtpEmailInput!): Boolean
+  sendChangeEmailOtp(email: String!): Boolean
+  sendChangePhoneOtp(input: SendOtpInput!): Boolean
+  verifyOtp(input: VerifyOtpInput!): Boolean
+  adminDeletePost(ids: [Uint64!]!): Boolean!
+  adminEditPost(input: AdminEditPostRequest!): Post!
+  adminEditStatusPost(input: AdminEditStatusPostRequest!): Boolean!
+  createPost(input: CreatePostRequest!): Post!
+  editPost(input: EditPostRequest!): Post!
+  editPostPrivacy(input: EditPostPrivacty!): Boolean!
+  deletePost(ids: [Uint64!]!): Boolean!
+  addPostFavorite(id: Uint64!): Boolean
+  likePost(postId: Uint64!): Boolean!
+  sharePost(postId: Uint64!, type: TypeSharePost!): Boolean!
+  adminDeleteProducts(input: DeleteProductInput): Boolean
+  adminEditProduct(input: AdminEditProductInput): ProductEntity
+  adminUpdateShowInAppProductRating(id: Uint64!, showInApp: ShowInAppProductRating!): Boolean!
+  adminDeleteProductRating(id: Uint64!): Boolean!
+  createProduct(input: CreateProductInput): ProductEntity
+  editProduct(input: EditProductInput): ProductEntity
+  deleteProduct(id: Uint64!): Boolean!
+  addProductFavorite(id: Uint64!): Boolean
+  rateProduct(input: RateProductInput!): Boolean
+  adminDeletePromotion(ids: [Uint64!]!): Boolean!
+  adminCancelPromotion(id: Uint64!): Boolean!
+  adminCreatePromotion(input: AdminCreatePromotionInput!): Promotion!
+  adminEditPromotion(input: AdminEditPromotionInput!): Promotion!
+  merchantCancelPromotion(id: Uint64!): Boolean!
+  merchantCreateVoucher(input: MerchantCreateVoucherRequest!): MerchantVoucherEntity!
+  merchantCreateDiscount(input: MerchantCreateDiscountRequest!): MerchantDiscountEntity!
+  merchantCreateBundleDeal(input: MerchantCreateBundleDealRequest!): MerchantBundleDealEntity!
+  merchantCreateAddOnDeal(input: MerchantCreateAddOnDealRequest!): MerchantAddOnDealEntity!
+  merchantCreateShippingFee(input: MerchantCreateShippingFeeRequest!): MerchantShippingFeeEntity!
+  merchantEditVoucher(input: MerchantEditVoucherRequest!): MerchantVoucherEntity!
+  merchantEditDiscount(input: MerchantEditDiscountRequest!): MerchantDiscountEntity!
+  merchantEditBundleDeal(input: MerchantEditBundleDealRequest!): MerchantBundleDealEntity!
+  merchantEditAddOnDeal(input: MerchantEditAddOnDealRequest!): MerchantAddOnDealEntity!
+  merchantEditShippingFee(input: MerchantEditShippingFeeRequest!): MerchantShippingFeeEntity!
+  merchantDeletePromotions(ids: [Uint64!]!): Boolean!
+  claimVoucher(input: ClaimMyVoucherInput!): Boolean!
+  rankingPostUniqueView(postId: String!): Boolean
+  rankingPostLike(postId: String!): Boolean
+  rankingPostFavorite(postId: String!): Boolean
+  rankingPostShareInbox(postId: String!): Boolean
+  rankingPostShareExternal(postId: String!): Boolean
+  rankingPostShareCopyLink(postId: String!): Boolean
+  rankingPostComment(postId: String!): Boolean
+  rankingPostFriendTagged(postId: String!, userIds: [String!]!): Boolean
+  rankingPostVideoDownload(postId: String!): Boolean
+  rankingPostAuthorFollowed(postId: String!): Boolean
+  rankingPostVideoViewDuration(postId: String!, percentage: Float!): Boolean
+  rankingPostAddProductToCartHaveProduct(postId: String!, productId: String!): Boolean
+  rankingPostRemoveProductFromCartHaveProduct(postId: String!, productId: String!): Boolean
+  rankingPostBoughtProductFromCartHaveProduct(postId: String!, productId: String!): Boolean
+  rankingPostUniqueViewRecipe(postId: String!, recipeId: String!): Boolean
+  rankingPostAddProductToCartHaveRecipe(postId: String!, recipeId: String!): Boolean
+  rankingPostRemoveProductFromCartHaveRecipe(postId: String!, recipeId: String!): Boolean
+  rankingPostBoughtProductFromCartHaveRecipe(postId: String!, recipeId: String!): Boolean
+  rankingProductRecommend(text: String!, type: RankingProductType!): Boolean
+  rankingProductUniqueView(productId: Uint64!): Boolean
+  rankingProductUniqueShare(productId: Uint64!): Boolean
+  updateStatusReport(id: Uint64!, status: StatusReport!): Boolean!
+  reportPost(id: String!, reportTypeId: String!, reason: String): ReportEntity!
+  reportProduct(id: String!, reportTypeId: String!, reason: String): ReportEntity!
+  reportBuyer(id: String!, reportTypeId: String!, reason: String): ReportEntity!
+  reportMerchant(id: String!, reportTypeId: String!, reason: String): ReportEntity!
+  reportPartner(id: String!, reportTypeId: String!, reason: String): ReportEntity!
+  reportComment(id: String!, reportTypeId: String!, reason: String): ReportEntity!
+  AdminCreateRole(input: AdminCreateRoleInput!): Role!
+  AdminEditRole(input: AdminEditRoleInput!): Role!
+  AdminDeleteRole(id: Uint64!): Boolean!
+  AdminCreateRoleUser(input: AdminCreateRoleUserInput!): RoleUser!
+  AdminEditRoleUser(input: AdminEditRoleUserInput!): RoleUser!
+  AdminDeleteRoleUser(ids: [Uint64!]!, reason: String!): Boolean!
+  adminCreateOrUpdateSeoLandingPage(input: AdminCreateOrUpdateSeoInput): SeoLandingPage!
+  updateShopInfo(input: EditShopInput): Shop
+  updateShippingFee(fee: Int!): Shop
+  followUser(id: String!): Boolean!
+  createTodo(input: CreateTodoInput!): Todo
+  updateTodo(id: Int!, input: UpdateTodoInput!): Todo
+  deleteTodo(id: Int!): Boolean
+  login(input: AppLoginInput!): LoginResponse
+  logout(deviceToken: String!): Boolean
+  loginSNS(input: AppLoginSNSInput!): LoginResponse
+  resetPassword(input: ResetPasswordInput!): Boolean
+  verifyTrustDevice(input: TrustDeviceInput): Boolean
+  forgotPasswordMerchant(input: ForgotPasswordMerchantInput!): Boolean
+  resetPasswordMerchant(input: ResetPasswordMerchantInput!): Boolean
+  adminLogout: Boolean!
+  merchantLogout: Boolean!
+  changeUserPassword(password: String!, newPassword: String!): Boolean
+  updateAvatar(avatarUrl: String!): Boolean
+  createUser(input: CreateUserInput!): User!
+  updateUser(input: UpdateUserInput!): User
+  updateUserDisplayName(name: String!): User
+  updateUserUsername(username: String!): User
+  updateUserEmail(email: String!, otp: String!): User
+  updateUserPhone(prefixPhone: String!, phone: String!, otp: String!): User
+  partnerRegister(input: PartnerUpgradeInput!): Partner
+  merchantRegister(input: MerchantUpgradeInput!): Partner
+  cancelPartnerAndMerchantRegister: Partner
+  inviteUser(email: String!): Boolean
+  switchRole(role: UserRole): Boolean
+  deletePaymentMethod(paymentMethodId: String!): Boolean
+  updateBusinessAddress(address: String!): Boolean!
+  updateBusinessContactNumber(input: UpdateBusinessContactNumberInput!): Boolean!
+  changeUserStatus(status: UserStatus!, otpCode: String): Boolean
+  sendChangeUserStatusOtp: Boolean
+  requestWithdrawal(amount: Float!): Withdrawal
+  adminApproveRejectWithdrawal(input: AdminApproveRejectWithdrawalInput!): Boolean!
+  adminConfirmWithdrawal(id: Uint64!): Boolean!
+}
+
+type MyCoinInfoResponse {
+  availableCoin: Int!
+  expireNumber: Int
+  expireDate: Date
+  earnedToday: Int!
+  allHistory: Int!
+  receivedHistory: Int!
+  spentHistory: Int!
+}
+
+input MyVoucherRequest {
+  limit: Int
+  page: Int
+  type: MyVoucherType!
+  keyword: String
+}
+
+enum MyVoucherType {
+  VALID
+  USED
+  INVALID
+}
+
+input NewMessageInput {
+  text: String
+  type: MessageType!
+  images: [Uint64]
+  productId: Uint64
+  postId: Uint64
+  roomId: Uint64!
+}
+
+input NewUserInput {
+  username: String!
+  phone: String!
+  prefixPhone: String!
+  email: String!
+  password: String!
+  referalCode: String
+}
+
+enum NotificationCategory {
+  ORDER
+  PROMOTION
+  SYSTEM
+  LIKE
+  COMMENT
+  REPLIES
+  SHARE
+  FAVOURITE
+  TAGGED
+  MENTIONED
+  FOLLOW
+  TAGGED_PRODUCT
+  SUBSCRIPTION_NEW_POST
+  PAID_PUSH_NOTIFICATION_SERVICE
+  BANNED_POST_COMMENT
+  SEND_MESSAGE
+  SHARE_POST
+  SHARE_PRODUCT
+  SHARE_ORDER_DETAIL
+  REQUEST_SUPPORT
+  SUPPORT_QUEUE
+  SUPPORT_CONNECTED
+  PARTICIPATED_CAMPAIGN_STATUS
+  NEW_PRODUCT_LISTING_FROM_FOLLOWED_SELLER_ACCOUNTS
+  FOLLOWING_MERCHANT_CREATES_NEW_VOUCHER
+  VOUCHER_IS_EXPIRING
+  WEEKLY_PAYOUT_STATEMENT_CREATED
+  NEW_APP_VERSION
+  CONFIRMATION_OF_ORDER
+  ORDER_OUT_FOR_DELIVERY
+  ORDER_DELIVERED
+  ORDER_RECEIVED
+  FAILED_DELIVERY
+  RAISE_DISPUTE
+  REFUND_BUYER_SUCCESSFULLY
+  CONFIRM_DELIVERY_RECEIVED
+  SUBSCRIPTION_NEW_PRODUCT
+  PURCHASE_OF_TAGGED_PRODUCT
+  RATE_PRODUCT
+  EXCHANGE_REQUEST
+  DISPUTE_SUBMITTED
+  REFUND_REQUESTED
+  ORDER_PAID_BY_USER
+  ADMIN_NOTIFICATION_OTHERS
+  ADMIN_NOTIFICATION_PROMOTIONS
+}
+
+type NotificationConfig {
+  enableNotification: Boolean!
+}
+
+input NotificationConfigInput {
+  enableNotification: Boolean!
+}
+
+type NotificationEntity {
+  id: Uint64!
+  category: NotificationCategory!
+  categoryMeta: String
+  seen: Boolean!
+  user: User
+  interactiveUser: User
+  interactiveUserAdmin: Admin
+  admin: Admin
+  userType: NotificationUserType
+  post: Post
+  statement: StatementEntity
+  product: ProductEntity
+  order: Order
+  createdAt: Date
+  title: String
+  content: String
+}
+
+input NotificationPaginationByUserInput {
+  cursor: PaginationCursor
+  category: NotificationPaginationCategory
+}
+
+enum NotificationPaginationCategory {
+  SOCIAL
+  ORDER
+  PROMOTION
+  OTHERS
+}
+
+enum NotificationUserType {
+  TYPE_USER
+  TYPE_MERCHANT
+  TYPE_SUPPORTER
+  TYPE_SAYANG
+}
+
+type Order {
+  id: Uint64!
+  orderNumber: String!
+  userId: String!
+  user: User!
+  shop: Shop!
+  address: AddressBook!
+  totalPrice: Float!
+  shippingFee: Float!
+  shopShippingDiscount: Float!
+  shopVoucherDiscount: Float!
+  sayangVoucherDiscount: Float!
+  sayangVoucherCashbackDiscount: Float!
+  sayangVoucherShippingPromotionDiscount: Float!
+  sayangCoin: Float!
+  tax: Float!
+  createdAt: Date!
+  updatedAt: Date!
+  status: StatusOrder!
+  transaction: TransactionPayment
+  transactionLogs: [TransactionLogs]
+  products: [OrderProduct]
+  promotions: [OrderPromotion]
+  logs: [OrderLogs]
+  orderRefund: OrderRefund
+}
+
+input OrderCartInput {
+  cartId: Uint64!
+  cartMeta: [Uint64!]!
+  voucher: Uint64
+}
+
+type OrderLogs {
+  id: Uint64!
+  status: StatusOrder!
+  userId: String!
+  typeUser: TypeUserOrderRefund!
+  reason: String
+  images: [Uint64!]
+  imageEntities: [MediaEntity!]
+  reasonTemplateId: Uint64
+  reasonTemplate: ReasonMerchant
+  amount: Float
+  prefixPhone: String
+  phone: String
+  postalCode: String
+  detailAddress: String
+  buyerOriginalAddress: Boolean
+  unitNo: String
+  description: String
+  state: OrderRefundState
+  handleRefundType: HandleRefundType
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input OrderPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusListOrder
+  sort: SortType
+}
+
+type OrderPayment {
+  id: Uint64!
+  orderId: Uint64!
+  method: PaymentMethodOrder!
+  numberCard: String
+  amountPaid: Float!
+  status: StatusOrderPayment!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type OrderProduct {
+  id: Uint64!
+  orderId: Uint64!
+  productId: Uint64!
+  product: ProductEntity
+  productVariantId: Uint64
+  productVariant: ProductVariant
+  quantity: Float!
+  uintPrice: Float!
+  totalPrice: Float!
+  createdAt: Date!
+  updatedAt: Date!
+  addOnDealPromotionId: Uint64
+  addOnDealUnitPrice: Float
+  addOnDealType: String
+  bundleDealUnitPrice: Float
+  bundleDealType: String
+  bundleDealPromotionId: Uint64
+  shippingPromotionType: String
+  shippingPromotionPrice: Float
+  shippingPromotionId: Uint64
+}
+
+type OrderPromotion {
+  id: Uint64!
+  orderId: Uint64!
+  promotionId: Uint64!
+  promotion: OrderPromotionDetail
+  discount: Float!
+  type: OrderPromotionType!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type OrderPromotionDetail {
+  id: Uint64!
+  CreatedAt: Date
+  UpdatedAt: Date
+  promotionName: String
+  promotionCode: String
+}
+
+enum OrderPromotionType {
+  SAYANG_VOUCHER
+  SHOP_VOUCHER
+  PRODUCT_DISCOUNT
+  BUNDLE_DEAL
+  ADD_ON_DEAL
+  SHOP_SHIPPING_PROMOTION
+  SAYANG_SHIPPING_PROMOTION
+  OTHERS
+}
+
+type OrderRefund {
+  id: Uint64!
+  medias: [MediaEntity!]!
+  description: String
+  reasonTemplate: ReasonMerchant
+  requestType: OrderRefundType!
+  requestReason: String
+  state: OrderRefundState!
+  products: [OrderRefundProduct!]
+  amount: Float
+  expiredDate: Date
+  prefixPhone: String
+  phone: String
+  postalCode: String
+  detailAddress: String
+  buyerOriginalAddress: Boolean!
+  unitNo: String
+  disputeLogs: [OrderLogs!]
+  createdAt: String
+  updatedAt: String
+}
+
+type OrderRefundDispute {
+  id: Uint64!
+  mediaIds: [Uint64!]
+  medias: [MediaEntity!]
+  disputedReason: String
+  createdAt: String
+  updatedAt: String
+}
+
+type OrderRefundProduct {
+  id: Uint64!
+  productId: Uint64!
+  productVariantId: Uint64
+  quantity: Float!
+  unitPrice: Float!
+  product: ProductEntity
+  productVariant: ProductVariant
+}
+
+enum OrderRefundState {
+  NEW
+  OFFER_PENDING
+  ACCEPTED
+  BUYER_DISPUTED
+  MERCHANT_DISPUTED
+}
+
+enum OrderRefundType {
+  REFUND
+  EXCHANGE
+}
+
+type OtpItem {
+  phone: String
+  email: String
+  otp: String!
+  createdAt: String!
+  expired: String
+}
+
+type PaginationAdminNotificationResponse {
+  items: [AdminNotificationEntity!]!
+  meta: MetaPagination!
+}
+
+type PaginationBannerResponse {
+  meta: MetaPagination!
+  items: [Banner!]!
+}
+
+type PaginationCampaignMerchantResponse {
+  meta: MetaPagination!
+  items: [CampaignMerchant!]!
+}
+
+type PaginationCampaignResponse {
+  meta: MetaPagination!
+  items: [Campaign!]!
+}
+
+input PaginationCartInput {
+  limit: Int
+  page: Int
+}
+
+type PaginationCartResponse {
+  meta: MetaPagination!
+  items: [Cart!]!
+}
+
+type PaginationCategoryResponse {
+  meta: MetaPagination!
+  items: [Category!]
+}
+
+type PaginationCommentResponse {
+  meta: MetaPagination!
+  items: [Comment!]!
+}
+
+type PaginationCommissionResponse {
+  meta: MetaPagination!
+  items: [CommissionEntity!]!
+}
+
+input PaginationCursor {
+  page: Int
+  limit: Int
+  offset: Int
+}
+
+type PaginationHashTagBannedResponse {
+  meta: MetaPagination!
+  items: [HashTagBanned!]
+}
+
+type PaginationHashTagResponse {
+  meta: MetaPagination!
+  items: [HashTag!]
+}
+
+type PaginationNotificationResponse {
+  items: [NotificationEntity!]!
+  meta: MetaPagination!
+}
+
+type PaginationOrderResponse {
+  meta: MetaPagination!
+  items: [Order!]
+}
+
+type PaginationPostResponse {
+  meta: MetaPagination!
+  items: [Post!]!
+}
+
+input PaginationProductInput {
+  search: String
+  categoryIds: [Uint64!]
+  userId: String
+  minPrice: Float
+  maxPrice: Float
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusProduct
+  taggable: Boolean
+  sort: ProductSort
+  rate: Int
+}
+
+type PaginationProductRatingResponse {
+  meta: MetaPagination!
+  items: [ProductRatingEntity!]!
+}
+
+type PaginationProductResponse {
+  meta: MetaPaginationProduct!
+  items: [ProductEntity!]!
+}
+
+type PaginationPromotionResponse {
+  meta: MetaPagination!
+  items: [Promotion!]!
+}
+
+type PaginationReportDetailsResponse {
+  meta: MetaPagination!
+  items: [ReportDetailsEntity!]!
+}
+
+type PaginationReportResponse {
+  meta: MetaPagination!
+  items: [ReportEntity!]!
+}
+
+type PaginationRoleResponse {
+  meta: MetaPagination!
+  items: [Role!]!
+}
+
+type PaginationRoleUserResponse {
+  meta: MetaPagination!
+  items: [RoleUser!]!
+}
+
+type PaginationShopResponse {
+  meta: MetaPagination!
+  items: [Shop!]!
+}
+
+type PaginationStatementDetailResponse {
+  meta: MetaPagination!
+  items: [StatementDetailEntity!]
+}
+
+type PaginationStatementOrderResponse {
+  meta: MetaPagination!
+  items: [StatementDetailEntity!]
+}
+
+type PaginationTodoResponse {
+  total_item: Int!
+  current_page: Int!
+  total_page: Int!
+  items: [Todo!]
+}
+
+input PaginationTransactionCreditInput {
+  limit: Int
+  page: Int
+}
+
+type PaginationTransactionCreditResponse {
+  meta: MetaPagination!
+  items: [TransactionCredit!]
+}
+
+type PaginationUserFollowResponse {
+  meta: MetaPagination!
+  items: [UserFollow!]!
+}
+
+type PaginationUserResponse {
+  meta: MetaPaging!
+  items: [User!]!
+}
+
+input PaginationWithdrawalInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusWithdrawal
+}
+
+type PaginationWithdrawalResponse {
+  meta: MetaPagination!
+  items: [Withdrawal!]
+}
+
+type Partner {
+  id: String!
+  userId: String!
+  user: User
+  firstName: String
+  lastName: String
+  email: String!
+  postalCode: String!
+  address: String
+  bankId: Uint64
+  bankName: String
+  credit: Float!
+  bankAccountNumber: String
+  prefixPhone: String!
+  phone: String!
+  shopName: String
+  businessDescription: String
+  halalCertificationNumber: String
+  uenNo: String
+  sfaLicenseNo: String
+  socialMediaUrls: [SocialMediaUrlType!]!
+  bankStatements: [String!]!
+  nricUrls: [String!]!
+  personalPhotoUrls: [String!]!
+  acraBizFileUrls: [String!]!
+  halalCertificationUrls: [String!]!
+  sfaLicenseUrls: [String!]!
+  websites: [String!]!
+  partnerType: PartnerType!
+  status: PartnerFormStatus!
+  nextRequestAt: String
+  createdAt: String
+  updatedAt: String
+  phoneUpdatedAt: String
+  addressUpdatedAt: String
+  approvedDate: String
+  statusActive: StatusActivePartner!
+  categoryIds: [String!]
+  categories: [Category!]
+  isAppliedCommissionTargeted: Boolean!
+  isAppliedTargeted: Boolean!
+  commission: CommissionEntity
+  reason: String
+  expiredTime: String
+}
+
+enum PartnerFormStatus {
+  NEW
+  APPROVED
+  REJECTED
+  CANCELED
+  RESUBMITTED
+  REVIEWING
+}
+
+type PartnerList {
+  meta: MetaPaging!
+  items: [Partner!]!
+}
+
+input PartnerPagingInput {
+  page: Int
+  limit: Int
+  status: StatusFilterPartner
+  search: String
+  fromDate: Date
+  toDate: Date
+  type: PartnerSearchType!
+  partnerType: PartnerType
+  commissionTargeted: Boolean
+}
+
+enum PartnerSearchType {
+  REGISTER
+  OTHER
+}
+
+enum PartnerType {
+  MERCHANT
+  PARTNER
+}
+
+input PartnerUpgradeInput {
+  info: PartnerUserInfoInput!
+  document: PartnerUserDocumentInput!
+}
+
+input PartnerUserDocumentInput {
+  nricUrls: [String!]!
+  bankStatementUrls: [String!]!
+  personalPhotoUrls: [String!]!
+}
+
+input PartnerUserInfoInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  prefixPhone: String!
+  postalCode: String!
+  address: String!
+  socialMediaUrls: [SocialMediaUrl!]!
+  bankId: Uint64
+  bankName: String!
+  bankAccountNumber: String!
+}
+
+type PaymentMethod {
+  id: Uint64!
+  title: String!
+}
+
+enum PaymentMethodOrder {
+  CARD
+}
+
+enum PaymentServiceMethod {
+  STRIPE
+  PAYNOW
+}
+
+enum PaymentServiceMethodOrder {
+  STRIPE
+  PAYNOW
+  PARTNER_CREDIT
+}
+
+type PlatformDetailPerformance {
+  buyer: Float!
+  seller: Float!
+  dailyPostToday: Float!
+  dailyPostList: [TotalDailyPost!]!
+  buyerList: [TotalDailyPost!]!
+  sellerList: [TotalDailyPost!]!
+  monthlyPostList: [TotalDailyPost!]!
+  postBreakDownList: [TotalPostBreakDown!]!
+  selerDeletedList: [TotalDailyPost!]!
+  buyerDeletedList: [TotalDailyPost!]!
+}
+
+type PlatformPerformance {
+  buyer: Float!
+  seller: Float!
+  dailyPostToday: Float!
+  dailyPosts: [TotalDailyPost!]!
+}
+
+type PlatformRewardList {
+  welcomeVoucher: WelcomeVoucherEntity!
+  refereeVoucher: RefereeVoucherEntity!
+  referrerVoucher: ReferrerVoucherEntity!
+}
+
+type PlatformSales {
+  merchants: [TopMerchantRevenue]!
+  seller: Float!
+  dailyPostToday: Float!
+  dailyPosts: [TotalDailyPost!]!
+}
+
+enum PlatformType {
+  ANDROID
+  IOS
+  WEB
+  WEB_MERCHANT
+}
+
+type Post {
+  id: Uint64!
+  isDraft: Boolean!
+  isLike: Boolean!
+  status: StatusPost!
+  postType: PostType!
+  caption: String
+  createdBy: User
+  createdById: String
+  postHashTags: [PostHashTag!]!
+  createdAt: String!
+  updatedAt: String!
+  postCookingMethods: [PostCookingMethod!]!
+  postIngredients: [PostIngredient!]!
+  displayMediaIds: [Uint64]
+  displayMediaEntities: [MediaEntity]
+  postPrivacy: PostPrivacy!
+  allowComment: Boolean!
+  saveToDevice: Boolean!
+  recipeName: String
+  durationHour: Int
+  durationMinute: Int
+  difficulty: Int
+  productIds: [Uint64!]!
+  productEntities: [ProductEntity!]!
+  ratio: PostRatio!
+  thumbnail: String
+  isFavorite: Boolean!
+  isFollow: Boolean!
+  countLike: Uint64!
+  countView: Uint64!
+  countFavorite: Uint64!
+  countShare: Uint64!
+  countComment: Uint64!
+}
+
+type PostCookingMethod {
+  id: Uint64!
+  name: String!
+  description: String!
+  mediaId: Uint64
+  mediaEntity: MediaEntity
+}
+
+type PostHashTag {
+  id: Uint64!
+  hashTag: String
+}
+
+type PostIngredient {
+  id: Uint64!
+  name: String!
+  amount: Float
+  measurement: String
+  productId: Uint64
+  productEntity: ProductEntity
+}
+
+input PostPaginationByHashtagInput {
+  hashtag: String!
+  limit: Int
+  page: Int
+}
+
+input PostPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusPost
+  postType: PostType
+  userId: String
+  isDraft: Boolean
+}
+
+enum PostPrivacy {
+  EVERYONE
+  FOLLOWER_ONLY
+  ONLY_ME
+}
+
+enum PostRatio {
+  ONE_ONE
+  THREE_FOUR
+}
+
+enum PostType {
+  RECIPE
+  NON_RECIPE
+}
+
+type PreNextPostResponse {
+  prePost: Post
+  nextPost: Post
+}
+
+input ProductDetailInput {
+  id: Uint64
+}
+
+type ProductEntity {
+  id: Uint64!
+  name: String!
+  userId: String!
+  user: User
+  description: String!
+  commission: Float
+  shippingFee: Float!
+  createdAt: Date
+  updatedAt: Date
+  medias: [MediaEntity!]
+  variants: [ProductVariant!]!
+  variantTemplates: [ProductVariantTemplate!]!
+  status: StatusProduct!
+  shop: Shop!
+  category: Category
+  taggable: Boolean!
+  stock: Int
+  outStock: Int!
+  stockValue: Int
+  price: Float
+  brand: String
+  isFavorite: Boolean!
+  ratingScore: Float!
+  voucherPromotion: MerchantVoucherEntity
+  discountPromotion: MerchantDiscountEntity
+  bundleDealPromotion: MerchantBundleDealEntity
+  addOnDealPromotion: MerchantAddOnDealEntity
+  shippingFeePromotion: MerchantShippingFeeEntity
+  bundleDealPromotions: [MerchantBundleDealEntity]
+  shippingFeePromotions: [MerchantShippingFeeEntity]
+  addOnDealPromotions: [MerchantAddOnDealEntity]
+}
+
+input ProductFilter {
+  keyword: String
+  sortType: ProductSort
+  pagination: PaginationCursor
+}
+
+input ProductInfoInput {
+  mediaIds: [Uint64!]!
+  name: String!
+  description: String!
+  taggable: Boolean!
+  commission: Float
+  status: StatusProduct!
+  stock: Uint64
+  price: Float
+  brand: String
+}
+
+type ProductRatingEntity {
+  id: Uint64!
+  rate: Uint64
+  reviewNote: String
+  updatedAt: Date!
+  unitPrice: Float!
+  quantity: Uint64!
+  order: Order
+  mediaIds: [Uint64!]!
+  medias: [MediaEntity!]
+  product: ProductEntity
+  productVariant: ProductVariant
+  status: ProductRatingEnum!
+  showInApp: ShowInAppProductRating!
+  userId: String!
+  user: User
+}
+
+enum ProductRatingEnum {
+  AWAITING
+  REVIEWED
+}
+
+type ProductRatingList {
+  shop: Shop
+  shopId: Uint64!
+  ratings: [ProductRatingEntity!]!
+}
+
+input ProductRatingPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  showInApp: ShowInAppProductRating
+  productId: Uint64
+}
+
+input ProductRefundInput {
+  productId: Uint64!
+  productVariantId: Uint64
+}
+
+enum ProductSort {
+  RECENTLY_ADDED
+  BEST_SELLING
+  ON_SALE
+  PRICE_LOWER_FIRST
+  PRICE_HIGHER_FIRST
+}
+
+type ProductStock {
+  product: ProductStockItem!
+  variants: [ProductStockItem]!
+}
+
+type ProductStockItem {
+  productId: Uint64!
+  variantId: Uint64
+  stock: Int!
+  inStock: Int!
+}
+
+type ProductVariant {
+  id: Uint64!
+  price: Float!
+  stock: Float!
+  outStock: Uint64!
+  values: [ProductVariantTemplateValues!]!
+}
+
+input ProductVariantDetail {
+  variations: [ProductVariation!]!
+  price: Float!
+  stock: Uint64!
+}
+
+type ProductVariantTemplate {
+  id: Uint64!
+  name: String!
+  templateValues: [ProductVariantTemplateValues!]!
+}
+
+type ProductVariantTemplateValues {
+  id: Uint64!
+  name: String!
+}
+
+input ProductVariation {
+  name: String!
+  option: String!
+}
+
+enum PromoPriceType {
+  FIX_AMOUNT
+  PERCENT_OFF
+}
+
+type Promotion {
+  id: Uint64!
+  promotionName: String!
+  promotionType: PromotionType!
+  voucherCode: String!
+  claimPeriodFrom: Date!
+  claimPeriodTo: Date!
+  validUntil: Date!
+  discountType: DiscountType!
+  discountAmount: Float!
+  minimumOrderAmount: Float!
+  maximumOrderAmount: Float
+  claimQuantity: Int
+  usageQuantity: Int
+  imageId: Uint64
+  Image: MediaEntity
+  status: PromotionStatus!
+  exceptType: PromotionExceptType!
+  excepts: [PromotionExcept!]
+  exceptIds: [Uint64!]
+  paymentMethod: PromotionPaymentMethod!
+  createdAt: Date!
+  updatedAt: Date!
+  products: [ProductEntity!]
+  categories: [Category!]
+}
+
+type PromotionExcept {
+  id: Uint64!
+  promotionId: Uint64!
+  productId: Uint64
+  product: ProductEntity
+  categoryId: Uint64
+  category: Category
+  exceptType: ExceptType!
+  createdAt: Date!
+  updateAt: Date!
+}
+
+enum PromotionExceptType {
+  ALL_PRODUCT
+  ALL_PRODUCT_EXCEPT
+  ALL_CATEGORY_EXCEPT
+}
+
+input PromotionPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: PromotionStatus
+  type: PromotionType
+}
+
+enum PromotionPaymentMethod {
+  ANY
+  PAY_NOW
+  CREDIT_CARD
+}
+
+type PromotionProduct {
+  product: ProductEntity!
+  productId: Uint64!
+  price: Float!
+}
+
+input PromotionProductInput {
+  productId: Uint64!
+  price: Float!
+}
+
+enum PromotionStatus {
+  UPCOMING
+  ONGOING
+  EXPIRED
+}
+
+enum PromotionType {
+  DISCOUNT
+  CASHBACK
+  FREE_SHIPPING
+}
+
+enum PublishedToType {
+  ALL
+  MATCH_CATEGORY
+  SPECIFIC_MERCHANT
+}
+
+type Query {
+  listAddressByUser: [AddressBook!]
+  adminListAddressByUser(id: String!): [AddressBook!]
+  detailAddressByUser(id: Uint64!): AddressBook
+  checkAdminResetPasswordToken(token: String!): Boolean
+  meAdmin: Admin
+  userListAdmin(input: UserPagingInput): UserConnection
+  partnerListAdmin(input: PartnerPagingInput): PartnerList!
+  checkDuplicateEmailAdmin(input: String!): Boolean!
+  checkDuplicatePhoneAdmin(prefixPhone: String!, phone: String!): Boolean!
+  banks(search: String): [Bank!]
+  adminDetailBanner(id: Uint64!): Banner
+  adminPaginationBanner(input: AdminPaginationBannerInput!): PaginationBannerResponse
+  detailBanner(id: Uint64!): Banner
+  listBanner(type: BannerType!): [Banner!]
+  adminListCampaignPagination(input: AdminListCampaginInput): PaginationCampaignResponse!
+  adminListCampaignMerchantPagination(input: AdminListCampaginMerchantInput): PaginationCampaignMerchantResponse!
+  adminDetailCampaignMerchant(campaignId: Uint64!): CampaignMerchant
+  merchantListCampaigns(input: MerchantListCampaignsInput): PaginationCampaignResponse!
+  merchantNominatedListCampaigns(input: MerchantNominatedListCampaignsInput): PaginationCampaignResponse!
+  merchantInvitationListCampaigns(input: MerchantListCampaignsInput): PaginationCampaignResponse!
+  merchantJoinedListCampaigns(input: MerchantJoinedListCampaignsInput): PaginationCampaignResponse!
+  merchantUnderReviewListCampaigns(input: MerchantUnderReviewListCampaignsInput): PaginationCampaignResponse!
+  adminDetailCampaign(id: Uint64!): Campaign
+  detailCampaign(id: Uint64!): Campaign
+  merchantDetailCampaign(id: Uint64!): Campaign
+  merchantCheckCampaignJoinStatus(id: Uint64!): CampaignJoinStatus
+  merchantListProductJoinCampaign(campaignId: Uint64!, search: String): [ProductEntity!]
+  merchantDetailCampaignMerchant(campaignId: Uint64!): CampaignMerchant
+  adminListCampaignLayout(campaignId: Uint64!): [CampaignLayoutResponse!]
+  carts(input: PaginationCartInput): PaginationCartResponse!
+  categories(input: CategoryPaginationInput): PaginationCategoryResponse!
+  allCategories(search: String): [Category!]
+  getAllCategory(search: String): AllCategoryResponse!
+  category(id: Uint64!): Category
+  adminCategory(id: Uint64!): Category
+  checkCategoryExist(name: String!): Boolean
+  getProductCategoriesByUserId(id: String!): AllCategoryResponse!
+  rooms(input: ChatListInput!): RoomListResponse
+  messages(input: MessageListInput!): MessageListResponse
+  room(input: RoomDetailInput!): Room
+  adminMessages(input: MessageListInput!): MessageListResponse
+  merchantRooms(input: ChatListInput!): RoomListResponse
+  merchantMessages(input: MessageListInput!): MessageListResponse
+  merchantRoom(input: RoomDetailInput!): Room
+  adminTemplateChat(ticketId: Uint64!, search: String): [TemplateChat!]
+  adminListTicket(input: TicketListInput): TicketListResponse!
+  adminListAgent(input: AgentManagementInput): AgentListResponse!
+  adminActiveListTicket: [Ticket!]
+  adminTotalTicket: TicketTotalResponse
+  adminListTicketManagement(input: TicketManagementInput): TicketListResponse!
+  adminTicketDetail(input: TicketDetailInput): Ticket!
+  mobileTicketDetail(input: TicketDetailInput): Ticket!
+  adminListComment(input: CommentPaginationInput): PaginationCommentResponse!
+  getDetailComment(id: Uint64!): Comment!
+  adminGetDetailComment(id: Uint64!): Comment!
+  listComment(input: ListCommentInput!): PaginationCommentResponse!
+  merchantListComment(input: ListCommentInput!): PaginationCommentResponse!
+  adminListCommission(input: CommissionPaginationInput): PaginationCommissionResponse!
+  getCommissionById(id: Uint64!): CommissionEntity!
+  adminGetListPlatformReward: PlatformRewardList!
+  adminGetWelcomeVoucherEntity: WelcomeVoucherEntity!
+  adminGetRefereeVoucherEntity: RefereeVoucherEntity!
+  adminGetReferrerVoucherEntity: ReferrerVoucherEntity!
+  adminCheckDuplicatedCommissionRate(rate: Float!): Boolean!
+  adminGetListMerchantNoCommission(input: AdminGetListMerchantNoCommissionInput): UserConnection!
+  dashboardSales: [TopMerchantRevenue]!
+  dashboardTotalDailySales: SaleResponse!
+  dashboardMostInteraction(input: MostInteractionInput): MostInteractionResponse!
+  dashboardCampaignMarketing: CampaingMarketingResponse!
+  dashboardCustomerService: CustomerServiceTotalResponse!
+  dashboardPlatformPerformance(input: DashboardPlatformPerformanceInput): PlatformDetailPerformance!
+  dashboardFinance: DashboardFinance
+  elasticSearchPost(input: ElasticSearchInput): PaginationPostResponse!
+  elasticSearchUser(input: ElasticSearchInput): UserConnection!
+  elasticSearchHashtag(input: ElasticSearchInput): PaginationHashTagResponse!
+  elasticSearchProduct(input: ElasticSearchInput): PaginationProductResponse!
+  elasticSearchShop(input: ElasticSearchInput): PaginationShopResponse!
+  searchLogs(input: SearchLogInput): [SearchLogs]!
+  financeStatement(input: FinanceReceivedInput!): FinanceStatmentResponse!
+  financeStatementDetail(input: FinanceStatementDetailInput!): StatementEntity!
+  financeStatementItemDetail(input: FinanceStatementItemDetailInput!): PaginationStatementDetailResponse!
+  financeStatementOrder(input: FinanceOrderInput!): PaginationStatementOrderResponse!
+  financeStatementSummary: FinanceTotalResponse!
+  merchantFinanceStatement(input: FinanceReceivedInput!): FinanceStatmentResponse!
+  merchantFinanceStatementDetail(input: FinanceStatementDetailInput!): StatementEntity!
+  merchantFinanceStatementItemDetail(input: FinanceStatementItemDetailInput!): PaginationStatementDetailResponse!
+  merchantFinanceStatementOrder(input: FinanceOrderInput!): PaginationStatementOrderResponse!
+  merchantFinanceStatementSummary: FinanceTotalResponse!
+  adminFinanceStatement(input: AdminFinanceInput!): FinanceStatmentResponse!
+  adminFinanceStatementDetail(input: FinanceStatementDetailInput!): StatementEntity!
+  adminFinanceStatementItemDetail(input: FinanceStatementItemDetailInput!): PaginationStatementDetailResponse!
+  adminFinanceStatementSummary: FinanceTotalResponse!
+  adminFinanceStatementRevenue(input: FinanceRevenueInput!): FinanceRevenueResponse!
+  adminFinanceStatementOrderDetail(input: FinanceStatementOrderDetailInput!): StatementDetailEntity!
+  merchantFinanceStatementOrderDetail(input: FinanceStatementOrderDetailInput!): StatementDetailEntity!
+  merchantDownloadFinanceStatementDetail(input: FinanceStatementDetailInput!): String
+  adminDownloadFinanceStatementDetail(input: AdminFinanceStatementDetailInput!): String
+  getPagingHashTag(input: HashTagPaginationInput): PaginationHashTagResponse!
+  adminGetPagingHashTag(input: HashTagPaginationInput): PaginationHashTagResponse!
+  getPagingHashTagBanned(input: HashTagBannedPaginationInput): PaginationHashTagBannedResponse!
+  hashtags(search: String): [HashTag!]
+  hashtag(id: Uint64!): HashTag
+  adminHashTag(id: Uint64!): HashTag
+  checkHashTagExist(name: String!): Boolean
+  checkHashTagBannedExist(name: String!): Boolean
+  listDiscoverHashtags(input: HashTagDiscoverInput): PaginationHashTagResponse!
+  getMediaById(id: Uint64!): MediaEntity!
+  getMediasByIds(ids: [Uint64!]!): [MediaEntity!]!
+  paginationNotification(input: NotificationPaginationByUserInput): PaginationNotificationResponse!
+  paginationAdminNotification(input: AdminListNotificationsInput): PaginationAdminNotificationResponse!
+  adminDetailNotification(input: AdminDetailNotificationInput): AdminNotificationEntity!
+  adminGetPagingOrder(input: OrderPaginationInput): PaginationOrderResponse!
+  orders(input: OrderPaginationInput): PaginationOrderResponse!
+  merchantOrders(input: OrderPaginationInput): PaginationOrderResponse!
+  getDetailOrder(id: Uint64!): Order!
+  listReasonTemplate(input: ListReasonTemplateInput): [ReasonMerchant]!
+  listOrderOfTransaction(id: Uint64!): [Order!]!
+  getListOtp: [OtpItem]
+  getListPaymentMethod(input: ListPaymentInput): ListPaymentMethodResponse!
+  adminListPost(input: PostPaginationInput): PaginationPostResponse!
+  adminGetPostById(id: Uint64!): Post!
+  getPostById(id: Uint64!): Post!
+  getPostByIds(id: [Uint64!]!): [Post!]!
+  getPostPagination(input: PostPaginationInput): PaginationPostResponse!
+  merchantPostPagination(input: PostPaginationInput): PaginationPostResponse!
+  getPostPaginationByHashtag(input: PostPaginationByHashtagInput!): PaginationPostResponse!
+  forYouListPost(input: ForYouListPostInput): PaginationPostResponse!
+  trendingListPost(input: TrendingListPostInput): PaginationPostResponse!
+  recipeListPost(input: RecipeListPostInput): PaginationPostResponse!
+  myPostFavorites(input: PaginationCursor): PaginationPostResponse!
+  preNextPost(postId: Uint64!): PreNextPostResponse
+  followingListPost(input: FollowingListPostInput): PaginationPostResponse!
+  adminGetProductPagination(input: PaginationProductInput): PaginationProductResponse!
+  adminProductDetail(input: ProductDetailInput): ProductEntity!
+  adminPaginationProductRating(input: ProductRatingPaginationInput): PaginationProductRatingResponse!
+  adminDetailProductRating(id: Uint64!): ProductRatingEntity
+  getProductPagination(input: PaginationProductInput): PaginationProductResponse!
+  getListProduct(input: ListProductInput): [ProductEntity!]!
+  getListProductByIds(ids: [Uint64!]!): [ProductEntity!]
+  getAllProduct(input: ListProductInput): AllProductResponse!
+  productDetail(input: ProductDetailInput): ProductEntity!
+  merchantGetProductPagination(input: MerchantGetProductPaginationInput!): PaginationProductResponse
+  myProductPagination(input: PaginationCursor): PaginationProductResponse!
+  myProductFavorites(input: PaginationCursor): PaginationProductResponse!
+  getProductPaginationByCategoryAndUser(
+    categoryId: Uint64!
+    userId: String!
+    filter: ProductFilter
+  ): PaginationProductResponse!
+  getProductByUserPagination(userId: String!, filter: ProductFilter): PaginationProductResponse!
+  getListRateProduct(status: ProductRatingEnum!): [ProductRatingList!]!
+  paginationProductRating(status: ProductRatingEnum!, pagination: PaginationCursor): PaginationProductRatingResponse!
+  getProductRatingByProductId(input: GetProductRatingInput!): PaginationProductRatingResponse!
+  paginationProductBestSelling(pagination: PaginationCursor): PaginationProductResponse!
+  paginationProductDailyDeals(pagination: PaginationCursor): PaginationProductResponse!
+  getProductAvailableStock(id: Uint64!): ProductStock
+  adminListPromotion(input: PromotionPaginationInput): PaginationPromotionResponse!
+  getPromotionById(id: Uint64!): Promotion!
+  merchantGetVoucher(id: Uint64!): MerchantVoucherEntity
+  merchantGetDiscount(id: Uint64!): MerchantDiscountEntity
+  merchantGetBundleDeal(id: Uint64!): MerchantBundleDealEntity
+  merchantGetAddOnDeal(id: Uint64!): MerchantAddOnDealEntity
+  merchantGetShippingFee(id: Uint64!): MerchantShippingFeeEntity
+  merchantGetVouchers(input: MerchantGetPromotionsRequest!): MerchantGetVouchersResponse!
+  merchantGetDiscounts(input: MerchantGetPromotionsRequest!): MerchantGetDiscountsResponse!
+  merchantGetBundleDeals(input: MerchantGetPromotionsRequest!): MerchantGetBundleDealsResponse!
+  merchantGetAddOnDeals(input: MerchantGetPromotionsRequest!): MerchantGetAddOnDealsResponse!
+  merchantGetShippingFees(input: MerchantGetPromotionsRequest!): MerchantGetShippingFeesResponse!
+  getMyVoucher(id: Uint64!): UserVoucherEntity!
+  getMyVouchers(input: MyVoucherRequest!): GetMyVouchersRequestResponse!
+  getVouchersByShopId(id: Uint64!, cursor: PaginationCursor): MerchantGetVouchersResponse!
+  getAllVouchersByShopId(id: Uint64!): [MerchantVoucherEntity!]
+  checkDuplicateVoucherCode(code: String!): Boolean!
+  sayangVouchers: [Promotion]
+  adminListReport(input: ReportPaginationInput): PaginationReportResponse!
+  getReportDetails(input: ReportDetailsPaginationInput!): PaginationReportDetailsResponse!
+  AdminGetDetailReportById(id: Uint64!): ReportEntity!
+  reportSelectList(reportType: ReportTypeEnum!): [ReportTypeEntity!]!
+  getMyCoinInfoRequest: MyCoinInfoResponse!
+  getCoinHistory(input: GetCoinHistoryRequest!): GetCoinHistoryResponse!
+  adminListRole(input: RolePaginationInput): PaginationRoleResponse!
+  getDetailRole(id: Uint64!): Role
+  checkDuplicateRoleName(name: String!): Boolean!
+  adminListRoleUser(input: RoleUserPaginationInput): PaginationRoleUserResponse!
+  allListRole(search: String, status: StatusRole): [Role!]!
+  getDetailRoleUser(id: Uint64!): RoleUser
+  getSeoLandingPage: SeoLandingPage
+  checkDuplicateShopName(name: String!): Boolean
+  checkIsFollowUser(userId: String!): Boolean!
+  listShopByShopName(name: String!): [Shop!]
+  getFollowerByUserId(input: ListFollowInput): PaginationUserFollowResponse!
+  getFollowingByUserId(input: ListFollowInput): PaginationUserFollowResponse!
+  todos(input: TodoPaginationInput): PaginationTodoResponse!
+  todo(id: Int!): Todo
+  users: [User!]!
+  user(id: String!): User
+  partner(id: String!): Partner
+  me: User
+  checkDuplicateUsername(input: String!): Boolean!
+  checkDuplicateEmail(input: String!): Boolean!
+  checkDuplicatePhone(prefixPhone: String!, phone: String!): Boolean!
+  checkDuplicateUsernameWithAuth(input: String!): Boolean
+  checkDuplicateEmailWithAuth(input: String!): Boolean
+  checkDuplicatePhoneWithAuth(prefixPhone: String!, phone: String!): Boolean
+  stripeAddCardSecretIntent: String!
+  userCreditCards: [CreditCard!]!
+  listUserByCategories(input: ListUserByCategoriesInput): [User!]!
+  adminDetailWithdrawal(id: Uint64!): Withdrawal
+  detailWithdrawal(id: Uint64!): Withdrawal
+  paginationWithdrawal(input: PaginationWithdrawalInput): PaginationWithdrawalResponse
+  adminPaginationWithdrawal(input: AdminPaginationWithdrawalInput): PaginationWithdrawalResponse
+  paginationTransactionCredit(input: PaginationTransactionCreditInput!): PaginationTransactionCreditResponse
+}
+
+enum RankingProductType {
+  PRODUCT_NAME
+  SEARCH_QUERY
+}
+
+input RateProductInput {
+  ratingId: Uint64!
+  mediaIds: [Uint64!]
+  reviewNote: String
+  rate: Int!
+}
+
+input RatingTicketInput {
+  ticketId: Uint64!
+  score: Int!
+  isResolved: Boolean!
+}
+
+input ReOrderBannerInput {
+  id: Uint64!
+  index: Int!
+}
+
+input ReOrderInput {
+  orderId: Uint64!
+}
+
+input RePaymentOrderInput {
+  orderId: Uint64!
+}
+
+input ReadNotificationInput {
+  id: Uint64!
+}
+
+type ReasonMerchant {
+  id: Uint64!
+  text: String!
+}
+
+enum ReasonTeamplate {
+  MOBILE
+  MERCHANT
+  MOBILE_REFUND
+  ORDER_DISPUTED
+  ORDER_DELIVERY_PROBLEM
+}
+
+input RecipeListPostInput {
+  limit: Int
+  page: Int
+  search: String
+}
+
+enum RedirectType {
+  NONE
+  CAMPAIGN
+  WEB_PAGE
+}
+
+type RefereeVoucherEntity {
+  rewardName: String!
+  rewardType: RefereeVoucherRewardType!
+  status: CommissionStatus!
+  validUntil: Int!
+  validUntilType: ValidUntilType!
+  discountType: CommissionDiscountType!
+  discountAmount: Float!
+  minimumOrderAmount: Float!
+  remark: String
+  exceptType: PromotionExceptType!
+  paymentMethod: PromotionPaymentMethod!
+  createdAt: Date!
+  updatedAt: Date!
+  products: [ProductEntity!]
+  categories: [Category!]
+}
+
+enum RefereeVoucherRewardType {
+  DISCOUNT
+  CASHBACK
+}
+
+type ReferrerVoucherEntity {
+  rewardName: String!
+  rewardType: ReferrerVoucherRewardType!
+  status: CommissionStatus!
+  discountAmount: Float!
+  remark: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+enum ReferrerVoucherRewardType {
+  COIN_REWARD
+}
+
+input ReplaceCartMetaInput {
+  oldCartMetaId: Uint64!
+  productId: Uint64!
+  variantId: Uint64!
+  quantity: Int!
+  shopId: Uint64!
+}
+
+type ReportDetailsEntity {
+  id: Uint64!
+  reason: String
+  reportType: ReportTypeEntity!
+  ticketId: String!
+  reportId: Uint64!
+  reporterId: String!
+  reporter: User
+  status: StatusReport!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input ReportDetailsPaginationInput {
+  limit: Int
+  page: Int
+  id: Uint64!
+}
+
+type ReportEntity {
+  id: Uint64!
+  reportType: ReportTypeEntity!
+  buyer: User
+  partner: User
+  merchant: User
+  post: Post
+  product: ProductEntity
+  comment: Comment
+  ticketId: String!
+  status: StatusReport!
+  reportNumber: Uint64!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input ReportPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusReport
+  tickerId: String
+  type: [ReportTypeEnum!]
+}
+
+type ReportTypeEntity {
+  id: Uint64!
+  key: String!
+  type: ReportTypeEnum!
+}
+
+enum ReportTypeEnum {
+  PRODUCT
+  POST
+  BUYER
+  MERCHANT
+  PARTNER
+  COMMENT
+}
+
+input RequestOrderRefundInput {
+  orderId: Uint64!
+  products: [ProductRefundInput!]!
+  mediaIds: [Uint64!]!
+  reasonTemplateId: Uint64
+  reason: String
+  description: String
+  requestType: OrderRefundType!
+}
+
+enum RequestType {
+  INTERNAL
+  EXTERNAL
+}
+
+input ResetPasswordAdminInput {
+  resetCode: String!
+  password: String!
+}
+
+input ResetPasswordInput {
+  otp: String!
+  password: String!
+  phone: String!
+  prefixPhone: String
+}
+
+input ResetPasswordMerchantInput {
+  resetCode: String!
+  password: String!
+}
+
+type Role {
+  id: Uint64!
+  status: StatusRole!
+  name: String!
+  remark: String
+  permissions: [String!]
+  lock: Boolean!
+  userNumber: Uint64!
+  existsUser: Boolean!
+  reason: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input RolePaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusRole
+}
+
+type RoleUser {
+  id: Uint64!
+  status: StatusRoleUser!
+  userId: String!
+  user: Admin
+  role: Role
+  expirationDate: Date
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input RoleUserPaginationInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: StatusRole
+  roleIds: [Uint64!]
+}
+
+type Room {
+  id: Uint64!
+  type: RoomType!
+  members: [RoomMember]!
+  name: String
+  image: String
+  createdAt: String!
+  updatedAt: String!
+  message: Message
+  unread: Int!
+}
+
+input RoomDetailInput {
+  roomId: Uint64!
+}
+
+type RoomListResponse {
+  items: [Room!]!
+  meta: MetaPagination!
+}
+
+enum RoomListSearchType {
+  UNREAD
+  ALL
+}
+
+type RoomMember {
+  id: Uint64!
+  user: User
+  admin: Admin
+  shop: Shop
+  createdAt: String!
+  updatedAt: String!
+}
+
+enum RoomPlatformType {
+  SOCIAL
+  MERCHANT
+}
+
+type RoomSubscriptions {
+  id: Uint64!
+  type: RoomType!
+  members: [RoomMember]!
+  name: String
+  image: String
+  createdAt: String!
+  updatedAt: String!
+  message: Message
+  memberIds: [String]!
+  unread: Int!
+}
+
+enum RoomType {
+  P2P
+  TICKET
+  P2MERCHANT
+}
+
+type SaleResponse {
+  totalDailySale: Float!
+  monthSales: [ListTotalSales]!
+  dailySales: [ListTotalSales]!
+  annualSaleChart: [ListTotalSales]!
+  productListed: [ListTotalSales]!
+}
+
+input SearchLogInput {
+  type: SearchLogType!
+}
+
+enum SearchLogType {
+  POST
+  PRODUCT
+  USER
+  SHOP
+  HASHTAG
+}
+
+type SearchLogs {
+  id: Uint64!
+  keyword: String
+}
+
+input SendOtpEmailInput {
+  email: String!
+}
+
+input SendOtpInput {
+  phone: String!
+  prefixPhone: String
+}
+
+type SeoLandingPage {
+  id: Uint64!
+  featureImageId: Uint64
+  featureImage: MediaEntity
+  metaDescription: String
+  seoKeywords: [String!]
+  seoPageTitle: String
+  createdAt: Date!
+  updateAt: Date!
+}
+
+type Shop {
+  id: String!
+  name: String!
+  description: String
+  rating: Float!
+  shippingFee: Int!
+  totalProduct: Int!
+  avatarUrl: String
+  coverPhotoUrl: String
+  user: User!
+  vouchers: [MerchantVoucherEntity!]
+  bannerMedia: MediaEntity
+  status: StatusShop!
+  prefixVoucher: String
+  ratingScore: Float!
+  replyRating: Float!
+}
+
+enum ShowInAppProductRating {
+  ACTIVE
+  INACTIVE
+}
+
+input SocialMediaUrl {
+  type: SocialType!
+  url: String!
+}
+
+type SocialMediaUrlType {
+  type: SocialType!
+  url: String!
+}
+
+enum SocialType {
+  FACEBOOK
+  TWITTER
+  INSTAGRAM
+  TIKTOK
+}
+
+enum SortType {
+  ASC
+  DESC
+}
+
+type StatementDetailEntity {
+  id: Uint64!
+  typeId: Uint64!
+  type: StatementTargetType!
+  numberCode: String!
+  description: String!
+  status: StatementDetailStatus!
+  openingBalance: Float!
+  itemPriceCredit: Float!
+  beneficiary: Shop
+  sellerPromotion: Float!
+  sayangPromotion: Float!
+  partnerCommission: Float!
+  shippingFee: Float!
+  platformShippingPromotion: Float!
+  merchantShippingPromotion: Float!
+  platformCharges: Float!
+  questCreationFees: Float!
+  closingBalance: Float!
+  payoutStart: String!
+  payoutAmount: Float!
+  partialRefund: Float!
+  fullRefund: Float!
+  payoutEnd: String!
+  createdAt: String!
+  updatedAt: String!
+  flag: FlagStement!
+}
+
+enum StatementDetailStatus {
+  ALL
+  PAID
+  OPEN
+  IN_PROGRESSING
+  FRAUD
+  RESOLVED
+}
+
+type StatementEntity {
+  id: Uint64!
+  shopId: Uint64!
+  shop: Shop
+  statementNumber: String!
+  status: StatementStatus!
+  openingBalance: Float!
+  itemPriceCredit: Float!
+  sellerPromotion: Float!
+  sayangPromotion: Float!
+  partnerCommission: Float!
+  shippingFee: Float!
+  platformShippingPromotion: Float!
+  merchantShippingPromotion: Float!
+  platformCharges: Float!
+  questCreationFees: Float!
+  closingBalance: Float!
+  payoutAmount: Float!
+  partialRefund: Float!
+  fullRefund: Float!
+  payoutStart: String!
+  periodStart: String!
+  payoutEnd: String!
+  periodEnd: String!
+  createdAt: String!
+  updatedAt: String!
+  flag: FlagStement!
+}
+
+enum StatementStatus {
+  ALL
+  PAID
+  OPEN
+  IN_PROGRESSING
+  FRAUD
+  RESOLVED
+}
+
+enum StatementTargetType {
+  ORDER
+  CAMPAIGN
+}
+
+enum StatusActivePartner {
+  ACTIVE
+  DELETED
+  DEACTIVATED
+  SUSPENDED
+  TERMINATED
+}
+
+enum StatusBannerInput {
+  ALL
+  ON
+  OFF
+}
+
+enum StatusCampaign {
+  DRAFT
+  PUBLISHED
+  UPCOMING
+  NOMINATING
+  REVIEWING
+  IN_PROGRESS
+  ENDED
+  CANCELED
+  WAITING
+}
+
+enum StatusCampaignInput {
+  DRAFT
+  PUBLISHED
+}
+
+enum StatusCampaignMerchant {
+  NEW
+  REQUESTED
+  REJECTED
+  PAID
+  APPROVED
+  UPDATED
+  CANCELED_BY_ADMIN
+  CANCELED_BY_MERCHANT
+}
+
+enum StatusCampaignTransaction {
+  SUCCESS
+  FAILED
+  PROCESSING
+}
+
+enum StatusComment {
+  ACTIVE
+  INACTIVE
+}
+
+enum StatusFilterPartner {
+  NEW
+  APPROVED
+  REJECTED
+  CANCELED
+  RESUBMITTED
+  REVIEWING
+  ACTIVE
+  DELETED
+  DEACTIVATED
+  SUSPENDED
+  TERMINATED
+}
+
+enum StatusListOrder {
+  TO_PACK
+  TO_SHIP
+  TO_RECEIVE
+  ORDER_RECEIVED
+  CANCELLED
+  COMPLELTED
+  REFUND_EXCHANGE
+}
+
+enum StatusOrder {
+  PENDING
+  AWAITING_PAYMENT
+  AWAITING_FULFILMENT
+  PROGRESSING
+  CANCELED_BUYER
+  CANCELED_SELLER
+  AWAITING_SHIPMENT
+  SHIPPING
+  ORDER_RECEIVED
+  BUYER_CONFIRM_RECEIVED
+  REFUND_REQUESTED
+  EXCHANGE_REQUESTED
+  COMPLETED
+  REFUND_ACCEPTED
+  EXCHANGE_ACCEPTED
+  FULL_REFUNDED
+  PARTIALLY_REFUNDED
+  EXCHANGED
+  FAILED_DELIVERY
+  DELIVERY_LIMIT_EXCEEDED
+  REFUND_CONFIRMED
+  EXCHANGE_CONFIRMED
+  RESOLVED
+  DISPUTED
+}
+
+enum StatusOrderPayment {
+  SUCCESS
+  PROGRESSING
+  FAILED
+}
+
+enum StatusPost {
+  ACTIVE
+  SUSPENDED
+}
+
+enum StatusProduct {
+  ACTIVE
+  INACTIVE
+}
+
+enum StatusReport {
+  ACTIVE
+  INACTIVE
+}
+
+enum StatusRole {
+  ACTIVE
+  INACTIVE
+}
+
+enum StatusRoleUser {
+  ACTIVE
+  INACTIVE
+}
+
+enum StatusShop {
+  DELETED
+  DEACTIVATED
+  ACTIVE
+  SUSPENDED
+  TERMINATED
+}
+
+enum StatusStatementInput {
+  FRAUD
+  RESOLVED
+}
+
+enum StatusTransactionPayment {
+  AWAITING_PAYMENT
+  SUCCESSFUL_PAYMENT
+  FAILED_PAYMENT
+  PENDING_PAYMENT
+}
+
+enum StatusWithdrawal {
+  SUBMITTED
+  APPROVED
+  REJECTED
+  PAID
+}
+
+enum StockTypeEnum {
+  IN_STOCK
+  OUT_STOCK
+}
+
+type SubAdminRoomUpdate {
+  room: AdminRoomSubscriptions!
+  type: UpdateRoomType!
+}
+
+type SubRoomUpdate {
+  room: RoomSubscriptions!
+  type: UpdateRoomType!
+}
+
+type SubUpdateTicket {
+  type: SubUpdateType!
+  ticket: TicketShort!
+}
+
+enum SubUpdateType {
+  ADD
+  REMOVE
+  CLOSE
+  UPDATE
+}
+
+type Subscription {
+  subNewMessage(roomId: Uint64!): Message
+  subUpdateRoom: SubRoomUpdate
+  adminSubNewMessage(roomId: Uint64!): Message
+  adminSubUpdateRoom: SubAdminRoomUpdate
+  adminSubUpdateTicket: SubUpdateTicket
+  subUpdateTicket(ticketId: Uint64!): SubUpdateTicket
+}
+
+type TagComment {
+  id: String!
+  user: User
+  type: TypeTagComment!
+}
+
+input TagCommentInput {
+  id: String!
+  type: TypeTagComment!
+}
+
+type TemplateChat {
+  id: Uint64!
+  type: String!
+  content: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Ticket {
+  id: Uint64!
+  roomId: Uint64!
+  ticketNumber: String!
+  userId: String!
+  adminId: String
+  user: User
+  admin: Admin
+  note: String
+  priority: TicketPriority
+  isResolved: Boolean
+  score: Int
+  isClosed: Boolean!
+  isActive: Boolean!
+  status: TicketStatus!
+  histories: [Ticket!]
+  ticketHistories: [TicketHistory!]
+  createdAt: String!
+  updatedAt: String!
+}
+
+input TicketDetailInput {
+  id: Uint64!
+}
+
+type TicketHistory {
+  id: Uint64!
+  ticketNumber: String!
+  userId: String!
+  adminId: String
+  user: User
+  admin: Admin
+  note: String
+  priority: TicketPriority
+  isResolved: Boolean
+  score: Int
+  isClosed: Boolean!
+  isActive: Boolean!
+  status: TicketStatus!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input TicketListInput {
+  limit: Int
+  page: Int
+  keyword: String
+  status: ListStatusTicket!
+}
+
+type TicketListResponse {
+  items: [Ticket!]!
+  meta: MetaPagination!
+}
+
+input TicketManagementInput {
+  search: String
+  fromDate: Date
+  toDate: Date
+  limit: Int
+  page: Int
+  status: TicketStatus
+}
+
+enum TicketPriority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+type TicketShort {
+  id: Uint64!
+  roomId: Uint64!
+  ticketNumber: String!
+  userId: String!
+  adminId: String
+  user: User
+  admin: Admin
+  note: String
+  priority: TicketPriority
+  isResolved: Boolean
+  score: Int
+  isClosed: Boolean!
+  isActive: Boolean!
+  status: TicketStatus!
+  createdAt: String!
+  updatedAt: String!
+}
+
+enum TicketStatus {
+  PENDING
+  RESOLVED
+  OPEN
+  WITHDRAWN
+}
+
+type TicketTotalResponse {
+  queue: Int
+  active: Int
+}
+
+"""
+
+"""
+scalar Time
+
+"""
+
+"""
+scalar Timestamp
+
+type Todo {
+  id: Int!
+  name: String!
+  metadata: String
+  age: Int
+}
+
+input TodoPaginationInput {
+  s: String
+  limit: Int
+  page: Int
+}
+
+type TopMerchantRevenue {
+  total: Float!
+  shop: Shop!
+}
+
+type TotalDailyPost {
+  total: Float!
+  date: String!
+}
+
+type TotalPostBreakDown {
+  total: Float!
+  role: UserRole!
+}
+
+type TransactionCredit {
+  id: Uint64!
+  type: TypeTransactionCredit!
+  typeId: Uint64!
+  order: Order
+  withdrawal: Withdrawal
+  amount: Float!
+  userId: String!
+  user: User
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type TransactionLogs {
+  id: Uint64!
+  status: StatusTransactionPayment!
+  paymentServices: PaymentServiceMethodOrder!
+  cardNumber: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type TransactionPayment {
+  id: Uint64!
+  status: StatusTransactionPayment!
+  paymentServices: PaymentServiceMethodOrder!
+  totalPrice: Float!
+  shippingFee: Float!
+  shopVoucherDiscount: Float!
+  sayangVoucherDiscount: Float!
+  sayangCoin: Float!
+  tax: Float!
+  createdAt: Date!
+  updatedAt: Date!
+  cardNumber: String
+  pgTransactionId: String
+  pgUrl: String
+}
+
+input TrendingListPostInput {
+  limit: Int
+  page: Int
+  search: String
+}
+
+input TrustDeviceInput {
+  otp: String!
+  deviceID: String!
+  platform: PlatformType!
+}
+
+enum TypeSharePost {
+  INTERNAL
+  EXTERNAL
+}
+
+enum TypeTagComment {
+  USER
+  MERCHANT
+}
+
+enum TypeTransactionCredit {
+  PAYOUT
+  WITHDRAWAL
+  PURCHASE
+}
+
+enum TypeUserOrderRefund {
+  USER
+  MERCHANT
+  ADMIN
+}
+
+"""
+
+"""
+scalar Uint64
+
+input UpdateBusinessContactNumberInput {
+  prefixPhone: String!
+  phone: String!
+  otpCode: String!
+}
+
+input UpdateCategoryInput {
+  id: Uint64!
+  name: String!
+  parentId: Uint64
+  image: String
+  description: String
+}
+
+input UpdateHashTagInput {
+  id: Uint64!
+  name: String!
+  image: String
+  description: String
+}
+
+input UpdateQuantityBundleDealInput {
+  cartMetaId: Uint64!
+  cartMetaBundleDealId: Uint64!
+  quantity: Int!
+}
+
+input UpdateQuantityCartMetaInput {
+  cartMetaId: Uint64!
+  quantity: Int!
+}
+
+input UpdateReadInput {
+  roomId: Uint64!
+}
+
+enum UpdateRoomType {
+  ADD
+  REMOVE
+  SEEN
+  NEW_MESSAGE
+}
+
+input UpdateTodoInput {
+  name: String
+  metadata: String
+  age: Int
+}
+
+input UpdateUserInput {
+  phone: String!
+  prefixPhone: String!
+  email: String!
+  username: String!
+}
+
+input UpdateVariantBundleDealInput {
+  cartMetaId: Uint64!
+  cartMetaBundleDealId: Uint64!
+  variantId: Uint64!
+}
+
+type User {
+  id: ID!
+  lastName: String
+  firstName: String
+  displayName: String
+  avatar: String
+  email: String!
+  phone: String!
+  prefixPhone: String!
+  referralCode: String
+  googleId: String
+  facebookId: String
+  appleId: String
+  role: UserRole!
+  userName: String!
+  status: String!
+  partner: Partner
+  merchant: Partner
+  shop: Shop
+  createdAt: Date
+  partnerReason: String
+  postCount: Int
+  cartCount: Int
+  availableUpgradeRole: UserRole
+  notificationConfig: NotificationConfig
+  reason: String
+  expiredTime: String
+  totalFollowers: Int!
+  totalFollowing: Int!
+  totalLike: Int!
+  totalOrders: Int!
+  totalPurchases: Int!
+  totalPostViews: Int!
+}
+
+type UserConnection {
+  meta: MetaPaging!
+  items: [User!]!
+}
+
+type UserFollow {
+  id: Uint64!
+  userFollowing: User!
+  userFollower: User!
+}
+
+input UserPagingInput {
+  page: Int
+  limit: Int
+  status: UserStatus
+  search: String
+  fromDate: Date
+  toDate: Date
+  role: UserRole
+}
+
+enum UserRole {
+  MERCHANT
+  BUYER
+  PARTNER
+  ADMIN
+}
+
+enum UserStatus {
+  DELETED
+  DEACTIVATED
+  ACTIVE
+  SUSPENDED
+  TERMINATED
+}
+
+type UserUpgradeStatus {
+  createdAt: String!
+  requestType: PartnerType!
+  reason: String!
+  status: PartnerFormStatus!
+  id: String!
+}
+
+type UserVoucherEntity {
+  id: Uint64!
+  type: UserVoucherType!
+  sayangVoucher: Promotion
+  shopVoucher: MerchantVoucherEntity
+  promotionId: Uint64!
+  expiredAt: Date
+  createdAt: Date!
+  updateAt: Date!
+}
+
+enum UserVoucherType {
+  SHOP_VOUCHER
+  SAYANG_VOUCHER
+}
+
+enum ValidUntilType {
+  DAYS
+  WEEKS
+  MONTHS
+  YEARS
+}
+
+type VariationOption {
+  id: Uint64!
+  name: String!
+}
+
+input VerifyOtpInput {
+  phone: String!
+  prefixPhone: String
+  otp: String!
+}
+
+type WelcomeVoucherEntity {
+  rewardName: String!
+  rewardType: WelcomeVoucherRewardType!
+  status: CommissionStatus!
+  validUntil: Int!
+  validUntilType: ValidUntilType!
+  discountType: CommissionDiscountType!
+  discountAmount: Float!
+  maximumDiscountAmount: Float
+  minimumOrderAmount: Float!
+  remark: String
+  exceptType: PromotionExceptType!
+  paymentMethod: PromotionPaymentMethod!
+  createdAt: Date!
+  updatedAt: Date!
+  products: [ProductEntity!]
+  categories: [Category!]
+}
+
+enum WelcomeVoucherRewardType {
+  DISCOUNT
+  CASHBACK
+}
+
+type Withdrawal {
+  id: Uint64!
+  requestId: String!
+  userId: String!
+  user: User
+  partner: Partner
+  requestAmount: Float!
+  processingFee: Float!
+  totalAmount: Float!
+  status: StatusWithdrawal!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input adminAcceptCampaignMerchantInput {
+  campaignMerchantId: String!
+}
+
+input adminRejectCampaignMerchantInput {
+  campaignMerchantId: String!
+  reason: String
+}
+
+input adminRequestCampaignMerchantInput {
+  campaignMerchantId: String!
+  type: [RequestType!]!
+  reason: String
+}

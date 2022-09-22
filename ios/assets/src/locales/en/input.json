@@ -1,0 +1,35 @@
+{
+ 
+   "field_mail_valid": "Please enter a valid email address",
+   "field_phone_valid": "Please enter a valid Phone number",
+   "field_required": "This field is required",
+   "repassword_not_match": "Confirm password not match",
+   "input_username": "Enter your username",
+   "input_phone": "Enter your phone",
+   "input_password": "Password",
+   "input_password_confirm": "Confirm password",
+ 
+   "field_required": "This field is required",
+   "input_username": "Enter your username",
+   "input_phone": "Enter your phone",
+   "input_password": "Enter your password",
+ 
+   "input_email": "Enter your email",
+   "input_otp_old": "Enter your otp old",
+   "input_otp_new": "Enter your otp new",
+   "input_money": "Enter your money",
+   "input_score": "Enter your score",
+   "input_descrif": "Enter at least 20 characters",
+   "input_code": "Example: 0909",
+   "search": "Search",
+   "update": "Update",
+   "create_comment_new": "Create a new comment",
+ 
+   "enter_otp":"Enter OTP code",
+   "input_login_info": "ID|Username|Email|Phone",
+   "input_invite_code": "Invitation code",
+ 
+   "enter_token":"Enter Token",
+   "enter_shares":"Enter Shares",
+   "enter_azsd":"Enter AZSD"
+}

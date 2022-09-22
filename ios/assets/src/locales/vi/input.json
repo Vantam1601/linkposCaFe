@@ -1,0 +1,34 @@
+{
+ 
+   "field_mail_valid": "Vui lòng nhập một địa chỉ email hợp lệ",
+   "field_phone_valid": "Vui lòng nhập một số điện thoại hợp lệ",
+   "field_required": "Trường này là bắt buộc",
+   "repassword_not_match": "Xác nhận mật khẩu không khớp",
+   "input_username": "Nhập tên người dùng",
+   "input_phone": "Nhập điện thoại",
+   "input_password": "Mật khẩu",
+   "input_password_confirm": "Xác nhận mật khẩu",
+ 
+   "field_required": "Trường này là bắt buộc",
+   "input_username": "Nhập tên người dùng",
+   "input_phone": "Nhập điện thoại",
+   "input_password": "Nhập mật khẩu",
+ 
+   "input_email": "Nhập email",
+   "input_otp_old": "Nhập otp cũ",
+   "input_otp_new": "Nhập otp mới",
+   "input_money": "Nhập số tiền",
+   "input_score": "Nhập điểm",
+   "input_descrif": "Nhập nội dung ít nhất 20 ký tự",
+   "input_code": "Ví dụ: 0909",
+   "search": "Tìm kiếm",
+   "update": "Cập nhật",
+ 
+   "enter_otp":"Nhập mã OTP",
+   "input_login_info": "ID|Tên tài khoản|Email|Số điện thoại",
+   "input_invite_code": "Mã giới thiệu",
+
+   "enter_token":"Nhập token",
+   "enter_shares":"Nhập cổ phiếu",
+   "enter_azsd":"Nhập AZSD"
+}

@@ -1,0 +1,14 @@
+{
+	"mainbg":"#ffffff",
+    "version":"1",
+    "beta":"0",
+    "api_key":"23",
+	"url_scheme":"azservices",
+	"url":"https://azservices/local.html",
+	"pusher":"https://azservices/pusher.php",
+	"bgcolor":"#ffffff",
+	"textcolor":"#333",
+	"logo":"https://azservices/images/logo.png",
+	"text":"",
+	"version":"1.0"
+}
