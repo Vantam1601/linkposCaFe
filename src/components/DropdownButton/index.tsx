@@ -32,6 +32,7 @@ interface Props {
   onSearch?: any;
   enableSearch?: boolean;
   keyView?: string;
+  autoBack?: boolean;
 }
 const DropdownButton = memo((props: Props) => {
   const {
@@ -45,12 +46,12 @@ const DropdownButton = memo((props: Props) => {
     idProps,
     enableSearch = false,
     keyView = "name",
+    autoBack,
   } = props;
   const [isIndex, setIsIndex] = useState<number>(-1);
   const [keyword, setKeyword] = useState<any>("");
 
   const intl = useTranslate();
-  const user = useCurrentUser();
 
   const sheetRefPersion = React.createRef<BottomSheet>();
 
@@ -61,6 +62,9 @@ const DropdownButton = memo((props: Props) => {
     } else {
       setIsIndex(index);
       onChange(value);
+    }
+    if (autoBack) {
+      sheetRefPersion?.current?.close?.();
     }
   };
   const onSearch = (text: string) => {
@@ -152,8 +156,8 @@ const DropdownButton = memo((props: Props) => {
             </AppText>
           </TouchableOpacity>
           <View style={{ marginHorizontal: 30, flex: 1 }}>
+            {renderHeadder()}
             <FlatList
-              ListHeaderComponent={renderHeadder}
               data={data}
               renderItem={({ item, index }) => renderItem(item, index)}
               keyExtractor={(item, index) => index.toString()}

@@ -56,7 +56,7 @@ const BottomTabLayoutKitchenCashier = (props: BottomTabBarProps) => {
       }}
     >
       <ItemTab
-        screen={cafeRoutes.Kitchen}
+        screen={cafeRoutes.Cashier}
         index={0}
         title="Home"
         image={images.home}

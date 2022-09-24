@@ -1,27 +1,35 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
-import React, { memo, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   Dimensions,
+  Image,
   ImageBackground,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { images } from "src/assets/images";
 import Input from "src/components/AppInputElement";
 
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { AppText } from "src/components/Apptext";
 import Button from "src/components/Button";
-import { API_ENDPOINT } from "src/helpers/api.endpoint";
-import { httpClient } from "src/helpers/httpClient";
 import { useTranslate } from "src/hooks/useTranslate";
+import { push } from "src/navigator/RootNavigation";
 import { COLOR } from "src/theme/color";
-import { ResponseBase } from "src/types/Response";
 import * as Yup from "yup";
+import { coreRoutes } from "../../router/CoreRouter";
+
+import {
+  faMinusSquare,
+  faPlusSquare,
+} from "nvquang-font-icon/pro-light-svg-icons";
+import HeaderBack from "src/components/HeaderBack";
 
 const { width, height } = Dimensions.get("window");
 
@@ -44,13 +52,16 @@ interface LginResponse {
 const RegisterStepOne = memo(() => {
   const intl = useTranslate();
   const [loading, setLoading] = useState<boolean>(false);
+  const number = useRef(1);
+  const [listPhone, setListPhone] = useState<any>([]);
+
   const navigation = useNavigation();
 
   const { control, handleSubmit, errors } = useForm<LoginMutationVariables>({
     resolver: yupResolver(FormSchema),
     defaultValues: {
-      username: "",
-      phonenumber: "",
+      username: "new Shop",
+      phonenumber: "0909123123",
     },
   });
 
@@ -59,38 +70,82 @@ const RegisterStepOne = memo(() => {
       return;
     }
     setLoading(true);
+    const dataFrom = new FormData();
+    dataFrom.append("name_outlet", value.username);
+    dataFrom.append("phone[]", value.phonenumber);
 
-    const data = new FormData();
+    listPhone.forEach((item) => {
+      if (value?.[item.name]) {
+        dataFrom.append("phone[]", value?.[item.name]);
+      }
+    });
 
-    const res = await httpClient.post<ResponseBase<LginResponse>>(
-      API_ENDPOINT.check_user,
-      {
-        pos_check_phone_email: 1,
-        username: value.username,
-      },
-      true
-    );
-    // if (res.status === 200 && res.data.code === 1) {
-    //   navigate(authRoutes.VERIFY_PASSS, {
-    //     ...res.data,
-    //     username: value.username,
-    //   });
-    // } else {
-    //   Toast.show({
-    //     type: "error",
-    //     text2: res?.data ? res.data.error : "Check user failed!",
-    //   });
-    // }
+    push(coreRoutes.RegisterStepTwo, {
+      data: dataFrom,
+    });
 
     setLoading(false);
   };
 
+  const renderPhone = () => {
+    return listPhone.map((item, index) => {
+      return (
+        <View key={index} style={styles.viewInput}>
+          <AppText style={styles.txtLabel}>
+            {"Số điện thoại:"}
+            (*)
+          </AppText>
+          <Controller
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <Input
+                autoCapitalize="none"
+                placeholder={"Nhập số điện thoại"}
+                errorStyle={styles.textError}
+                errorMessage={
+                  errors?.[item.name] ? errors?.[item.name].message : ""
+                }
+                multiline={false}
+                onChangeText={(val: any) => onChange(val)}
+                onBlur={onBlur}
+                value={value}
+                containerStyle={[
+                  styles.input,
+                  { marginBottom: errors?.[item.name] ? 30 : 16 },
+                ]}
+                style={styles.textInput}
+                rightIcon={
+                  <TouchableOpacity
+                    onPress={() => {
+                      number.current = number.current + 1;
+                      setListPhone(
+                        listPhone.filter((_item) => _item.name !== item.name)
+                      );
+                    }}
+                    activeOpacity={0.6}
+                  >
+                    <FontAwesomeIcon
+                      color={COLOR.black}
+                      icon={faMinusSquare}
+                      size={22}
+                    />
+                  </TouchableOpacity>
+                }
+              />
+            )}
+            name={item.name}
+            rules={{ required: true }}
+            defaultValue=""
+          />
+        </View>
+      );
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={images.background}
-        style={{ flex: 1, paddingTop: getStatusBarHeight() }}
-      >
+      <HeaderBack title={`Đăng ký cửa hàng`} />
+      <ImageBackground source={images.background} style={{ flex: 1 }}>
         <ScrollView
           style={{ flex: 1 }}
           scrollEnabled={false}
@@ -108,7 +163,16 @@ const RegisterStepOne = memo(() => {
             }}
           >
             <View style={styles.viewLogo}>
-              <AppText style={styles.txtLogo}>{"Đăng ký cửa hàng :"}</AppText>
+              <AppText style={styles.txtInfo}>
+                {intl.formatMessage({
+                  id: "Thông tin cửa hàng",
+                })}
+              </AppText>
+              <Image
+                style={styles.tinyLogo}
+                resizeMode="contain"
+                source={images.infoShop}
+              />
               <View style={styles.viewInput}>
                 <AppText style={styles.txtLabel}>
                   {intl.formatMessage({
@@ -168,6 +232,26 @@ const RegisterStepOne = memo(() => {
                         { marginBottom: errors.phonenumber ? 30 : 16 },
                       ]}
                       style={styles.textInput}
+                      rightIcon={
+                        <TouchableOpacity
+                          onPress={() => {
+                            number.current = number.current + 1;
+                            setListPhone([
+                              ...listPhone,
+                              {
+                                name: `phonenumber${number.current}`,
+                              },
+                            ]);
+                          }}
+                          activeOpacity={0.6}
+                        >
+                          <FontAwesomeIcon
+                            color={COLOR.black}
+                            icon={faPlusSquare}
+                            size={22}
+                          />
+                        </TouchableOpacity>
+                      }
                     />
                   )}
                   name="phonenumber"
@@ -175,6 +259,7 @@ const RegisterStepOne = memo(() => {
                   defaultValue=""
                 />
               </View>
+              {renderPhone()}
               <Button
                 buttonStyle={styles.buttonLogin}
                 loading={loading}
@@ -247,7 +332,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   viewInput: {
-    marginTop: 10,
+    // borderWidth: 1,
   },
   input: {
     width: width - 60,
@@ -256,8 +341,8 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
   },
   tinyLogo: {
-    width: 125,
-    height: 125,
+    width: 100,
+    height: 100,
     borderRadius: 12,
   },
   txtLogo: {
@@ -265,7 +350,13 @@ const styles = StyleSheet.create({
     marginTop: 30,
     lineHeight: 26,
     textAlign: "center",
-    fontWeight: "500",
+  },
+  txtInfo: {
+    fontSize: 20,
+    marginTop: 30,
+    lineHeight: 26,
+    textAlign: "center",
+    fontWeight: "bold",
   },
   viewLogo: {
     alignSelf: "center",

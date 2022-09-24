@@ -10,6 +10,8 @@ export const images = {
   bep: require("./bep.png"),
   thungan: require("./thungan.png"),
   banhang: require("./banhang.png"),
+  user: require("./user.png"),
+  infoShop: require("./infoShop.png"),
 };
 
 export type ImageTypes = keyof typeof images;

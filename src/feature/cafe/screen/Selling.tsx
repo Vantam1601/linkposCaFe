@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -13,6 +13,9 @@ import { getStatusBarHeight } from "react-native-status-bar-height";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "src/assets/images";
 import { AppText } from "src/components/Apptext";
+import LoadingOverlay, {
+  RefObject,
+} from "src/feature/core/component/loadingPage/LoadingPage";
 import { show_money } from "src/helpers/config";
 import { push } from "src/navigator/RootNavigation";
 import { RootStateReducer } from "src/store/types";
@@ -84,6 +87,7 @@ const ItemTable = ({ item, index }) => {
 const Selling = (props: Props) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
+  const loading = useRef<RefObject>(null);
   const tables = useSelector<RootStateReducer>(
     (state) => state.cafe.tableAndMenu.tables
   );
@@ -147,20 +151,15 @@ const Selling = (props: Props) => {
 
   const onRefresh = () => {
     setRefreshing(true);
+    loading.current?.toggleState(true);
     dispatch({
       type: LOAD_CART,
-      callback: setRefreshing(false),
+      callback: () => {
+        setRefreshing(false);
+        loading.current?.toggleState(false);
+      },
     });
   };
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     dispatch({
-  //       type: LOAD_CART,
-  //       callback: setRefreshing(false),
-  //     });
-  //   }, [])
-  // );
 
   return (
     <View style={{ flex: 1 }}>
@@ -210,6 +209,7 @@ const Selling = (props: Props) => {
           )}
         </View>
       </ImageBackground>
+      <LoadingOverlay ref={loading} />
     </View>
   );
 };

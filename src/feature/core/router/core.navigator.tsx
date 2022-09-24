@@ -10,14 +10,26 @@ import MyShop from "src/feature/core/screen/MyShop";
 import { AppRoutes } from "src/navigator/app-routes";
 
 import type { RootStackParamList } from "../../../navigator/root.navigator";
+import ChooseShop from "../screen/ChooseShop";
 import Dashboard from "../screen/Dashboard";
 import RegisterStepOne from "../screen/registerStore/RegisterStepOne";
+import RegisterStepThree from "../screen/registerStore/RegisterStepThree";
+import RegisterStepTwo from "../screen/registerStore/RegisterStepTwo";
 import { coreRoutes } from "./CoreRouter";
 
 export type CoreStackParamList = {
   [coreRoutes.MY_STORE]: undefined;
   [coreRoutes.DASH_BOARD]: undefined;
   [coreRoutes.RegisterStepOne]: undefined;
+  [coreRoutes.RegisterStepTwo]: {
+    data: FormData;
+  };
+  [coreRoutes.RegisterStepThree]: {
+    data: FormData;
+  };
+  [coreRoutes.ChooseShop]: {
+    key: string;
+  };
 };
 
 const Stack = createStackNavigator<CoreStackParamList>();
@@ -55,12 +67,36 @@ export const CoreNavigator = () => {
         component={CafeNavigator}
       />
       <Stack.Screen
+        name={coreRoutes.ChooseShop}
+        options={{
+          title: "Choose shop",
+          headerShown: false,
+        }}
+        component={ChooseShop}
+      />
+      <Stack.Screen
         name={coreRoutes.RegisterStepOne}
         options={{
           title: "CAFE Shop",
           headerShown: false,
         }}
         component={RegisterStepOne}
+      />
+      <Stack.Screen
+        name={coreRoutes.RegisterStepTwo}
+        options={{
+          title: "CAFE Shop",
+          headerShown: false,
+        }}
+        component={RegisterStepTwo}
+      />
+      <Stack.Screen
+        name={coreRoutes.RegisterStepThree}
+        options={{
+          title: "CAFE Shop",
+          headerShown: false,
+        }}
+        component={RegisterStepThree}
       />
     </Stack.Navigator>
   );

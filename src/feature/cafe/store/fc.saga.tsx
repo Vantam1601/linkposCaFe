@@ -26,23 +26,27 @@ export function* getConfig(action: PayloadAction<string, unknown, unknown>) {
 }
 
 export function* getTokenShop(action: PayloadAction<string, unknown, unknown>) {
-  const access_token = yield select(selectToken);
-  const server = yield select(selectServer);
+  try {
+    const access_token = yield select(selectToken);
+    const server = yield select(selectServer);
 
-  const response = yield call(
-    httpClient.postNoApi,
-    server + API_ENDPOINT.get_token_shop + `?session_id=${access_token}`,
-    {}
-  );
+    const response = yield call(
+      httpClient.postNoApi,
+      server + API_ENDPOINT.get_token_shop + `?session_id=${access_token}`,
+      {}
+    );
 
-  // console.log("response", response);
-  if (response.status === 200) {
-    yield put({
-      type: Constants.LOAD_TOKEN_SHOP_SUCCESS,
-      payload: response.data,
-    });
+    // console.log("response", response);
+    if (response.status === 200) {
+      yield put({
+        type: Constants.LOAD_TOKEN_SHOP_SUCCESS,
+        payload: response.data,
+      });
+    }
+    action.callback?.();
+  } catch (error) {
+    action.callback?.();
   }
-  action.callback?.();
 }
 
 export function* getMenuAndTable(

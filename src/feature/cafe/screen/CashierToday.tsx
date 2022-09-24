@@ -1,16 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useRef } from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { images } from "src/assets/images";
 import { AppText } from "src/components/Apptext";
 import HeaderBack from "src/components/HeaderBack";
 import { push } from "src/navigator/RootNavigation";
@@ -23,7 +15,7 @@ import { cafeRoutes } from "../router/CafeRouter";
 import LoadingOverlay, {
   RefObject,
 } from "src/feature/core/component/loadingPage/LoadingPage";
-import { format_money, show_money } from "src/helpers/config";
+import { show_money } from "src/helpers/config";
 import {
   CASHIER_CONFIRM_OUTLET_GENARE,
   GET_CASHIER_TODAY,
@@ -81,7 +73,6 @@ const CashierToday = (props: Props) => {
   };
 
   const renderProduct = ({ item, index }) => {
-    const log = JSON.stringify(item?.log ?? "{}");
     return (
       <View
         key={index}

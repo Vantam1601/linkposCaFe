@@ -37,7 +37,7 @@ export type Props = {
     draggableIcon?: StyleProp<ViewStyle>;
   };
   children: React.ReactNode;
-  styleProps: any
+  styleProps: any;
 };
 
 type State = {
@@ -57,7 +57,7 @@ const defaultProps: Props = {
   keyboardAvoidingViewEnabled: false,
   customStyles: {},
   children: <View />,
-  styleProps: {}
+  styleProps: {},
 };
 
 const headerHeight = 25;

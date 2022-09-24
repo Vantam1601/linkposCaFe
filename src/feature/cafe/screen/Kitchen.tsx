@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   FlatList,
   Image,
@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { images } from "src/assets/images";
 import { AppText } from "src/components/Apptext";
 import HeaderBack from "src/components/HeaderBack";
+import LoadingOverlay, {
+  RefObject,
+} from "src/feature/core/component/loadingPage/LoadingPage";
 import { push } from "src/navigator/RootNavigation";
 import { RootStateReducer } from "src/store/types";
 import { COLOR } from "src/theme/color";
@@ -91,6 +94,7 @@ const ItemTable = ({ item, index }) => {
 const Kitchen = (props: Props) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
+  const loading = useRef<RefObject>(null);
   const tables = useSelector<RootStateReducer>(
     (state) => state.cafe.cartKitchen
   );
@@ -104,10 +108,14 @@ const Kitchen = (props: Props) => {
   };
 
   const onRefresh = () => {
+    loading.current?.toggleState(true);
     setRefreshing(true);
     dispatch({
       type: LOAD_CART_KITCHEN,
-      callback: setRefreshing(false),
+      callback: () => {
+        setRefreshing(false);
+        loading.current?.toggleState(false);
+      },
     });
   };
 
@@ -140,6 +148,7 @@ const Kitchen = (props: Props) => {
           />
         </View>
       </View>
+      <LoadingOverlay ref={loading} />
     </View>
   );
 };

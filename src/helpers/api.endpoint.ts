@@ -1,4 +1,5 @@
 export const API_ENDPOINT = {
+  country: "country.php",
   check_user: "/login.php",
   login: "/login.php",
   verify_pass: "",

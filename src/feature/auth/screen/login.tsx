@@ -1,30 +1,22 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigation } from "@react-navigation/native";
 import React, { memo, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
 import {
   Dimensions,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
   ScrollView,
-  StyleSheet, View
+  StyleSheet,
+  View,
 } from "react-native";
 import { images } from "src/assets/images";
-import Input from "src/components/AppInputElement";
 
 import { getStatusBarHeight } from "react-native-status-bar-height";
-import Toast from "react-native-toast-message";
 import { AppText } from "src/components/Apptext";
-import Button from "src/components/Button";
-import { API_ENDPOINT } from "src/helpers/api.endpoint";
-import { httpClient } from "src/helpers/httpClient";
 import { useTranslate } from "src/hooks/useTranslate";
-import { navigate } from "src/navigator/RootNavigation";
 import { COLOR } from "src/theme/color";
-import { ResponseBase } from "src/types/Response";
 import * as Yup from "yup";
-import { authRoutes } from "../router/AuthRouter";
+import FormLoginPassWord from "./FormLoginPassWord";
+import FormLoginUserName from "./FormLoginUserName";
 
 const { width, height } = Dimensions.get("window");
 
@@ -45,173 +37,51 @@ interface LginResponse {
 
 const LoginScreen = memo(() => {
   const intl = useTranslate();
-  const [loading, setLoading] = useState<boolean>(false);
-  const navigation = useNavigation();
-
-  const { control, handleSubmit, errors } = useForm<LoginMutationVariables>({
-    resolver: yupResolver(LoginSchema),
-    defaultValues: {
-      username: "0000000000",
-    },
-  });
-
-  const handleLogin = async (value: LoginMutationVariables) => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-
-    const data = new FormData();
-
-    const res = await httpClient.post<ResponseBase<LginResponse>>(
-      API_ENDPOINT.check_user,
-      {
-        pos_check_phone_email: 1,
-        username: value.username,
-      },
-      true
-    );
-    if (res.status === 200 && res.data.code === 1) {
-      navigate(authRoutes.VERIFY_PASSS, {
-        ...res.data,
-        username: value.username,
-      });
-    } else {
-      Toast.show({
-        type: "error",
-        text2: res?.data ? res.data.error : "Check user failed!",
-      });
-    }
-
-    setLoading(false);
-  };
-
-  // const goToForgotPassword = () => {
-  //   navigation.navigate(AppRoutes.FORGOT_PASSWORD);
-  // };
-
-  // const goToRegister = () => {
-  //   navigation.navigate(AppRoutes.REGISTER);
-  // };
-
-  // const skip = () => {
-  //   navigation.navigate(AppRoutes.APP);
-  // };
+  const [username, setUsername] = useState("");
 
   return (
     <View style={styles.container}>
-       <ImageBackground
+      <ImageBackground
         source={images.background}
         style={{ flex: 1, paddingTop: getStatusBarHeight() }}
       >
-      <ScrollView
-        style={{ flex: 1 }}
-        scrollEnabled={false}
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          flex: 1,
-        }}
-      >
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={{
+        <ScrollView
+          style={{ flex: 1 }}
+          scrollEnabled={false}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
             flex: 1,
-            alignItems: "center",
-            marginTop: 84,
-            paddingHorizontal: "10%",
           }}
         >
-          <View style={styles.viewLogo}>
-            <Image
-              style={styles.tinyLogo}
-              resizeMode="contain"
-              source={images.logo}
-            />
-            <AppText style={styles.txtLogo}>
-              {intl.formatMessage({
-                id: "label:login",
-              })}
-            </AppText>
-            <View style={styles.viewInput}>
-              <AppText style={styles.txtLabel}>
-                {intl.formatMessage({
-                  id: "label:phone",
-                })}
-                (*)
-              </AppText>
-              <Controller
-                control={control}
-                render={({ onChange, onBlur, value }) => (
-                  <Input
-                    autoCapitalize="none"
-                    autoCompleteType="username"
-                    placeholder={intl.formatMessage({
-                      id: "input:input_username",
-                    })}
-                    errorStyle={styles.textError}
-                    errorMessage={
-                      errors.phonenumber ? errors.phonenumber.message : ""
-                    }
-                    multiline={false}
-                    onChangeText={(val: any) => onChange(val)}
-                    onBlur={onBlur}
-                    value={value}
-                    containerStyle={[
-                      styles.input,
-                      { marginBottom: errors.phonenumber ? 30 : 16 },
-                    ]}
-                    style={styles.textInput}
-                  />
-                )}
-                name="username"
-                rules={{ required: true }}
-                defaultValue=""
+          <KeyboardAvoidingView
+            behavior="padding"
+            style={{
+              flex: 1,
+              alignItems: "center",
+              marginTop: 84,
+              paddingHorizontal: "10%",
+            }}
+          >
+            <View style={styles.viewLogo}>
+              <Image
+                style={styles.tinyLogo}
+                resizeMode="contain"
+                source={images.logo}
               />
+              <AppText style={styles.txtLogo}>
+                {intl.formatMessage({
+                  id: "label:login",
+                })}
+              </AppText>
+              {username ? (
+                <FormLoginPassWord username={username} />
+              ) : (
+                <FormLoginUserName setUsername={setUsername} />
+              )}
             </View>
-
-            <Button
-              buttonStyle={styles.buttonLogin}
-              loading={loading}
-              onPress={handleSubmit(handleLogin)}
-              text={intl.formatMessage({
-                id: "label:login",
-              })}
-              loadingColor={COLOR.white}
-              textStyle={styles.txtLogin}
-            />
-            {/* <TouchableOpacity
-              onPress={goToForgotPassword}
-              style={styles.btnForgot}
-              activeOpacity={0.6}
-            >
-              <AppText style={styles.textForgot}>
-                {intl.formatMessage({
-                  id: "label:forgot_password",
-                })}
-              </AppText>
-            </TouchableOpacity>
-            <View style={styles.viewRegister}>
-              <AppText style={{ fontSize: 13 }}>
-                {intl.formatMessage({
-                  id: "label:no_account",
-                })}
-              </AppText>
-              <TouchableOpacity
-                onPress={goToRegister}
-                style={styles.btnRegister}
-                activeOpacity={0.6}
-              >
-                <AppText style={styles.textRegister}>
-                  {intl.formatMessage({
-                    id: "label:register_now",
-                  })}
-                </AppText>
-              </TouchableOpacity>
-            </View> */}
-          </View>
-        </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
         </ScrollView>
-        </ImageBackground>
+      </ImageBackground>
     </View>
   );
 });

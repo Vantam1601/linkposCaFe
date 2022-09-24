@@ -1,16 +1,18 @@
-import { useNavigation } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import React from "react";
+import React, { useRef } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { AppText } from "src/components/Apptext";
 import HeaderBack from "src/components/HeaderBack";
+import LoadingOverlay, {
+  RefObject,
+} from "src/feature/core/component/loadingPage/LoadingPage";
+import { show_money } from "src/helpers/config";
 import { RootStateReducer } from "src/store/types";
 import { COLOR } from "src/theme/color";
 import { CafeStackParamList } from "../router/CafeNavigator";
 import { cafeRoutes } from "../router/CafeRouter";
 import { GET_INVOICE } from "../store/constants";
-import { format_money, show_money } from "src/helpers/config";
 
 interface Props
   extends StackScreenProps<
@@ -42,23 +44,24 @@ const ItemRow = (props: ItemRowProps) => {
 };
 const DetailCashierOutlet = (props: Props) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const loading = useRef<RefObject>(null);
+
   const data = useSelector<RootStateReducer>(
     (state) => state.cafe.currentInvoice
   );
-
-  const log = JSON.parse(data?.log ?? "{}");
 
   React.useEffect(() => {
     onRefresh();
   }, []);
 
   const onRefresh = () => {
+    loading.current?.toggleState(true);
     dispatch({
       type: GET_INVOICE,
       payload: {
         id_inv: props.route.params.id,
       },
+      callback: () => loading.current?.toggleState(false),
     });
   };
 
@@ -151,8 +154,8 @@ const DetailCashierOutlet = (props: Props) => {
         <ItemRow label="Tổng tiền" value={show_money(data?.total)} />
         <ItemRow label="Tình trạng" value={data?.status} />
         <ItemRow label="Thanh toán" value={data?.payment} />
-        <ItemRow label="Nhân viên gọi" value={log?.caller?.fullname || ""} />
-        <ItemRow label="Nhân viên thanh toán" value={log?.fullname} />
+        <ItemRow label="Nhân viên gọi" value={data?.fullname || ""} />
+        <ItemRow label="Nhân viên thanh toán" value={data?.fullname} />
         <ItemRow label="Giờ vào" value={data?.created_date} />
         <ItemRow label="Giờ ra" value={data?.completed_date} />
         {renderRowTitle()}
@@ -172,6 +175,7 @@ const DetailCashierOutlet = (props: Props) => {
           ItemSeparatorComponent={() => <View style={{ height: 2 }} />}
         />
       </View>
+      <LoadingOverlay ref={loading} />
     </View>
   );
 };

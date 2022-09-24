@@ -4,4 +4,7 @@ export enum coreRoutes {
   CAFE = "Cafe",
   DASH_BOARD = "Dashboard",
   RegisterStepOne = "RegisterStepOne",
+  RegisterStepTwo = "RegisterStepTwo",
+  RegisterStepThree = "RegisterStepThree",
+  ChooseShop = "ChooseShop",
 }

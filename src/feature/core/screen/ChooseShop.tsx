@@ -1,7 +1,7 @@
+import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef } from "react";
 import {
   FlatList,
-  Image,
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
@@ -11,49 +11,23 @@ import { getStatusBarHeight } from "react-native-status-bar-height";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "src/assets/images";
 import { AppText } from "src/components/Apptext";
-import { cafeRoutes } from "src/feature/cafe/router/CafeRouter";
 import normalize from "src/helpers/normalize";
 import { useCurrentUser } from "src/hooks/useCurrentUser";
+import { push } from "src/navigator/RootNavigation";
 import { RootStateReducer } from "src/store/types";
 import { COLOR } from "src/theme/color";
 import { GET_MYSTORE, LOGOUT } from "../../auth/store/constants";
-import ItemMenu from "../component/ItemMenu";
+import ItemShop from "../component/ItemShop";
 import LoadingOverlay, {
   RefObject,
 } from "../component/loadingPage/LoadingPage";
+import { CoreStackParamList } from "../router/core.navigator";
+import { coreRoutes } from "../router/CoreRouter";
 
-export interface ItemMenuInterface {
-  name?: string;
-  icon?: any;
-  id: number;
-  role: string[];
-  screen?: string;
-}
+interface Props
+  extends StackScreenProps<CoreStackParamList, coreRoutes.ChooseShop> {}
 
-const listMenu = [
-  {
-    id: 1,
-    name: "Thu Ngân",
-    icon: images.thungan,
-    role: ["admin"],
-    screen: cafeRoutes.HomeCashier,
-  },
-  {
-    id: 1,
-    name: "Bán hàng",
-    icon: images.banhang,
-    role: ["admin"],
-    screen: cafeRoutes.Home,
-  },
-  {
-    id: 1,
-    name: "Nhà bếp",
-    icon: images.bep,
-    role: ["admin"],
-    screen: cafeRoutes.HomeKitChen,
-  },
-];
-const Dashboard = () => {
+const ChooseShop = (props: Props) => {
   const user = useCurrentUser();
   const loading = useRef<RefObject>(null);
   const store = useSelector<RootStateReducer>((state) => state.auth.myStore);
@@ -73,7 +47,7 @@ const Dashboard = () => {
   };
 
   const renderItem = ({ item, index }) => {
-    return <ItemMenu key={index} item={item} />;
+    return <ItemShop key={index} item={item} />;
   };
 
   return (
@@ -105,19 +79,14 @@ const Dashboard = () => {
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1 }}>
-            <View style={{ alignItems: "center" }}>
-              <Image
-                style={{
-                  width: 100,
-                  height: 100,
-                }}
-                resizeMode="contain"
-                source={images.logo}
-              />
+            <View style={{ alignItems: "center", paddingVertical: 20 }}>
+              <AppText fontWeight="bold" color={COLOR.black} fontSize={20}>
+                {"Danh sách cửa hàng"}
+              </AppText>
             </View>
             <FlatList
               style={{ paddingHorizontal: 10 }}
-              data={listMenu}
+              data={store ? store?.staff?.[props.route.params.key] : []}
               renderItem={renderItem}
               ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
               keyExtractor={(item, index) => `${index}`}
@@ -130,6 +99,6 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ChooseShop;
 
 const styles = StyleSheet.create({});

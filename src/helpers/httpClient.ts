@@ -8,7 +8,7 @@ import { ResponseBase } from "src/types/Response";
 import { store } from "src/store/store";
 let myAxios = axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 30000,
   headers: {
     // "Content-Type": "application/json",
     Accept: "application/json",
@@ -16,7 +16,7 @@ let myAxios = axios.create({
 });
 let myAxiosNoApi = axios.create({
   baseURL: API_URL_NO_API,
-  timeout: 10000,
+  timeout: 30000,
   headers: {
     // "Content-Type": "application/json",
     Accept: "application/json",
@@ -125,7 +125,7 @@ const post = <T = ResponseBase<any>>(
 
   return myAxios.post<T>(
     url,
-    parseFormData ? body : {},
+    parseFormData ? body : data || {},
     config ?? defaultConfig
   );
 };

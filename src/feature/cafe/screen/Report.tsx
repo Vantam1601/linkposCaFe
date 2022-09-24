@@ -19,10 +19,7 @@ const ItemMenu = (props: ItemMenuProps) => {
     }
   };
   return (
-    <View
-      key={props.name}
-      style={{ height: 100, padding: 10, flexDirection: "row" }}
-    >
+    <View key={props.name} style={{ height: 100, padding: 10 }}>
       <TouchableOpacity
         onPress={onPress}
         style={{
@@ -31,7 +28,8 @@ const ItemMenu = (props: ItemMenuProps) => {
           borderColor: COLOR.borderGray,
           alignItems: "center",
           flex: 1,
-          paddingTop: 10,
+          padding: 10,
+          flexDirection: "row",
         }}
       >
         <Image
@@ -43,13 +41,15 @@ const ItemMenu = (props: ItemMenuProps) => {
           resizeMode="contain"
           source={images.report}
         />
-        <AppText
-          fontSize={15}
-          fontWeight="bold"
-          style={{ textAlign: "center" }}
-        >
-          {props.name}
-        </AppText>
+        <View style={{ flex: 1 }}>
+          <AppText
+            fontSize={15}
+            fontWeight="bold"
+            style={{ paddingHorizontal: 10 }}
+          >
+            {props.name}
+          </AppText>
+        </View>
       </TouchableOpacity>
     </View>
   );
