@@ -13,8 +13,8 @@ const MonneyView = (props: Props) => {
   const { value, total } = props;
   const monney = Number(value) - Number(total);
   return (
-    <View style={{ padding: 10, backgroundColor: COLOR.bgWhite }}>
-      <View>
+    <View style={{}}>
+      <View style={{ backgroundColor: COLOR.bgWhite, padding: 10 }}>
         <AppText style={styles.label} fontWeight="bold">
           {"Khách hàng đưa"}
         </AppText>
@@ -29,7 +29,9 @@ const MonneyView = (props: Props) => {
           style={styles.textInput}
         />
       </View>
-      <View>
+      <View
+        style={{ backgroundColor: COLOR.bgWhite, marginTop: 10, padding: 10 }}
+      >
         <AppText style={styles.label} fontWeight="bold">
           {"Tiền thừa: "}
         </AppText>

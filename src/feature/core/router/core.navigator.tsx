@@ -17,6 +17,9 @@ import RegisterStepThree from "../screen/registerStore/RegisterStepThree";
 import RegisterStepTwo from "../screen/registerStore/RegisterStepTwo";
 import { coreRoutes } from "./CoreRouter";
 
+import QRcode from "src/old/screens/qr/qr";
+import Webview from "src/old/screens/webview/";
+
 export type CoreStackParamList = {
   [coreRoutes.MY_STORE]: undefined;
   [coreRoutes.DASH_BOARD]: undefined;
@@ -97,6 +100,24 @@ export const CoreNavigator = () => {
           headerShown: false,
         }}
         component={RegisterStepThree}
+      />
+
+      <Stack.Screen
+        name={"QRcode"}
+        options={{
+          title: "QRcode",
+          headerShown: false,
+        }}
+        component={QRcode}
+      />
+
+      <Stack.Screen
+        name={"Webview"}
+        options={{
+          title: "Webview",
+          headerShown: false,
+        }}
+        component={Webview}
       />
     </Stack.Navigator>
   );

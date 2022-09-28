@@ -3,20 +3,21 @@ import React, { useEffect, useRef } from "react";
 import {
   FlatList,
   ImageBackground,
+  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,
 } from "react-native";
 import { getStatusBarHeight } from "react-native-status-bar-height";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "src/assets/images";
-import { AppText } from "src/components/Apptext";
-import normalize from "src/helpers/normalize";
+import HeaderBack from "src/components/HeaderBack";
 import { useCurrentUser } from "src/hooks/useCurrentUser";
 import { push } from "src/navigator/RootNavigation";
 import { RootStateReducer } from "src/store/types";
 import { COLOR } from "src/theme/color";
-import { GET_MYSTORE, LOGOUT } from "../../auth/store/constants";
+import { GET_MYSTORE } from "../../auth/store/constants";
 import ItemShop from "../component/ItemShop";
 import LoadingOverlay, {
   RefObject,
@@ -32,6 +33,7 @@ const ChooseShop = (props: Props) => {
   const loading = useRef<RefObject>(null);
   const store = useSelector<RootStateReducer>((state) => state.auth.myStore);
   const dispatch = useDispatch();
+
   useEffect(() => {
     loading.current?.toggleState(true);
     dispatch({
@@ -40,10 +42,8 @@ const ChooseShop = (props: Props) => {
     });
   }, []);
 
-  const LogOut = () => {
-    dispatch({
-      type: LOGOUT,
-    });
+  const createStore = () => {
+    push(coreRoutes.RegisterStepOne);
   };
 
   const renderItem = ({ item, index }) => {
@@ -52,38 +52,20 @@ const ChooseShop = (props: Props) => {
 
   return (
     <View style={{ flex: 1 }}>
+      <HeaderBack
+        title={"Danh sách cửa hàng"}
+        titleRight={
+          <TouchableOpacity onPress={createStore}>
+            <Icon color={COLOR.white} name="md-add" size={30}></Icon>
+          </TouchableOpacity>
+        }
+      />
       <ImageBackground
         source={images.background}
         style={{ flex: 1, paddingTop: getStatusBarHeight() }}
       >
         <View style={{ flex: 1 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              paddingHorizontal: normalize(15),
-              paddingVertical: 10,
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <AppText color={COLOR.main_color} fontSize={16}>
-                {"Xin Chào"}
-              </AppText>
-              <AppText color={COLOR.main_color} fontSize={20} fontWeight="bold">
-                {user?.username_user}
-              </AppText>
-            </View>
-            <TouchableOpacity onPress={LogOut}>
-              <AppText fontWeight="bold" color={COLOR.main_color} fontSize={16}>
-                {"Logout"}
-              </AppText>
-            </TouchableOpacity>
-          </View>
           <View style={{ flex: 1 }}>
-            <View style={{ alignItems: "center", paddingVertical: 20 }}>
-              <AppText fontWeight="bold" color={COLOR.black} fontSize={20}>
-                {"Danh sách cửa hàng"}
-              </AppText>
-            </View>
             <FlatList
               style={{ paddingHorizontal: 10 }}
               data={store ? store?.staff?.[props.route.params.key] : []}
@@ -93,6 +75,7 @@ const ChooseShop = (props: Props) => {
             />
           </View>
         </View>
+        <SafeAreaView />
       </ImageBackground>
       <LoadingOverlay ref={loading} />
     </View>

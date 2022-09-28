@@ -47,7 +47,14 @@ const ListProduct = (props: PropsList) => {
     return (
       <TouchableOpacity
         onPress={() => props.onPressItem(item)}
-        style={{ flex: 1, alignItems: "center" }}
+        style={{
+          flex: 1,
+          alignItems: "center",
+          borderWidth: 1,
+          borderColor: COLOR.borderGray,
+          margin: 10,
+          padding: 5,
+        }}
       >
         <Image
           style={{

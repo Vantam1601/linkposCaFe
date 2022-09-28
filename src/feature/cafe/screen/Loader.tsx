@@ -3,7 +3,9 @@ import React from "react";
 import {
   ActivityIndicator,
   Alert,
-  ImageBackground, Text, View
+  ImageBackground,
+  Text,
+  View,
 } from "react-native";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { useDispatch } from "react-redux";
@@ -12,32 +14,27 @@ import { replace } from "src/navigator/RootNavigation";
 import { COLOR } from "src/theme/color";
 import { CafeStackParamList } from "../router/CafeNavigator";
 import { cafeRoutes } from "../router/CafeRouter";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 import {
-  LOAD_CART, LOAD_CONFIG,
-  LOAD_TABLE, LOAD_TOKEN_SHOP
+  LOAD_CART,
+  LOAD_CONFIG,
+  LOAD_TABLE,
+  LOAD_TOKEN_SHOP,
 } from "../store/constants";
 
 interface Props
   extends StackScreenProps<CafeStackParamList, cafeRoutes.Loader> {}
 
 const Loader = (props: Props) => {
-  const {screen} = props.route.params
+  const { screen } = props.route.params;
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const getTokenShop = () => {
-    dispatch({
-      type: LOAD_TOKEN_SHOP,
-      callback: callBack,
-    });
-    // ?session_id={access_token}
-  };
   const callBack = () => {
     dispatch({
       type: LOAD_CONFIG,
-      callback: callbackNavigate
+      callback: callbackNavigate,
     });
     dispatch({
       type: LOAD_TABLE,
@@ -49,18 +46,11 @@ const Loader = (props: Props) => {
 
   const callbackNavigate = () => {
     if (!screen) {
-      navigation.goBack()
-      return Alert.alert('Thông báo',"Chức năng đang ohast triển")
+      navigation.goBack();
+      return Alert.alert("Thông báo", "Chức năng đang ohast triển");
     }
-  replace(screen);
-  }
-  const getConfig = () => {
-    getTokenShop();
+    replace(screen);
   };
-
-  React.useEffect(() => {
-    getConfig();
-  }, []);
 
   return (
     <ImageBackground

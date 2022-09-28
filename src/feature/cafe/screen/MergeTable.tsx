@@ -74,6 +74,14 @@ const MergeTable = (props: Props) => {
   const [listSelect, setListSelect] = useState<any>([]);
 
   const order = useSelector<RootStateReducer>((state) => state.cafe.cart.all);
+
+  const orderTables = React.useMemo(() => {
+    if (!order?.length) {
+      return [];
+    }
+    return order?.filter((item) => !`${item.id}`.includes("takeaway"));
+  }, []);
+
   const [tableTo, setTableTo] = useState(order?.[0] || {});
 
   const checkActive = React.useCallback(
@@ -149,7 +157,7 @@ const MergeTable = (props: Props) => {
           onRefresh={onRefresh}
           showsVerticalScrollIndicator={false}
           numColumns={3}
-          data={order || []}
+          data={orderTables || []}
           renderItem={renderItem}
           keyExtractor={(_item, index) => index}
           ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}

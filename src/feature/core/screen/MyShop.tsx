@@ -22,6 +22,9 @@ import LoadingOverlay, {
 } from "../component/loadingPage/LoadingPage";
 import { coreRoutes } from "../router/CoreRouter";
 
+import Icon from "react-native-vector-icons/Ionicons";
+
+
 const MyShop = () => {
   const loading = useRef<RefObject>(null);
   const user = useCurrentUser();
@@ -48,6 +51,7 @@ const MyShop = () => {
   };
 
   const onPress = (key: string) => {
+  
     push(coreRoutes.ChooseShop, {
       key: key,
     });
@@ -81,8 +85,8 @@ const MyShop = () => {
               </AppText>
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1 }}>
-            <View style={{ alignItems: "center" }}>
+          <View style={{ flex: 1,justifyContent: 'center' }}>
+            {store?.staff?.shoper?.length== 0?<View style={{ alignItems: "center" }}>
               <TouchableOpacity
                 style={{ marginVertical: 10 }}
                 onPress={createStore}
@@ -91,7 +95,7 @@ const MyShop = () => {
                   {"Đăng ký cửa hàng"}
                 </AppText>
               </TouchableOpacity>
-            </View>
+            </View> :null}
             <View style={{ padding: 10 }}>
               {store?.staff?.staff?.length > 0 && (
                 <TouchableOpacity
@@ -157,6 +161,10 @@ const MyShop = () => {
         </View>
       </ImageBackground>
       <LoadingOverlay ref={loading} />
+
+      <TouchableOpacity onPress={createStore} style={[styles.container_icon]}>
+        <Icon name="md-add" style={styles.icon2}></Icon>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -177,4 +185,28 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 12,
   },
+  container_icon: {
+    position:'absolute',
+    right:20,
+    bottom:44,
+    backgroundColor: "#3F51B5",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 28,
+    shadowColor: "#111",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.2,
+    elevation: 2,
+    width: 40,
+    height: 40
+  },
+  icon2: {
+    color: "rgba(255,255,255,1)",
+    fontSize: 40,
+    alignSelf: "center"
+  }
 });

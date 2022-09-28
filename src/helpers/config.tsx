@@ -878,22 +878,16 @@ export const postAsync = async function (
     params.append("lng", location.longitude);
   }
 
-  const w_t = await storage.get("w_t");
-  if (!config) {
-    config = { headers: {} };
-    if (w_t) {
-      config.headers[constants.AUTH_HEADER] = w_t;
-    }
-  } else {
-    config = config;
-  }
-
-  // config =config?config:{headers: {}};
-
   // const w_t = await storage.get("w_t");
-
-  // console.log(params,config);
-  // alert(W_T);
+  // if (!config) {
+  //   config = { headers: {} };
+  //   if (w_t) {
+  //     config.headers[constants.AUTH_HEADER] = w_t;
+  //   }
+  // } else {
+  //   config = config;
+  // }
+ 
   return axios.post(url, params, config);
 };
 export const postForm = function (url: string, data: any, config: any = null) {

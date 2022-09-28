@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import React from "react";
+import React, { useRef } from "react";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { AppText } from "src/components/Apptext";
@@ -13,19 +13,26 @@ import { cafeRoutes } from "../router/CafeRouter";
 import { DELETE_BILL_ORDER, LOAD_CART_TABLE } from "../store/constants";
 import { useNavigation } from "@react-navigation/native";
 import { show_money } from "src/helpers/config";
+import LoadingOverlay, {
+  RefObject,
+} from "src/feature/core/component/loadingPage/LoadingPage";
 interface Props
   extends StackScreenProps<CafeStackParamList, cafeRoutes.Detail> {}
 const DetailOrder = (props: Props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const loading = useRef<RefObject>(null);
+
   const dataOrder = useSelector<RootStateReducer>(
     (state) => state.cafe.cart?.[`tb_${props.route.params.id}`]
   );
 
   React.useEffect(() => {
+    loading.current?.toggleState(true);
     dispatch({
       type: LOAD_CART_TABLE,
       payload: props.route.params.id,
+      callback: () => loading.current?.toggleState(false),
     });
   }, []);
 
@@ -261,6 +268,7 @@ const DetailOrder = (props: Props) => {
           {renderFooter()}
         </View>
       </View>
+      <LoadingOverlay ref={loading} />
     </View>
   );
 };

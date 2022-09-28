@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   Image,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Text,
 } from "react-native";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +23,14 @@ import LoadingOverlay, {
   RefObject,
 } from "../component/loadingPage/LoadingPage";
 
+import { httpClient } from "src/helpers/httpClient";
+
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faQrcode } from "nvquang-font-icon/pro-solid-svg-icons";
+
+import { site_url, postAsync } from "src/helpers/config";
+import Button from "src/components/Button";
+
 export interface ItemMenuInterface {
   name?: string;
   icon?: any;
@@ -30,50 +39,121 @@ export interface ItemMenuInterface {
   screen?: string;
 }
 
-const listMenu = [
-  {
-    id: 1,
-    name: "Thu Ngân",
-    icon: images.thungan,
-    role: ["admin"],
-    screen: cafeRoutes.HomeCashier,
-  },
-  {
-    id: 1,
-    name: "Bán hàng",
-    icon: images.banhang,
-    role: ["admin"],
-    screen: cafeRoutes.Home,
-  },
-  {
-    id: 1,
-    name: "Nhà bếp",
-    icon: images.bep,
-    role: ["admin"],
-    screen: cafeRoutes.HomeKitChen,
-  },
-];
-const Dashboard = () => {
+const Dashboard = (props) => {
   const user = useCurrentUser();
   const loading = useRef<RefObject>(null);
   const store = useSelector<RootStateReducer>((state) => state.auth.myStore);
+  const tokenStore = useSelector<RootStateReducer>(
+    (state) => state.auth.tokenStore
+  );
   const dispatch = useDispatch();
+  const params = props.route.params;
+  // alert(JSON.stringify(params));
+
+  const [listMenu, setListMenu] = useState({
+    checkin: 0,
+  });
+  //   [
+  //   {
+  //     id: 1,
+  //     name: "Thu Ngân",
+  //     icon: images.thungan,
+  //     role: ["admin"],
+  //     screen: cafeRoutes.HomeCashier,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Bán hàng",
+  //     icon: images.banhang,
+  //     role: ["admin"],
+  //     screen: cafeRoutes.Home,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Nhà bếp",
+  //     icon: images.bep,
+  //     role: ["admin"],
+  //     screen: cafeRoutes.HomeKitChen,
+  //   },
+  // ]
+
+  // console.log(params);
+
   useEffect(() => {
-    loading.current?.toggleState(true);
-    dispatch({
-      type: GET_MYSTORE,
-      callback: () => loading.current?.toggleState(false),
-    });
+    init();
+
+    // alert(JSON.stringify(user));
+
+    //load  role
+    // loading.current?.toggleState(true);
+    // dispatch({
+    //   type: GET_MYSTORE,
+    //   callback: () => loading.current?.toggleState(false),
+    // });
   }, []);
 
-  const LogOut = () => {
-    dispatch({
-      type: LOGOUT,
+  const init = async () => {
+    loading.current?.toggleState(true);
+
+    // let url = params.server+"/session_id.php?session_id="+params.access_token;
+    // let url =
+    //   "https://access.linkpos.top/session_id.php?session_id=" +
+    //   params.access_token;
+    // //
+
+    // let res = await postAsync(url, {});
+
+    let headers = { headers: {} };
+    headers.headers["auth-token"] = tokenStore;
+    // headers["auth-token"] = httpClient.mytoken;
+    const res1 = await postAsync(
+      "https://access.linkpos.top/action.php?a=client&confirm=permission_checkin",
+      {},
+      headers
+    );
+    console.log(res1.data);
+
+    if (res1.data) {
+      setListMenu(res1.data);
+
+      loading.current?.toggleState(false);
+    }
+  };
+
+  const onScan = () => {
+    props.navigation.navigate("QRcode", {
+      title: "Scan QR Code",
+      lang: "en",
+      handleDataQR: (code) => {},
     });
   };
 
   const renderItem = ({ item, index }) => {
     return <ItemMenu key={index} item={item} />;
+  };
+
+  const show_qrcode = () => {
+    return (
+      <View style={{ alignItems: "center" }}>
+        <Image
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/128/5628/5628131.png",
+          }}
+          style={{ width: 125, height: 125 }}
+        />
+        <Text>Vui lòng quét mã để truy cập làm việc</Text>
+        <Button
+          style={{}}
+          onPress={onScan}
+          textStyle={{
+            color: COLOR.textWhite,
+            width: 215,
+            textAlign: "center",
+          }}
+          text={"Quét mã"}
+        />
+      </View>
+    );
   };
 
   return (
@@ -92,36 +172,38 @@ const Dashboard = () => {
           >
             <View style={{ flex: 1 }}>
               <AppText color={COLOR.main_color} fontSize={16}>
-                {"Xin Chào"}
+                {"Cửa hàng"}
               </AppText>
               <AppText color={COLOR.main_color} fontSize={20} fontWeight="bold">
-                {user?.username_user}
+                {params?.shop}
               </AppText>
             </View>
-            <TouchableOpacity onPress={LogOut}>
-              <AppText fontWeight="bold" color={COLOR.main_color} fontSize={16}>
-                {"Logout"}
-              </AppText>
+            <TouchableOpacity onPress={onScan}>
+              <FontAwesomeIcon icon={faQrcode} color={COLOR.main_color} />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1 }}>
-            <View style={{ alignItems: "center" }}>
-              <Image
-                style={{
-                  width: 100,
-                  height: 100,
-                }}
-                resizeMode="contain"
-                source={images.logo}
-              />
-            </View>
-            <FlatList
-              style={{ paddingHorizontal: 10 }}
-              data={listMenu}
-              renderItem={renderItem}
-              ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-              keyExtractor={(item, index) => `${index}`}
+          <View style={{ alignItems: "center" }}>
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+              }}
+              resizeMode="contain"
+              source={images.logo}
             />
+          </View>
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            {listMenu?.checkin ? (
+              <FlatList
+                style={{ paddingHorizontal: 10 }}
+                data={listMenu?.menu}
+                renderItem={renderItem}
+                ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+                keyExtractor={(item, index) => `${index}`}
+              />
+            ) : (
+              show_qrcode()
+            )}
           </View>
         </View>
       </ImageBackground>

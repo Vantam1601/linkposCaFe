@@ -21,7 +21,7 @@ import BillVoucher from "./component/BillVoucher";
 import MonneyView from "./component/MonneyView";
 import ProductOrder from "./component/ProductOrder";
 import { getBottomSpace } from "react-native-iphone-x-helper";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { debounce } from "lodash";
 import { amountFormat } from "src/helpers/constants";
 
@@ -111,9 +111,9 @@ const Bill = (props: Props) => {
   };
 
   const handleChangeCustomer = React.useRef(
-    debounce(val => {
+    debounce((val) => {
       getDataCustomer(val);
-    }, 1000),
+    }, 1000)
   ).current;
 
   const getDataCustomer = async (text: string) => {
@@ -126,9 +126,11 @@ const Bill = (props: Props) => {
     );
 
     if (res.status === 200 && res.data) {
-      setstate(produce((draft) => {
-        draft.user = res.data
-     }))
+      setstate(
+        produce((draft) => {
+          draft.user = res.data;
+        })
+      );
     } else {
       Toast.show({
         type: "error",
@@ -169,54 +171,55 @@ const Bill = (props: Props) => {
     >
       <HeaderBack title={`Bill`} />
       <KeyboardAwareScrollView>
-      <ProductOrder total={item.total} data={Object.values(dataBill)} />
-      <View style={{ paddingHorizontal: 10 }}>
-        <MonneyView
-          value={state.monney}
-          onSetValue={(val) => setData("monney", val)}
-          total={totalMoney}
-        />
-        <BillCustomer
-          value={state.username}
-          onSetValue={(val) => {
-            handleChangeCustomer(val);
-            setData("username", val);
-          }}
-          user={state.user}
-        />
-        {/* <BillVoucher
+        <ProductOrder total={item.total} data={Object.values(dataBill)} />
+        <View style={{ paddingHorizontal: 10 }}>
+          <MonneyView
+            value={state.monney}
+            onSetValue={(val) => setData("monney", val)}
+            total={totalMoney}
+          />
+          <BillCustomer
+            value={state.username}
+            onSetValue={(val) => {
+              handleChangeCustomer(val);
+              setData("username", val);
+            }}
+            user={state.user}
+          />
+          {/* <BillVoucher
           value={state.codeVoucher}
           onSetValue={(val) => {
             setData("codeVoucher", val);
             getVoucher(val);
           }}
         /> */}
-        <BillDiscount
-          value={state.discount}
-          onSetValue={(val) => setData("discount", val)}
-        />
-      </View>
-      <View
-        style={{
-          padding: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <AppText fontWeight="bold">{"Tổng tiền : "}</AppText>
-        <AppText fontWeight="bold" fontSize={20}>
-          {amountFormat(`${totalMoney}`)}
-        </AppText>
-      </View>
-      <View style={{ paddingHorizontal: 5 }}>
-        <Button
-          type={"success"}
-          onPress={onSubmit}
-          textStyle={{ color: COLOR.textWhite }}
-          text={"Thanh toán"}
-        />
+          <BillDiscount
+            total={Number(item.total)}
+            value={state.discount}
+            onSetValue={(val) => setData("discount", val)}
+          />
         </View>
-        </KeyboardAwareScrollView>
+        <View
+          style={{
+            padding: 10,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <AppText fontWeight="bold">{"Tổng tiền : "}</AppText>
+          <AppText fontWeight="bold" fontSize={20}>
+            {amountFormat(`${totalMoney}`)}
+          </AppText>
+        </View>
+        <View style={{ paddingHorizontal: 5 }}>
+          <Button
+            type={"success"}
+            onPress={onSubmit}
+            textStyle={{ color: COLOR.textWhite }}
+            text={"Thanh toán"}
+          />
+        </View>
+      </KeyboardAwareScrollView>
     </View>
   );
 };
