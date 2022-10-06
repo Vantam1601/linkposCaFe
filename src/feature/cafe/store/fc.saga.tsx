@@ -40,7 +40,7 @@ export function* getTokenShop(action: PayloadAction<string, unknown, unknown>) {
     if (response.status === 200) {
       yield put({
         type: Constants.LOAD_TOKEN_SHOP_SUCCESS,
-        payload: response.data,
+        payload: response.data.token,
       });
     }
     action.callback?.();
@@ -238,12 +238,19 @@ export function* completeOrder(
 export function* takeAwayOrder(
   action: PayloadAction<string, unknown, unknown>
 ) {
+
+  // return;
   const response = yield call(
     httpClient.postStore,
     API_ENDPOINT.takeaway,
     action.payload,
     true
   );
+
+  //
+  //
+  // alert(JSON.stringify(response.data));
+
   //
   if (response.status === 200) {
     Toast.show({

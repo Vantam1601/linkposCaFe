@@ -5,8 +5,9 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   ScrollView,
-  StyleSheet,
-  View,
+  StyleSheet,Linking,
+  TouchableOpacity,
+  View,Text,
 } from "react-native";
 import { images } from "src/assets/images";
 
@@ -21,7 +22,7 @@ import FormLoginUserName from "./FormLoginUserName";
 const { width, height } = Dimensions.get("window");
 
 const LoginSchema = Yup.object().shape({
-  username: Yup.string().required("* Required"),
+  username: Yup.string().required("* Ô nhập không được trống"),
 });
 
 type LoginMutationVariables = {
@@ -69,15 +70,24 @@ const LoginScreen = memo(() => {
                 source={images.logo}
               />
               <AppText style={styles.txtLogo}>
-                {intl.formatMessage({
-                  id: "label:login",
-                })}
+                {"Đăng nhập"}
               </AppText>
               {username ? (
                 <FormLoginPassWord username={username} />
               ) : (
                 <FormLoginUserName setUsername={setUsername} />
               )}
+            </View>
+
+            <View style={{marginTop:16,width:'100%',alignItems: "center",justifyContent: 'space-between',flexDirection:'row'}}>
+              <TouchableOpacity onPress={()=>{
+                 Linking.openURL("https://linkpos.giaiphap.xyz/register.php");
+              }}>
+               <Text>Đăng ký ngay</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+               <Text>Quên mật khẩu?</Text>
+              </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
@@ -157,7 +167,7 @@ const styles = StyleSheet.create({
   },
   txtLogo: {
     fontSize: 26,
-    marginTop: 30,
+ 
     lineHeight: 26,
     textAlign: "center",
     fontWeight: "500",

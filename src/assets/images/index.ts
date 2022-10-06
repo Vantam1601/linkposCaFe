@@ -12,6 +12,8 @@ export const images = {
   banhang: require("./banhang.png"),
   user: require("./user.png"),
   infoShop: require("./infoShop.png"),
+  ads: require("./ads.png"),
+  board: require("./board.png"),
 };
 
 export type ImageTypes = keyof typeof images;

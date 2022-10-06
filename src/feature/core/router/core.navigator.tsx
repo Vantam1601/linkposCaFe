@@ -20,6 +20,48 @@ import { coreRoutes } from "./CoreRouter";
 import QRcode from "src/old/screens/qr/qr";
 import Webview from "src/old/screens/webview/";
 
+import FingerQrcode from "../../cafe/screen/FingerQrcode";
+import MyBoardOpen from "../../cafe/screen/MyBoardOpen";
+
+import SellFingerHistory from "../../cafe/screen/sell/FingerHistory";
+import SellReport from "../../cafe/screen/sell/Report";
+import SellInvToday from "../../cafe/screen/sell/InvToday";
+import SellConfig from "../../cafe/screen/sell/Config";
+
+import DetailOrder from "../../cafe/screen/DetailCashierOutlet";
+
+import CashierFingerHistory from "../../cafe/screen/sell/FingerHistory";
+import CashierConfig from "../../cafe/screen/sell/Config";
+
+
+import Profile from "../screen/Profile";
+import InfoProfile from "../screen/InfoProfile";
+import UpdatePassword from "../../auth/screen/UpdatePassword";
+
+
+
+import ComingSoon from "../screen/ComingSoon";
+
+
+const pages = {
+  QRcode: QRcode,
+  Webview: Webview,
+  SellFingerHistory: SellFingerHistory,
+  FingerQrcode: FingerQrcode,
+  MyBoardOpen: MyBoardOpen,
+  SellConfig: SellConfig,
+  SellReport: SellReport,
+  SellInvToday: SellInvToday,
+
+  CashierConfig: CashierConfig,
+  CashierFingerHistory: CashierFingerHistory,
+  DetailOrder: DetailOrder,
+
+  UpdatePassword:UpdatePassword,
+
+  ComingSoon:ComingSoon
+};
+
 export type CoreStackParamList = {
   [coreRoutes.MY_STORE]: undefined;
   [coreRoutes.DASH_BOARD]: undefined;
@@ -33,6 +75,8 @@ export type CoreStackParamList = {
   [coreRoutes.ChooseShop]: {
     key: string;
   };
+  [coreRoutes.Profile]: undefined;
+  [coreRoutes.InfoProfile]: undefined;
 };
 
 const Stack = createStackNavigator<CoreStackParamList>();
@@ -101,23 +145,34 @@ export const CoreNavigator = () => {
         }}
         component={RegisterStepThree}
       />
-
+      {Object.entries({
+        ...pages,
+      }).map(([name, component]) => (
+        <Stack.Screen
+          name={name}
+          options={{
+            headerShown: false,
+            title: name,
+          }}
+          key={name}
+          component={component}
+        />
+      ))}
       <Stack.Screen
-        name={"QRcode"}
+        name={coreRoutes.Profile}
         options={{
-          title: "QRcode",
+          title: "CAFE Shop",
           headerShown: false,
         }}
-        component={QRcode}
+        component={Profile}
       />
-
       <Stack.Screen
-        name={"Webview"}
+        name={coreRoutes.InfoProfile}
         options={{
-          title: "Webview",
+          title: "CAFE Shop",
           headerShown: false,
         }}
-        component={Webview}
+        component={InfoProfile}
       />
     </Stack.Navigator>
   );

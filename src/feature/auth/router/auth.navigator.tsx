@@ -11,7 +11,10 @@ import { AppRoutes } from "src/navigator/app-routes";
 
 import type { RootStackParamList } from "../../../navigator/root.navigator";
 import VerifyPassScreen from "../screen/verify_pass";
+import UpdatePassword from "../screen/UpdatePassword";
 import { authRoutes } from "./AuthRouter";
+
+
 
 export type AuthStackParamList = {
   [authRoutes.LOGIN]: undefined;
@@ -19,6 +22,7 @@ export type AuthStackParamList = {
   [authRoutes.FORGOT_PASSWORD]: undefined;
   [authRoutes.FORGOT_PASSWORD_OTP]: undefined;
   [authRoutes.FORGOT_PASSWORD_OTP_NEW]: undefined;
+  [authRoutes.UPDATE_PASSWORD]: undefined;
   [authRoutes.VERIFY_PASSS]: {
     username: string;
   };
@@ -50,6 +54,8 @@ export const AuthNavigator = () => {
         }}
         component={VerifyPassScreen}
       />
+
+      
     </Stack.Navigator>
   );
 };

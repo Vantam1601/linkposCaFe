@@ -23,7 +23,12 @@ interface ItemDiscount {
   name: string;
 }
 const listDiscount: ItemDiscount[] = [
+  
   {
+    id: 0,
+    value: 0,
+    name: "0",
+  },{
     id: 1,
     value: 5,
     name: "5%",
@@ -88,7 +93,7 @@ const BillDiscount = (props: Props) => {
         </AppText>
         <Input
           autoCapitalize="none"
-          placeholder={"Nhap mã code"}
+          placeholder={"Nhập số tiền cần giảm"}
           multiline={false}
           onChangeText={(val: any) => props.onSetValue(val)}
           value={props.value}

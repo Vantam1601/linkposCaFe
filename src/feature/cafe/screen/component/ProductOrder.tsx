@@ -22,7 +22,7 @@ const ProductOrder = ({ data, total }: Props) => {
         }}
       >
         <View style={[styles.itemRow]}>
-          <AppText fontWeight="bold">{index}</AppText>
+          <AppText fontWeight="bold">{index+1}</AppText>
         </View>
         <View style={[styles.itemRow2]}>
           <AppText fontWeight="bold">{item.title}</AppText>

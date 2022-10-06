@@ -58,7 +58,7 @@ const BottomTabLayout = (props: BottomTabBarProps) => {
       <ItemTab
         screen={cafeRoutes.Selling}
         index={0}
-        title="Home"
+        title="Trang chủ"
         image={images.home}
         activeIndex={index}
       />
@@ -91,14 +91,14 @@ const BottomTabLayout = (props: BottomTabBarProps) => {
       <ItemTab
         screen={cafeRoutes.MergeTable}
         index={2}
-        title="Merge Table"
+        title="Nhập bàn"
         image={images.cart}
         activeIndex={index}
       />
       <ItemTab
-        screen={cafeRoutes.Report}
+        screen={"SellReport"}
         index={3}
-        title="Report"
+        title="Menu"
         image={images.report}
         activeIndex={index}
       />

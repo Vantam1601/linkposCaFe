@@ -1,3 +1,4 @@
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import {
   FlatList,
@@ -102,6 +103,14 @@ const Kitchen = (props: Props) => {
   React.useEffect(() => {
     onRefresh();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch({
+        type: LOAD_CART_KITCHEN,
+      });
+    }, [])
+  );
 
   const renderItem = ({ item, index }) => {
     return <ItemTable key={item.id} item={item} index={index} />;

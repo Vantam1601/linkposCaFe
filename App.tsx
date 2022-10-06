@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { navigationRef } from "src/navigator/RootNavigation";
 import { i18n } from "./src/locales";
+import RNBootSplash from "react-native-bootsplash";
 
 moment.updateLocale("vi", {
   relativeTime: {
@@ -62,6 +63,7 @@ import { AppRoutes } from "src/navigator/app-routes";
 import { RootNavigator } from "src/navigator/root.navigator";
 import { persistor, store } from "src/store/store";
 import { COLOR } from "src/theme/color";
+import SocketController from "src/feature/core/SocketController";
 
 Colors.loadColors({
   primaryColor: "#2364AA",
@@ -107,10 +109,14 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <I18nextProvider i18n={i18n}>
           <SafeAreaProvider>
+            <SocketController />
             <NavigationContainer
               ref={navigationRef}
               fallback={<Text>Loading...</Text>}
               theme={DefaultTheme}
+              onReady={() => {
+                RNBootSplash.hide();
+              }}
             >
               <AppStatusBar backgroundColor={COLOR.main_color} />
               <RootNavigator initialRouteName={AppRoutes.AUTH} />

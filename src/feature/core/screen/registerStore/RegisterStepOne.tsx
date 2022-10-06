@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity,SafeAreaView,
   View,
 } from "react-native";
 import { images } from "src/assets/images";
@@ -34,8 +34,8 @@ import HeaderBack from "src/components/HeaderBack";
 const { width, height } = Dimensions.get("window");
 
 const FormSchema = Yup.object().shape({
-  username: Yup.string().required("* Required"),
-  phonenumber: Yup.string().required("* Required"),
+  username: Yup.string().required("* Ô nhập không được trống"),
+  phonenumber: Yup.string().required("* Ô nhập không được trống"),
 });
 
 type LoginMutationVariables = {
@@ -60,8 +60,8 @@ const RegisterStepOne = memo(() => {
   const { control, handleSubmit, errors } = useForm<LoginMutationVariables>({
     resolver: yupResolver(FormSchema),
     defaultValues: {
-      username: "new Shop",
-      phonenumber: "0909123123",
+      username: "",
+      phonenumber: "",
     },
   });
 
@@ -260,6 +260,9 @@ const RegisterStepOne = memo(() => {
                 />
               </View>
               {renderPhone()}
+              
+            </View>
+            <View>
               <Button
                 buttonStyle={styles.buttonLogin}
                 loading={loading}
@@ -271,6 +274,7 @@ const RegisterStepOne = memo(() => {
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
+        <SafeAreaView/>
       </ImageBackground>
     </View>
   );
@@ -359,6 +363,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   viewLogo: {
+    flex:1,
     alignSelf: "center",
     alignItems: "center",
   },

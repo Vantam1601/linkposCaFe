@@ -30,7 +30,8 @@ const MyWebViewScreen = memo((navigationRoute: any) => {
   const myWebView = useRef<any>();
   const navigation = useNavigation();
 
-  const config: any = useTypedSelector((state) => state.app.appJson);
+  // const config: any = useTypedSelector((state) => state.app.appJson);
+  const config = null;
 
   const [laucher,setLauncher] = useState<any>("");
   const show_laucher = ()=>{

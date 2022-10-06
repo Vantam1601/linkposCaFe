@@ -7,4 +7,6 @@ export enum coreRoutes {
   RegisterStepTwo = "RegisterStepTwo",
   RegisterStepThree = "RegisterStepThree",
   ChooseShop = "ChooseShop",
+  Profile = "Profile",
+  InfoProfile = "InfoProfile",
 }

@@ -29,6 +29,9 @@ import LoadingOverlay, {
   RefObject,
 } from "src/feature/core/component/loadingPage/LoadingPage";
 import { show_money } from "src/helpers/config";
+import normalize from "src/helpers/normalize";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const { width: deviceWidth, height: deviceHeight } = Dimensions.get("window");
 
@@ -160,7 +163,7 @@ const ListOrder = (props: PropsListOrder) => {
         <View style={{ flexDirection: "row" }}>
           <Input
             autoCapitalize="none"
-            placeholder={"note..."}
+            placeholder={"Ghi chú..."}
             errorStyle={styles.textError}
             multiline={false}
             onChangeText={(val: any) => onChangeNote(data, val)}
@@ -174,28 +177,77 @@ const ListOrder = (props: PropsListOrder) => {
       </TouchableOpacity>
     );
   };
+
+  const navigation = useNavigation();
   return (
     <View style={{ flex: 1, paddingBottom: 20, paddingTop: 10 }}>
-      <AppText fontSize={20} fontWeight="bold" style={{ textAlign: "center" }}>
-        {"List order"}
-      </AppText>
+      <View style={{ flexDirection: "row", paddingHorizontal: 10 }}>
+        <TouchableOpacity activeOpacity={0.6} onPress={navigation.goBack}>
+          <FontAwesome
+            name={"remove"}
+            size={30}
+            color={COLOR.main_color}
+            style={{ color: COLOR.main_color, marginRight: normalize(6) }}
+          />
+        </TouchableOpacity>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            paddingRight: 50,
+            flex: 1,
+          }}
+        >
+          <AppText
+            fontSize={20}
+            fontWeight="bold"
+            style={{ textAlign: "center" }}
+          >
+            {"Danh sách"}
+          </AppText>
+        </View>
+      </View>
+
       <FlatList
         showsVerticalScrollIndicator={false}
         data={data ?? []}
         renderItem={renderProductItem}
         keyExtractor={(item, index) => `${index}`}
       />
-      <View style={{ paddingHorizontal: 10 }}>
+      <View
+        style={{
+          paddingHorizontal: 10,
+          alignItems: "center",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
+      >
         <Button
-          onPress={onSubmit}
+          buttonStyle={{ width: "45%" }}
+          onPress={() => {
+            onSubmit(true);
+          }}
           textStyle={{ color: COLOR.textWhite }}
-          text={"Submit"}
+          text={"Xác nhận & In bill"}
+        />
+
+        <Button
+          buttonStyle={{ width: "45%" }}
+          onPress={() => {
+            onSubmit();
+          }}
+          textStyle={{ color: COLOR.textWhite }}
+          text={"Xác nhận"}
         />
       </View>
     </View>
   );
 };
 const Order = (props: Props) => {
+  const tokenStore = useSelector<RootStateReducer>(
+    (state) => state.auth.tokenStore
+  );
+
   const { item = {} } = props.route?.params;
   const [cartLocal, setCartLocal] = useState({});
   const [isVisible, setIsVisible] = useState(false);
@@ -280,7 +332,7 @@ const Order = (props: Props) => {
     );
   };
 
-  const onSubmitTakeAway = () => {
+  const onSubmitTakeAway = async (print) => {
     let totalMonney = 0;
     const products = Object.values(cartLocal).map((item, index) => {
       totalMonney = totalMonney + item.item.price * item.number;
@@ -318,25 +370,43 @@ const Order = (props: Props) => {
 
     Object.values(cartLocal).map((item, index) => {
       dataOrder[`products[${index}][id_product]`] = item.item.id;
+      dataOrder[`products[${index}][title]`] = item.title;
       dataOrder[`products[${index}][quantity]`] = item.number;
       dataOrder[`products[${index}][price]`] = item.item.price;
       dataOrder[`products[${index}][subtotal]`] = item.item.price * item.number;
       dataOrder[`products[${index}][note]`] = item.note;
     });
     setIsVisible(false);
+    setCartLocal({});
     push(cafeRoutes.Bill, {
       item: dataOrder,
     });
+
+    if (print == true) {
+      let headers = { headers: {} };
+      headers.headers["auth-token"] = tokenStore;
+      body = { data: dataOrder.products };
+      body.type = "json";
+      body.name = Date.now();
+      const res1 = await postAsync(
+        "https://access.linkpos.top/action.php?a=print&confirm=add",
+        body,
+        headers
+      );
+
+      console.log(res1.data);
+    }
   };
 
-  const onSubmit = () => {
+  const onSubmit = async (print) => {
     loading.current?.toggleState(true);
     if (item.id === -1) {
-      return onSubmitTakeAway();
+      return onSubmitTakeAway(print);
     }
     const body: any = { ...item };
     Object.values(cartLocal).map((item, index) => {
       body[`products[${index}][id_product]`] = item.item.id;
+      body[`products[${index}][title]`] = item.item.title;
       body[`products[${index}][quantity]`] = item.number ?? "1";
       body[`products[${index}][price]`] = item.item.price ?? "0";
       body[`products[${index}][subtotal]`] =
@@ -348,16 +418,32 @@ const Order = (props: Props) => {
       type: SUBMIT_ORDER,
       payload: body,
       callback: () => {
+        setCartLocal({});
         navigation.goBack();
         loading.current?.toggleState(false);
       },
     });
+
+    if (print == true) {
+      let headers = { headers: {} };
+      headers.headers["auth-token"] = tokenStore;
+      body = { data: body.products };
+      body.type = "json";
+      body.name = Date.now();
+      const res1 = await postAsync(
+        "https://access.linkpos.top/action.php?a=print&confirm=add",
+        body,
+        headers
+      );
+
+      // console.log(res1.data);
+    }
   };
 
   return (
     <View style={{ flex: 1 }}>
       <HeaderBackCustom
-        title={`Order - ${item.name}`}
+        title={`Gọi món - ${item.name}`}
         rightComponent={renderCart()}
       />
       <ListProduct onPressItem={onPressItem} />

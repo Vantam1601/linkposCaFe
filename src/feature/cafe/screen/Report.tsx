@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image,ScrollView} from "react-native";
 import React from "react";
 import { COLOR } from "src/theme/color";
 import HeaderBack from "src/components/HeaderBack";
@@ -57,12 +57,13 @@ const ItemMenu = (props: ItemMenuProps) => {
 const Report = () => {
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.bg }}>
-      <HeaderBack title={`Report`} />
-      <View style={{ flex: 1 }}>
-        <ItemMenu name={"Lịch sử đơn hàng"} />
-        <ItemMenu name={"Chấm công"} />
-        <ItemMenu screen={cafeRoutes.ConfigMenu} name={"Config menu"} />
-      </View>
+      <HeaderBack title={`Thông tin`} />
+      <ScrollView style={{ flex: 1 }}>
+        <ItemMenu screen={cafeRoutes.CashierToday} name={"Lịch sử đơn hàng"} />
+        <ItemMenu screen={"FingerQrcode"} name={"Mã Chấm công"} />
+        <ItemMenu screen={"CashierFingerHistory"} name={"Lịch sử chấm công"} />
+        <ItemMenu screen={"CashierConfig"} name={"Cài đặt"} />
+      </ScrollView>
     </View>
   );
 };

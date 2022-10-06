@@ -36,7 +36,7 @@ import { LOGIN_SUCCESS } from "../store/constants";
 const { width, height } = Dimensions.get("window");
 
 const LoginSchema = Yup.object().shape({
-  password: Yup.string().required("* Required"),
+  password: Yup.string().required("* Ô nhập không được trống"),
 });
 
 type LoginMutationVariables = {

@@ -3,15 +3,17 @@ import {
   FlatList,
   Image,
   ImageBackground,
-  StyleSheet,
+  StyleSheet,SafeAreaView,
   TouchableOpacity,
   View,
-  Text,
+  Text,Dimensions,ScrollView
 } from "react-native";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { useDispatch, useSelector } from "react-redux";
 import { images } from "src/assets/images";
 import { AppText } from "src/components/Apptext";
+import FastImage from "src/components/FastImage";
+
 import { cafeRoutes } from "src/feature/cafe/router/CafeRouter";
 import normalize from "src/helpers/normalize";
 import { useCurrentUser } from "src/hooks/useCurrentUser";
@@ -22,6 +24,7 @@ import ItemMenu from "../component/ItemMenu";
 import LoadingOverlay, {
   RefObject,
 } from "../component/loadingPage/LoadingPage";
+import Geolocation from '@react-native-community/geolocation';
 
 import { httpClient } from "src/helpers/httpClient";
 
@@ -30,6 +33,7 @@ import { faQrcode } from "nvquang-font-icon/pro-solid-svg-icons";
 
 import { site_url, postAsync } from "src/helpers/config";
 import Button from "src/components/Button";
+import { show_money } from "src/helpers/config";
 
 export interface ItemMenuInterface {
   name?: string;
@@ -48,11 +52,13 @@ const Dashboard = (props) => {
   );
   const dispatch = useDispatch();
   const params = props.route.params;
-  // alert(JSON.stringify(params));
+  //alert(JSON.stringify(params));
 
   const [listMenu, setListMenu] = useState({
     checkin: 0,
+    sell_total:0
   });
+ 
   //   [
   //   {
   //     id: 1,
@@ -78,6 +84,7 @@ const Dashboard = (props) => {
   // ]
 
   // console.log(params);
+ 
 
   useEffect(() => {
     init();
@@ -95,41 +102,152 @@ const Dashboard = (props) => {
   const init = async () => {
     loading.current?.toggleState(true);
 
-    // let url = params.server+"/session_id.php?session_id="+params.access_token;
-    // let url =
-    //   "https://access.linkpos.top/session_id.php?session_id=" +
-    //   params.access_token;
-    // //
-
-    // let res = await postAsync(url, {});
 
     let headers = { headers: {} };
-    headers.headers["auth-token"] = tokenStore;
-    // headers["auth-token"] = httpClient.mytoken;
+    headers.headers["auth-token"] = tokenStore; 
     const res1 = await postAsync(
-      "https://access.linkpos.top/action.php?a=client&confirm=permission_checkin",
+      params.server+"/action.php?a=client&confirm=permission_checkin",
       {},
       headers
     );
-    console.log(res1.data);
+    // console.log(res1.data);
 
     if (res1.data) {
-      setListMenu(res1.data);
+      // alert(res1.data.type);
+
+      res1.data.menu.map((v,i)=>{
+        if(v.screen.match(/^https?:/ig)){
+           v.onPress = function(){
+              let a = v.screen+(v.screen.includes("?")?"?":"&")+"auth-token="+tokenStore;
+      
+                props.navigation.navigate("Webview", {
+                  title:"Scan QR Code",
+                  url:a,
+                   
+                });
+            };
+        }else if(v.screen=="ComingSoon"){
+          v.icon = images.board;
+          
+          v.onPress = function(){
+             props.navigation.navigate("ComingSoon");   
+          };
+        }
+      });
+
+      res1.data.report.map((v,i)=>{
+        if(v.screen.match(/^https?:/ig)){
+           v.onPress = function(){
+              let a = v.screen+(v.screen.includes("?")?"?":"&")+"auth-token="+tokenStore;
+      
+                props.navigation.navigate("Webview", {
+                  title:"Scan QR Code",
+                  url:a,
+                   
+                });
+            };
+        }else if(v.screen=="ComingSoon"){
+          v.icon = images.board;
+          
+          v.onPress = function(){
+             props.navigation.navigate("ComingSoon");   
+          };
+        }
+      });
+
+      res1.data.manager.map((v,i)=>{
+        if(v.screen.match(/^https?:/ig)){
+           v.onPress = function(){
+              let a = v.screen+(v.screen.includes("?")?"?":"&")+"auth-token="+tokenStore;
+      
+                props.navigation.navigate("Webview", {
+                  title:"Scan QR Code",
+                  url:a,
+                   
+                });
+            };
+        }else if(v.screen=="ComingSoon"){
+          v.icon = images.board;
+          
+          v.onPress = function(){
+             props.navigation.navigate("ComingSoon");   
+          };
+        }
+      });
+
+     
+      setListMenu(res1.data); 
 
       loading.current?.toggleState(false);
     }
   };
 
-  const onScan = () => {
-    props.navigation.navigate("QRcode", {
-      title: "Scan QR Code",
-      lang: "en",
-      handleDataQR: (code) => {},
+
+  const go_scan = (gps)=>{
+     props.navigation.navigate("QRcode", {
+      title: "Quét mã chấm công ca làm việc",
+      lang: "vi",
+      handleDataQR: async(code) => {
+          var items =  action =  data = null;
+        try{
+          items = JSON.parse(decodeURIComponent(code));
+          action = code.action;
+          data = code.token;
+        }catch(e){
+           var items = code.split(";");
+           var action = items[0];
+           var data = items[1];
+        }
+        
+        
+        // alert(action);
+         let headers = { headers: {} };
+         headers.headers["auth-token"] = tokenStore; 
+
+        switch(action){
+            
+            case "FINGER":
+ 
+              gps.qrcode = data;
+              const res = await postAsync(
+                params.server+"/action.php?a=finger&confirm=qrcode_check",
+                gps,
+                headers
+              ); 
+
+                  if (typeof res.data === "object") {
+               
+                      init(); 
+                  } else {
+                      alert(res.data);
+                  }
+         
+            break;
+            default :
+              alert("Không tìm thấy yêu cầu.");
+                
+            break;
+        }
+      },
     });
+  }
+
+  const onScan = () => {
+    Geolocation.getCurrentPosition((position) => {
+      go_scan({lat:position.coords.latitude,lng:position.coords.longitude});
+      
+   }, (error) => alert("Vui lòng bật GPS"), { 
+     enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 
+   }
+);
+
+
+    
   };
 
   const renderItem = ({ item, index }) => {
-    return <ItemMenu key={index} item={item} />;
+    // console.log(((index+1)%2==1 && listMenu?.menu.length-1==index?'100%':'48%'));
+    return <ItemMenu key={index} width={((index+1)%2==1 && listMenu?.menu.length-1==index?'100%':'48%')} item={item} />;
   };
 
   const show_qrcode = () => {
@@ -156,18 +274,59 @@ const Dashboard = (props) => {
     );
   };
 
+  const show_action = ()=>{
+    return <ScrollView style={{flex:1,paddingHorizontal: 10,marginVertical:10}}>
+      <View style={{minHeight:100}}>
+      <AppText style={{marginVertical: 8}} color={COLOR.main_color} fontSize={20} fontWeight="bold">
+         Truy cập nhanh
+      </AppText>
+        <View style={{justifyContent: "space-around",alignItems:'center',flexDirection:'row',flexWrap:'wrap'}}>
+        {listMenu?.access?.map((v,index)=>{
+           const w = Dimensions.get('window').width;
+           const l = listMenu?.access.length>3?3:listMenu?.access.length;
+           return <ItemMenu key={index} width={(w/l)-16} item={v} />;
+        })}
+        </View>
+      </View>
+      {listMenu?.isadmin?<>
+        <AppText style={{marginVertical: 8}} color={COLOR.main_color} fontSize={20} fontWeight="bold">
+         Báo cáo
+      </AppText>
+      <View style={{justifyContent: "space-around",alignItems:'center',flexDirection:'row',flexWrap:'wrap'}}>
+        {listMenu?.report?.map((v,index)=>{
+           const w = Dimensions.get('window').width;
+           const l = listMenu?.report.length>3?3:listMenu?.report.length;
+           return <ItemMenu key={index} width={(w/l)-16} item={v} />;
+        })}
+        </View>
+      <AppText style={{marginVertical: 8}} color={COLOR.main_color} fontSize={20} fontWeight="bold">
+         Quản lý
+      </AppText>
+      <View style={{justifyContent: "space-around",alignItems:'center',flexDirection:'row',flexWrap:'wrap'}}>
+        {listMenu?.manager?.map((v,index)=>{
+           const w = Dimensions.get('window').width;
+           const l = listMenu?.manager.length>3?3:listMenu?.manager.length;
+           return <ItemMenu key={index} width={(w/l)-16} item={v} />;
+        })}
+        </View>
+       
+      
+      </>:<View style={{padding:16,justifyContent: "space-around",alignItems: "center",flexDirection: 'row' }}><Image resizeMode={"contain"} source={{uri:"https://dautu.giaiphap.xyz/public/images/landingpage/desktop/slide5.png"}} style={{marginTop:24,height:315,width:'95%'}} /></View>}
+      
+    </ScrollView>
+  }
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
         source={images.background}
         style={{ flex: 1, paddingTop: getStatusBarHeight() }}
       >
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1}}>
           <View
             style={{
               flexDirection: "row",
-              paddingHorizontal: normalize(15),
-              paddingVertical: 10,
+              paddingHorizontal: 16,
+              
             }}
           >
             <View style={{ flex: 1 }}>
@@ -179,33 +338,59 @@ const Dashboard = (props) => {
               </AppText>
             </View>
             <TouchableOpacity onPress={onScan}>
-              <FontAwesomeIcon icon={faQrcode} color={COLOR.main_color} />
+              <FontAwesomeIcon icon={faQrcode} size={20} color={COLOR.main_color} />
             </TouchableOpacity>
           </View>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-              }}
-              resizeMode="contain"
-              source={images.logo}
-            />
+          <View style={{ alignItems: "center",marginTop:20,marginBottom:48}}>
+             <AppText color={COLOR.main_color} fontSize={24}>
+                {"Bảng điều khiển"}
+              </AppText>
           </View>
+
+          {listMenu?.isadmin?<View style={{  alignItems:'center',justifyContent: "center" }}>
+              <View style={{ 
+          backgroundColor: COLOR.white,
+          borderRadius: 10,
+          padding: 10,  alignItems:'center',justifyContent: "center" }}>
+                <Text>Doanh thu hôm nay</Text>
+                <Text style={{fontSize:14,fontWeight:'bold'}}>{show_money(listMenu?.sell_total?listMenu?.sell_total:0)}</Text>
+            </View>
+          </View>:null}
+
           <View style={{ flex: 1, justifyContent: "center" }}>
-            {listMenu?.checkin ? (
-              <FlatList
-                style={{ paddingHorizontal: 10 }}
-                data={listMenu?.menu}
-                renderItem={renderItem}
-                ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-                keyExtractor={(item, index) => `${index}`}
-              />
-            ) : (
-              show_qrcode()
-            )}
+            {listMenu?.checkin ? show_action() : show_qrcode() }
+
+
+          </View>
+          <View style={{padding:16,justifyContent: "space-around",alignItems: "center",flexDirection: 'row' }}>
+              <Button
+              style={{}}
+              onPress={()=>{
+                props.navigation.goBack();
+              }}
+              textStyle={{
+                color: COLOR.textWhite,
+                width: '49%',
+                textAlign: "center",
+              }}
+              text={"Về trang chủ"}
+            />
+
+            {listMenu?.permissions?.boardopen?<Button
+              style={{}}
+              onPress={()=>{
+                props.navigation.navigate("MyBoardOpenAdmin");
+              }}
+              textStyle={{
+                color: COLOR.textWhite,
+                 width: '49%',
+                textAlign: "center",
+              }}
+              text={"Mở board làm việc"}
+            />:null}
           </View>
         </View>
+      <SafeAreaView/>
       </ImageBackground>
       <LoadingOverlay ref={loading} />
     </View>

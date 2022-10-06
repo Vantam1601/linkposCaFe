@@ -58,10 +58,12 @@ export default function authReducer(
       }
 
       case Constants.LOGOUT: {
-        draft.token = "";
-        draft.user = undefined;
-        draft.myStore = [];
-        draft.tokenStore = undefined;
+        return { ...initialState };
+        break;
+      }
+
+      case Constants.UPDATE_PROFILE_SUCCESS: {
+        draft.user = action.payload;
         break;
       }
 

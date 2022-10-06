@@ -17,13 +17,13 @@ import { useCurrentUser } from "src/hooks/useCurrentUser";
 import { push } from "src/navigator/RootNavigation";
 import { RootStateReducer } from "src/store/types";
 import { COLOR } from "src/theme/color";
-import { GET_MYSTORE } from "../../auth/store/constants";
+import { GET_MYSTORE,LOGOUT} from "../../auth/store/constants";
 import ItemShop from "../component/ItemShop";
 import LoadingOverlay, {
   RefObject,
 } from "../component/loadingPage/LoadingPage";
 import { CoreStackParamList } from "../router/core.navigator";
-import { coreRoutes } from "../router/CoreRouter";
+import { coreRoutes } from "../router/CoreRouter"; 
 
 interface Props
   extends StackScreenProps<CoreStackParamList, coreRoutes.ChooseShop> {}
@@ -34,20 +34,20 @@ const ChooseShop = (props: Props) => {
   const store = useSelector<RootStateReducer>((state) => state.auth.myStore);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    loading.current?.toggleState(true);
-    dispatch({
-      type: GET_MYSTORE,
-      callback: () => loading.current?.toggleState(false),
-    });
-  }, []);
+  // useEffect(() => {
+  //   loading.current?.toggleState(true);
+  //   dispatch({
+  //     type: GET_MYSTORE,
+  //     callback: () => loading.current?.toggleState(false),
+  //   });
+  // }, []);
 
   const createStore = () => {
     push(coreRoutes.RegisterStepOne);
   };
 
   const renderItem = ({ item, index }) => {
-    return <ItemShop key={index} item={item} />;
+    return <ItemShop loading={loading} key={index} choose={props.route.params.key} item={item} />;
   };
 
   return (

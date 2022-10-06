@@ -15,6 +15,7 @@
 		7EF68E3733C33B6898317E18 /* libPods-KNBC-KNBCTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-KNBC-KNBCTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9889417528769454007B241B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9889417428769454007B241B /* GoogleService-Info.plist */; };
+		B3AB2BD928EEA6DC00A93686 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3AB2BD828EEA6DC00A93686 /* BootSplash.storyboard */; };
 		CEA447B7275A5441002A1044 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = CEA447B6275A5441002A1044 /* assets */; };
 		CEFC444927A001A20062DFFE /* Cairo-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CEFC444627A001A20062DFFE /* Cairo-Regular.otf */; };
 		CEFC444A27A001A20062DFFE /* Cairo-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CEFC444727A001A20062DFFE /* Cairo-SemiBold.otf */; };
@@ -74,6 +75,7 @@
 		A93D6D96E622499B93C9D194 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		ABFE59519B596E51CEFDCCC0 /* libPods-KNBC-KNBCTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KNBC-KNBCTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B119C934296F4F8689220A7D /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		B3AB2BD828EEA6DC00A93686 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = linkpos/BootSplash.storyboard; sourceTree = "<group>"; };
 		B6BC6EF88AC14F20BDB5CB5D /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		C0A881CF5CF3F2B244570E2A /* Pods-KNBC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KNBC.debug.xcconfig"; path = "Target Support Files/Pods-KNBC/Pods-KNBC.debug.xcconfig"; sourceTree = "<group>"; };
 		C637278883F74D2D8B2B94A7 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B3AB2BD828EEA6DC00A93686 /* BootSplash.storyboard */,
 				CEFC444827A001A20062DFFE /* Cairo-Light.otf */,
 				CEFC444627A001A20062DFFE /* Cairo-Regular.otf */,
 				CEFC444727A001A20062DFFE /* Cairo-SemiBold.otf */,
@@ -337,6 +340,7 @@
 				CEA447B7275A5441002A1044 /* assets in Resources */,
 				D6748707271001C0009B2430 /* Inter-Black.ttf in Resources */,
 				D6748708271001C0009B2430 /* Inter-Bold.ttf in Resources */,
+				B3AB2BD928EEA6DC00A93686 /* BootSplash.storyboard in Resources */,
 				D6748709271001C0009B2430 /* Inter-ExtraBold.ttf in Resources */,
 				D674870A271001C0009B2430 /* Inter-ExtraLight.ttf in Resources */,
 				D674870B271001C0009B2430 /* Inter-Light.ttf in Resources */,

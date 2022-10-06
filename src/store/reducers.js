@@ -12,9 +12,16 @@ const authPersistConfig = {
   // blacklist: ["token", "user"],
 };
 
+const cafePersistConfig = {
+  key: "cafe",
+  transforms: [immutableTransform()],
+  storage: AsyncStorage,
+  // blacklist: ["token", "user"],
+};
+
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
-  cafe: cafeReducer,
+  cafe: persistReducer(cafePersistConfig, cafeReducer),
 });
 
 export default rootReducer;

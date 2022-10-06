@@ -25,7 +25,7 @@ import { LOGIN_SUCCESS } from "../store/constants";
 const { width, height } = Dimensions.get("window");
 
 const LoginSchema = Yup.object().shape({
-  password: Yup.string().required("* Required"),
+  password: Yup.string().required("* Ô nhập không được trống"),
 });
 
 type LoginMutationVariables = {
@@ -46,7 +46,7 @@ const FormLoginPassWord = memo(({ username }) => {
   const { control, handleSubmit, errors } = useForm<LoginMutationVariables>({
     resolver: yupResolver(LoginSchema),
     defaultValues: {
-      password: "123123",
+      password: "",
     },
   });
 
@@ -89,9 +89,7 @@ const FormLoginPassWord = memo(({ username }) => {
     <View>
       <View style={styles.viewInput}>
         <AppText style={styles.txtLabel}>
-          {intl.formatMessage({
-            id: "label:password",
-          })}
+          {"Mật khẩu"}
           (*)
         </AppText>
         <Controller
@@ -112,9 +110,8 @@ const FormLoginPassWord = memo(({ username }) => {
                 </TouchableOpacity>
               }
               autoCapitalize="none"
-              placeholder={intl.formatMessage({
-                id: "input:input_password",
-              })}
+              secureTextEntry={true}
+              placeholder={"Nhập mật khẩu"}
               errorStyle={styles.textError}
               errorMessage={
                 errors.phonenumber ? errors.phonenumber.message : ""
@@ -145,9 +142,7 @@ const FormLoginPassWord = memo(({ username }) => {
         buttonStyle={styles.buttonLogin}
         loading={loading}
         onPress={handleSubmit(handleLogin)}
-        text={intl.formatMessage({
-          id: "label:login",
-        })}
+        text={"Đăng nhập"}
         loadingColor={COLOR.white}
         textStyle={styles.txtLogin}
       />

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "splash": "yarn react-native generate-bootsplash splash/splash.png --background-color=FFFFFF --logo-width=150  --assets-path=assets",
     "android-m1": "source ~/.bash_profile&&react-native run-android",
     "build-m1": "source ~/.bash_profile&&react-native run-android --variant=release",
     "android": "source ~/.bash_profile&&react-native run-android",
@@ -95,7 +96,7 @@
     "react-native-animated-loader": "0.0.9",
     "react-native-audio-record": "^0.2.2",
     "react-native-autoheight-webview": "^1.5.8",
-    "react-native-bootsplash": "3.1.2",
+    "react-native-bootsplash": "^3.1.2",
     "react-native-calendars": "^1.1268.0",
     "react-native-camera": "3.40.5",
     "react-native-contacts": "^7.0.3",

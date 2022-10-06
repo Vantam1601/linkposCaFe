@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useRef } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View,TouchableOpacity,Alert} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { AppText } from "src/components/Apptext";
 import HeaderBack from "src/components/HeaderBack";
@@ -13,6 +13,9 @@ import { COLOR } from "src/theme/color";
 import { CafeStackParamList } from "../router/CafeNavigator";
 import { cafeRoutes } from "../router/CafeRouter";
 import { GET_INVOICE } from "../store/constants";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faPrint,faBarcode} from "nvquang-font-icon/pro-solid-svg-icons";
+import { site_url, postAsync } from "src/helpers/config";
 
 interface Props
   extends StackScreenProps<
@@ -45,6 +48,11 @@ const ItemRow = (props: ItemRowProps) => {
 const DetailCashierOutlet = (props: Props) => {
   const dispatch = useDispatch();
   const loading = useRef<RefObject>(null);
+
+  const tokenStore = useSelector<RootStateReducer>(
+    (state) => state.auth.tokenStore
+  );
+
 
   const data = useSelector<RootStateReducer>(
     (state) => state.cafe.currentInvoice
@@ -144,28 +152,48 @@ const DetailCashierOutlet = (props: Props) => {
           padding: 10,
         }}
       >
-        <AppText fontSize={20} fontWeight="bold">
-          {"Thông tin"}
-        </AppText>
-        <AppText fontSize={18} fontWeight="bold">
-          {data?.name}
-        </AppText>
+        
+        <View style={{alignItems:'center'}}>
+          <AppText fontSize={18} fontWeight="bold">
+            {data?.name}
+          </AppText>
+        </View>
         <ItemRow label="Barcode" value={data?.barcode} />
-        <ItemRow label="Tổng tiền" value={show_money(data?.total)} />
-        <ItemRow label="Tình trạng" value={data?.status} />
-        <ItemRow label="Thanh toán" value={data?.payment} />
+        <ItemRow label="Tổng tiền" value={show_money(data?.after_total?data?.after_total:data?.total)} />
+        <ItemRow label="Tình trạng" value={data?.status=="complete"?"Đã thanh toán":data?.status} />
+        <ItemRow label="Thanh toán" value={data?.payment=="cash"?"Tiền mặt":data?.payment} />
         <ItemRow label="Nhân viên gọi" value={data?.fullname || ""} />
         <ItemRow label="Nhân viên thanh toán" value={data?.fullname} />
         <ItemRow label="Giờ vào" value={data?.created_date} />
         <ItemRow label="Giờ ra" value={data?.completed_date} />
         {renderRowTitle()}
+
+
       </View>
     );
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.bg }}>
-      <HeaderBack title={`Detail`} />
+      <HeaderBack title={`Chi tiết`}  hasRight={true} titleRight={ <FontAwesomeIcon
+        onPress={()=>{
+                  let headers = { headers: {} };
+                    headers.headers["auth-token"] = tokenStore;
+                    let body = { data: data };
+                    body.type = "json";
+                    body.name = Date.now();
+                     postAsync(
+                      "https://access.linkpos.top/action.php?a=print&confirm=add",
+                      body,
+                      headers
+                    );
+
+                     Alert.alert("Đã gởi đến máy in");
+                }}
+                size={20}
+                icon={faBarcode}
+                color={COLOR.contentColor}
+              />} />
       <View style={{ flex: 1, padding: 10 }}>
         <FlatList
           data={data?.listmenu || []}
@@ -174,8 +202,11 @@ const DetailCashierOutlet = (props: Props) => {
           keyExtractor={(item) => `${item.id}`}
           ItemSeparatorComponent={() => <View style={{ height: 2 }} />}
         />
+
+        {data?.discount?<ItemRow label="Giảm giá" value={show_money(data?.discount?data?.discount:0)} />:null}
       </View>
       <LoadingOverlay ref={loading} />
+
     </View>
   );
 };

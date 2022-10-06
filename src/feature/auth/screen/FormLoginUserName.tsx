@@ -18,7 +18,7 @@ import * as Yup from "yup";
 const { width, height } = Dimensions.get("window");
 
 const LoginSchema = Yup.object().shape({
-  username: Yup.string().required("* Required"),
+  username: Yup.string().required("* Ô nhập không được trống"),
 });
 
 type LoginMutationVariables = {
@@ -40,7 +40,7 @@ const FormLoginUserName = memo(({ setUsername }) => {
   const { control, handleSubmit, errors } = useForm<LoginMutationVariables>({
     resolver: yupResolver(LoginSchema),
     defaultValues: {
-      username: "0909656119",
+      username: "",
     },
   });
 
@@ -65,7 +65,7 @@ const FormLoginUserName = memo(({ setUsername }) => {
     } else {
       Toast.show({
         type: "error",
-        text2: res?.data ? res.data.error : "Check user failed!",
+        text2: res?.data ? res.data.error : "Lỗi xảy ra!",
       });
     }
 
@@ -76,9 +76,7 @@ const FormLoginUserName = memo(({ setUsername }) => {
     <View>
       <View style={styles.viewInput}>
         <AppText style={styles.txtLabel}>
-          {intl.formatMessage({
-            id: "label:phone",
-          })}
+          {"Số điện thoại"}
           (*)
         </AppText>
         <Controller
@@ -87,9 +85,7 @@ const FormLoginUserName = memo(({ setUsername }) => {
             <Input
               autoCapitalize="none"
               autoCompleteType="username"
-              placeholder={intl.formatMessage({
-                id: "input:input_username",
-              })}
+              placeholder={"nhập tên tài khoản"}
               errorStyle={styles.textError}
               errorMessage={
                 errors.phonenumber ? errors.phonenumber.message : ""
@@ -115,9 +111,7 @@ const FormLoginUserName = memo(({ setUsername }) => {
         buttonStyle={styles.buttonLogin}
         loading={loading}
         onPress={handleSubmit(handleLogin)}
-        text={intl.formatMessage({
-          id: "label:login",
-        })}
+        text={"Đăng nhập"}
         loadingColor={COLOR.white}
         textStyle={styles.txtLogin}
       />

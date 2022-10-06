@@ -47,6 +47,7 @@ const DropdownButton = memo((props: Props) => {
     enableSearch = false,
     keyView = "name",
     autoBack,
+    placeholder
   } = props;
   const [isIndex, setIsIndex] = useState<number>(-1);
   const [keyword, setKeyword] = useState<any>("");
@@ -122,7 +123,7 @@ const DropdownButton = memo((props: Props) => {
       <View>
         <AppInput
           onChangeText={(text) => onSearch(text)}
-          placeholder={intl.formatMessage({ id: "label:search" })}
+          placeholder={placeholder?placeholder:intl.formatMessage({ id: "label:search" })}
           style={[styles.input]}
           inputContainerStyle={{ width: width - 20 }}
           value={keyword}

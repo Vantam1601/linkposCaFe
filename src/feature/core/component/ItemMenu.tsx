@@ -11,7 +11,7 @@ import { cafeRoutes } from 'src/feature/cafe/router/CafeRouter';
 interface Props {
   item: ItemMenuInterface;
 }
-const ItemMenu = ({ item }: Props) => {
+const ItemMenu = ({ item,width}: Props) => {
   const {  name } = item;
   const onPress = () => {
     navigate(coreRoutes.CAFE, {
@@ -22,28 +22,29 @@ const ItemMenu = ({ item }: Props) => {
     });
   };
   return (
-    <View style={{flexDirection:'row', justifyContent:'center'}}>
+    <View style={{flexDirection:'row', justifyContent:'center',width:width?width:'48%',}}>
       <TouchableOpacity
-      onPress={onPress}
+      onPress={item.onPress?item.onPress:onPress}
       style={{
         minHeight: 100,
         backgroundColor: COLOR.white,
         borderRadius: 10,
         padding: 10,
-        flexDirection: "row",
-        width:'70%', alignItems:'center'
+        flexDirection: "column",
+        width:'100%', alignItems:'center',
+        marginBottom:16
       }}
     >
       <Image
         style={{
-          width: 50,
-          height: 50,
+          width: 24,
+          height: 24,
         }}
         resizeMode="contain"
         source={item.icon}
       />
-      <View style={{ flex: 1, alignItems:'flex-start', justifyContent:'center', paddingHorizontal: 20 }}>
-        <AppText  fontSize={20} fontWeight="bold">
+      <View style={{ flex: 1, alignItems: 'center', justifyContent:'center'}}>
+        <AppText fontSize={20} fontWeight="bold" >
           {name}
         </AppText>
       </View>

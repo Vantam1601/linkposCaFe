@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useRef, useState } from "react";
 import {
@@ -89,6 +89,17 @@ const Cashier = (props: Props) => {
   React.useEffect(() => {
     onRefresh();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch({
+        type: CASHIER_OUTLET_GENARE,
+        payload: {
+          id_outlet: outlet?.id_outlet,
+        },
+      });
+    }, [])
+  );
 
   const onRefresh = () => {
     setRefreshing(true);

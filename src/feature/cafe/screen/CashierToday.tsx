@@ -11,6 +11,7 @@ import { COLOR } from "src/theme/color";
 import ToggleSwitch from "toggle-switch-react-native";
 import { CafeStackParamList } from "../router/CafeNavigator";
 import { cafeRoutes } from "../router/CafeRouter";
+import moment from "moment";
 
 import LoadingOverlay, {
   RefObject,
@@ -98,7 +99,7 @@ const CashierToday = (props: Props) => {
           </AppText>
         </View>
         <View style={[styles.itemColumn]}>
-          <AppText fontWeight="bold">{item.name}</AppText>
+          <AppText fontWeight="bold">{item.name?item.name:"Takeaway"}</AppText>
         </View>
 
         <View style={[styles.itemColumn]}>
@@ -174,8 +175,18 @@ const CashierToday = (props: Props) => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.bg }}>
-      <HeaderBack title={`Cashier`} />
+      <HeaderBack title={`Doanh thu`} />
       <View style={{ flex: 1, padding: 10 }}>
+        <View style={{
+            flex: 1,
+            borderWidth: 1,
+            borderColor: COLOR.borderGray,
+            backgroundColor: COLOR.white,
+            borderRadius: 10,
+            padding: 10,
+          }}>
+            <Text>Hôm nay: {moment().format('DD-MMMM-YYYY')}</Text> 
+        </View>
         <View
           style={{
             flex: 1,

@@ -80,9 +80,9 @@ const MergeTable = (props: Props) => {
       return [];
     }
     return order?.filter((item) => !`${item.id}`.includes("takeaway"));
-  }, []);
+  }, [order]);
 
-  const [tableTo, setTableTo] = useState(order?.[0] || {});
+  const [tableTo, setTableTo] = useState(orderTables?.[0] || {});
 
   const checkActive = React.useCallback(
     (item) => {
@@ -142,9 +142,9 @@ const MergeTable = (props: Props) => {
         </AppText>
         <DropdownButton
           idProps={tableTo?.id}
-          title={tableTo?.name}
+          title={tableTo?.name || "-- Chọn bàn cần nhập --"}
           idProps={undefined}
-          data={order || []}
+          data={orderTables || []}
           stylesProps={{
             margin: 10,
             backgroundColor: COLOR.bgWhite,
@@ -167,7 +167,7 @@ const MergeTable = (props: Props) => {
         <Button
           onPress={onSubmit}
           textStyle={{ color: COLOR.textWhite }}
-          text={"Submit"}
+          text={"Xác nhận"}
         />
       </View>
     </View>

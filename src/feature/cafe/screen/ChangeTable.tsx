@@ -151,7 +151,7 @@ const ChangeTable = (props: Props) => {
           <Button
             onPress={onSubmit}
             textStyle={{ color: COLOR.textWhite }}
-            text={"Submit"}
+            text={"Xác nhận"}
           />
         </View>
       </View>

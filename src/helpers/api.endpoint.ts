@@ -37,7 +37,8 @@ export const API_ENDPOINT = {
   find_local: "action.php?a=customer&confirm=find_local",
   check_voucher: "action.php?a=promotion&confirm=check_voucher",
   complete: "action.php?a=table&confirm=complete",
-  takeaway: "action.php?a=cart&confirm=staff_add_takeway",
+  takeaway: "action.php?a=client&confirm=client_complete",
+  updateInfo: "https://linkpos.top/api/shop.php",
 };
 
 export const user = "/user.php";

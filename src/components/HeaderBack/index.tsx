@@ -171,9 +171,8 @@ const HeaderBack = React.memo<Props>(
                   })}
                 </AppText>
               </TouchableOpacity>
-            ) : (
-              titleRight
-            )}
+            ) : titleRight
+            }
           </View>
         </View>
       </Animated.View>

@@ -16,14 +16,14 @@ import { push } from "src/navigator/RootNavigation";
 import { RootStateReducer } from "src/store/types";
 import { COLOR } from "src/theme/color";
 import { GET_MYSTORE, LOGOUT } from "../../auth/store/constants";
-import ItemShop from "../component/ItemShop";
 import LoadingOverlay, {
   RefObject,
 } from "../component/loadingPage/LoadingPage";
 import { coreRoutes } from "../router/CoreRouter";
 
 import Icon from "react-native-vector-icons/Ionicons";
-
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faSignOut } from "nvquang-font-icon/pro-solid-svg-icons";
 
 const MyShop = () => {
   const loading = useRef<RefObject>(null);
@@ -51,10 +51,13 @@ const MyShop = () => {
   };
 
   const onPress = (key: string) => {
-  
     push(coreRoutes.ChooseShop, {
       key: key,
     });
+  };
+
+  const onPressProfile = () => {
+    push(coreRoutes.Profile);
   };
 
   return (
@@ -75,29 +78,22 @@ const MyShop = () => {
               <AppText color={COLOR.main_color} fontSize={16}>
                 {"Xin Chào"}
               </AppText>
-              <AppText color={COLOR.main_color} fontSize={20} fontWeight="bold">
+              <AppText
+                onPress={onPressProfile}
+                color={COLOR.main_color}
+                fontSize={20}
+                fontWeight="bold"
+              >
                 {user?.username_user}
               </AppText>
             </View>
             <TouchableOpacity onPress={LogOut}>
-              <AppText fontWeight="bold" color={COLOR.main_color} fontSize={16}>
-                {"Logout"}
-              </AppText>
+              <FontAwesomeIcon icon={faSignOut} size={20} color={COLOR.main_color} />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1,justifyContent: 'center' }}>
-            {store?.staff?.shoper?.length== 0?<View style={{ alignItems: "center" }}>
-              <TouchableOpacity
-                style={{ marginVertical: 10 }}
-                onPress={createStore}
-              >
-                <AppText fontWeight="bold" color={COLOR.black} fontSize={20}>
-                  {"Đăng ký cửa hàng"}
-                </AppText>
-              </TouchableOpacity>
-            </View> :null}
+          <View style={{ flex: 1, justifyContent: "center" }}>
             <View style={{ padding: 10 }}>
-              {store?.staff?.staff?.length > 0 && (
+              {store?.staff?.staff?.length ? (
                 <TouchableOpacity
                   onPress={() => onPress("staff")}
                   style={styles.buttonShop}
@@ -121,6 +117,19 @@ const MyShop = () => {
                     </AppText>
                   </View>
                 </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => onPress("staff")}>
+                  <View style={{ alignItems: "center" }}>
+                    <Image
+                      style={{
+                        width: "100%",
+                        height: 145,
+                      }}
+                      resizeMode="contain"
+                      source={images.ads}
+                    />
+                  </View>
+                </TouchableOpacity>
               )}
 
               <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -131,7 +140,7 @@ const MyShop = () => {
                 />
               </View>
 
-              {store?.staff?.shoper?.length > 0 && (
+              {store?.staff?.shoper?.length ? (
                 <TouchableOpacity
                   onPress={() => onPress("shoper")}
                   style={styles.buttonShop}
@@ -152,6 +161,30 @@ const MyShop = () => {
                       fontWeight="bold"
                     >
                       {"Của hàng của tôi"}
+                    </AppText>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={createStore}
+                  style={styles.buttonShop}
+                >
+                  <View style={{ alignItems: "center" }}>
+                    <Image
+                      style={{
+                        width: 50,
+                        height: 50,
+                      }}
+                      resizeMode="contain"
+                      source={images.shop}
+                    />
+                    <AppText
+                      style={{ marginTop: 10 }}
+                      color="white"
+                      fontSize={20}
+                      fontWeight="bold"
+                    >
+                      {"Đăng ký cửa hàng"}
                     </AppText>
                   </View>
                 </TouchableOpacity>
@@ -186,9 +219,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   container_icon: {
-    position:'absolute',
-    right:20,
-    bottom:44,
+    position: "absolute",
+    right: 20,
+    bottom: 44,
     backgroundColor: "#3F51B5",
     alignItems: "center",
     justifyContent: "center",
@@ -196,17 +229,17 @@ const styles = StyleSheet.create({
     shadowColor: "#111",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.2,
     elevation: 2,
     width: 40,
-    height: 40
+    height: 40,
   },
   icon2: {
     color: "rgba(255,255,255,1)",
     fontSize: 40,
-    alignSelf: "center"
-  }
+    alignSelf: "center",
+  },
 });

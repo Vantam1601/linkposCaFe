@@ -82,7 +82,7 @@ const CallStaff = (props: Props) => {
           </AppText>
           <Input
             autoCapitalize="none"
-            placeholder={"note..."}
+            placeholder={"Ghi chú..."}
             errorStyle={styles.textError}
             multiline={true}
             onChangeText={(val: any) => setNote(val)}

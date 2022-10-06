@@ -6,7 +6,7 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
-  View,
+  View,SafeAreaView,Text,Linking
 } from "react-native";
 import { images } from "src/assets/images";
 
@@ -67,6 +67,50 @@ const listSubCategory: GroupCategory[] = [
     name: "Bán hàng",
     id: "Bán hàng",
   },
+  {
+    name: "Cà phê",
+    id: "Cà phê",
+  },
+  {
+    name: "Trà sữa",
+    id: "Trà sữa",
+  },
+  {
+    name: "Spa – Thẩm mỹ viện",
+    id: "Spa – Thẩm mỹ viện",
+  },
+  {
+    name: "Bida",
+    id: "Bida",
+  },
+  {
+    name: "Cửa hàng Mỹ phẩm",
+    id: "Cửa hàng Mỹ phẩm",
+  },
+  {
+    name: "Thời trang – Phụ kiện",
+    id: "Thời trang – Phụ kiện",
+  },
+  {
+    name: "Hoa – Quà tặng",
+    id: "Hoa – Quà tặng",
+  },
+  {
+    name: "GAS",
+    id: "GAS",
+  },
+  {
+    name: "Gara sửa xe",
+    id: "Gara sửa xe",
+  },
+  {
+    name: "Khách sạn",
+    id: "Khách sạn",
+  },
+  {
+    name: "Khác",
+    id: "Khác",
+  } 
 ];
 
 interface Props
@@ -96,6 +140,7 @@ const RegisterStepTwo = memo((props: Props) => {
   };
 
   const renderItem = ({ item, index }: { item: Category; index: number }) => {
+    
     return (
       <TouchableOpacity
         onPress={() => {
@@ -150,6 +195,7 @@ const RegisterStepTwo = memo((props: Props) => {
         <DropdownButton
           keyView="name"
           idProps={subCategorySelected?.id}
+          placeholder={"Nhập ngành nghề"}
           autoBack={true}
           title={
             subCategorySelected?.name ||
@@ -172,24 +218,53 @@ const RegisterStepTwo = memo((props: Props) => {
             setsubCategory(val);
           }}
         />
+
+        <View style={{
+                backgroundColor: COLOR.white,
+                
+                minHeight: 70,
+                margin: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                paddingHorizontal: 10,
+              }}>
+              
+                  <View style={{borderRadius:8,borderWidth:1,borderColor:"#cecece",paddingVertical:8,paddingHorizontal:16}}> 
+                  <Text>Thiết bị đề nghị:</Text>
+                  <Text> Đường truyền internet và có 1 trong 3 thiết bị sau:</Text>
+                  <Text> Laptop.</Text>
+                  <Text> Máy tính để bàn.</Text>
+                  <Text> Máy tính bảng.</Text>
+                  </View>
+
+                  <View style={{marginTop:16}}>
+                     <TouchableOpacity onPress={()=>{
+                        Linking.openURL("https://linkpos.giaiphap.xyz/huong-dan.php")
+                     }}>
+                       <Text style={{color:"blue"}}>Tìm hiểu thêm</Text>
+                     </TouchableOpacity>
+                  </View>
+              </View>
       </View>
     );
   };
 
   const renderChooseGroup = () => {
-    return (
-      <FlatList
+    return 
+      (<FlatList
         data={listCategory}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
         keyExtractor={(item, index) => `${index}`}
         numColumns={2}
-      />
-    );
+      />) 
+    
   };
 
   const onBack = () => {
     setStep(0);
+
+
   };
 
   return (
@@ -205,16 +280,27 @@ const RegisterStepTwo = memo((props: Props) => {
               borderRadius: 20,
             }}
           >
-            <View style={{ alignItems: "center", paddingVertical: 10 }}>
-              <Image
-                style={styles.tinyLogo}
-                resizeMode="contain"
-                source={images.infoShop}
-              />
-            </View>
+            <View style={{flex:1}}>
+              <View style={{ alignItems: "center", paddingVertical: 10 }}>
+                <Image
+                  style={styles.tinyLogo}
+                  resizeMode="contain"
+                  source={images.infoShop}
+                />
+              </View>
 
-            {step === 1 ? renderChooseCategory() : renderChooseGroup()}
-            <View style={{ alignItems: "center" }}>
+              
+             
+                {step ==1 ? renderChooseCategory() : <FlatList
+                data={listCategory}
+                renderItem={renderItem}
+                ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+                keyExtractor={(item, index) => `${index}`}
+                numColumns={2}
+              /> }
+              
+            </View>
+            <View style={{ alignItems: "center",flexDirection:'row',justifyContent:'space-around'}}>
               {step === 1 && (
                 <Button
                   buttonStyle={styles.buttonBack}
@@ -237,6 +323,7 @@ const RegisterStepTwo = memo((props: Props) => {
             </View>
           </View>
         </View>
+        <SafeAreaView />
       </ImageBackground>
     </View>
   );
@@ -306,11 +393,11 @@ const styles = StyleSheet.create({
   },
   buttonLogin: {
     marginTop: 20,
-    width: width - 60,
+    width: '45%',
   },
   buttonBack: {
     marginTop: 20,
-    width: width - 60,
+    width: '45%',
     backgroundColor: COLOR.bgSilver_Gray,
   },
   txtLabel: {
@@ -340,7 +427,7 @@ const styles = StyleSheet.create({
   txtName: {
     textAlign: "center",
     lineHeight: 30,
-    fontSize: 25,
+    fontSize: 20,
     borderColor: COLOR.borderGray,
   },
   viewLogo: {

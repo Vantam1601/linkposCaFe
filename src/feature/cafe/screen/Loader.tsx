@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -44,10 +44,14 @@ const Loader = (props: Props) => {
     });
   };
 
+  useEffect(() => {
+    callBack();
+  }, []);
+
   const callbackNavigate = () => {
     if (!screen) {
       navigation.goBack();
-      return Alert.alert("Thông báo", "Chức năng đang ohast triển");
+      return Alert.alert("Thông báo", "Chức năng đang phát triển");
     }
     replace(screen);
   };
@@ -58,7 +62,7 @@ const Loader = (props: Props) => {
       style={{ flex: 1, paddingTop: getStatusBarHeight() }}
     >
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>loading data ...</Text>
+        <Text>Đang tải ...</Text>
         <ActivityIndicator size={"large"} color={COLOR.main_color} />
       </View>
     </ImageBackground>

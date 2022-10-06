@@ -11,6 +11,7 @@ import CartModal from "../modal/cart";
 
 import * as Constants from "./constants";
 import { OutletModal } from "../modal/index";
+import { LOGOUT, SET_CURRENT_STORE } from "src/feature/auth/store/constants";
 
 export interface cafeState {
   loading: boolean;
@@ -86,6 +87,14 @@ export default function cafeReducer(
       }
       case Constants.GET_CASHIER_TODAY_SUCCESS: {
         draft.listToday = action.payload;
+        break;
+      }
+      case LOGOUT: {
+        return { ...initialState };
+        break;
+      }
+      case SET_CURRENT_STORE: {
+        return { ...initialState };
         break;
       }
       default: {

@@ -8,7 +8,7 @@ import { AppRoutes } from "src/navigator/app-routes";
 import type { RootStackParamList } from "../../../navigator/root.navigator";
 import { TableModal } from "../modal";
 import Cashier from "../screen/Cashier";
-import DetailOrder from "../screen/DetailOrder";
+import DetailOrder from "../screen/sell/DetailOrder";
 import Kitchen from "../screen/Kitchen";
 import Loader from "../screen/Loader";
 import Order from "../screen/Order";
@@ -23,10 +23,10 @@ import Report from "../screen/Report";
 import BottomTabLayout from "./BottomTabLayout";
 import Bill from "../screen/Bill";
 import BottomTabLayoutKitchen from "./BottomTabLayoutKitchen";
-import DetailConfirm from "../screen/DetailConfirm";
-import Selling from "../screen/Selling";
+import DetailConfirm from "../screen/sell/DetailConfirm";
+import Selling from "../screen/sell/Selling";
 import BottomTabLayoutKitchenCashier from "./BottomTabLayoutKitchenCashier";
-import ConfigMenu from "../screen/ConfigMenu";
+// import ConfigMenu from "../screen/ConfigMenu";
 import CallStaff from "../screen/CallStaff";
 import DetailCashierOutlet from "../screen/DetailCashierOutlet";
 import CashierToday from "../screen/CashierToday";
@@ -34,7 +34,7 @@ import CashierToday from "../screen/CashierToday";
 export type CafeStackParamList = {
   [cafeRoutes.Kitchen]: undefined;
   [cafeRoutes.Selling]: undefined;
-  [cafeRoutes.ConfigMenu]: undefined;
+ 
   [cafeRoutes.Home]: undefined;
   [cafeRoutes.CallStaff]: undefined;
   [cafeRoutes.CashierToday]: undefined;
@@ -203,14 +203,7 @@ export const CafeNavigator = () => {
         }}
         component={DetailConfirm}
       />
-      <Stack.Screen
-        name={cafeRoutes.ConfigMenu}
-        options={{
-          title: "Order",
-          headerShown: false,
-        }}
-        component={ConfigMenu}
-      />
+       
       <Stack.Screen
         name={cafeRoutes.CallStaff}
         options={{
